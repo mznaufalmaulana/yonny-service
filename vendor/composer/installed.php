@@ -1,11 +1,11 @@
 <?php return array(
     'root' => array(
-        'pretty_version' => 'v7.30.1',
-        'version' => '7.30.1.0',
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => NULL,
+        'reference' => 'bd28d48dfc7fbd84141fe76ed02a0412c75eb0c8',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -95,12 +95,12 @@
             'dev_requirement' => true,
         ),
         'facade/ignition' => array(
-            'pretty_version' => '2.15.0',
-            'version' => '2.15.0.0',
+            'pretty_version' => '2.16.0',
+            'version' => '2.16.0.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../facade/ignition',
             'aliases' => array(),
-            'reference' => '3ee6e94815462bcf09bca0efc1c9069685df8da3',
+            'reference' => '23400e6cc565c9dcae2c53704b4de1c4870c0697',
             'dev_requirement' => true,
         ),
         'facade/ignition-contracts' => array(
@@ -374,12 +374,12 @@
             'dev_requirement' => false,
         ),
         'laravel/laravel' => array(
-            'pretty_version' => 'v7.30.1',
-            'version' => '7.30.1.0',
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => NULL,
+            'reference' => 'bd28d48dfc7fbd84141fe76ed02a0412c75eb0c8',
             'dev_requirement' => false,
         ),
         'laravel/tinker' => array(
@@ -474,6 +474,15 @@
             'aliases' => array(),
             'reference' => '7c125dc2463f3e144ddc7e05e63077109508c94e',
             'dev_requirement' => true,
+        ),
+        'nwidart/laravel-modules' => array(
+            'pretty_version' => '8.2.0',
+            'version' => '8.2.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../nwidart/laravel-modules',
+            'aliases' => array(),
+            'reference' => '6ade5ec19e81a0e4807834886a2c47509d069cb7',
+            'dev_requirement' => false,
         ),
         'opis/closure' => array(
             'pretty_version' => '3.6.2',
@@ -677,19 +686,19 @@
             ),
         ),
         'psr/log' => array(
-            'pretty_version' => '1.1.4',
-            'version' => '1.1.4.0',
+            'pretty_version' => '2.0.0',
+            'version' => '2.0.0.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../psr/log',
             'aliases' => array(),
-            'reference' => 'd49695b909c3b7628b6289db5479a1c204601f11',
+            'reference' => 'ef29f6d262798707a9edd554e2b82517ef3a9376',
             'dev_requirement' => false,
         ),
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0|2.0',
-                1 => '1.0.0 || 2.0.0 || 3.0.0',
+                0 => '1.0.0 || 2.0.0 || 3.0.0',
+                1 => '1.0|2.0',
             ),
         ),
         'psr/simple-cache' => array(
