@@ -8,8 +8,6 @@ use App\Http\Requests\ProductTypeRequest;
 use Exception;
 use Illuminate\Http\JsonResponse;
 
-//use Illuminate\Http\Request;
-
 class ProductTypeController extends Controller
 {
 
@@ -50,6 +48,7 @@ class ProductTypeController extends Controller
   public function storeProductType(ProductTypeRequest $request): JsonResponse
   {
     try {
+      $request->validated();
       $result = $this->productType->storeProductType($request);
       return $this->returnSuccess($result , "ok");
     }
@@ -62,6 +61,7 @@ class ProductTypeController extends Controller
   public function updateProductType($id, ProductTypeRequest $request): JsonResponse
   {
     try {
+      $request->validated();
       $result = $this->productType->updateProductType($id, $request);
       return $this->returnSuccess($result , "ok");
     }

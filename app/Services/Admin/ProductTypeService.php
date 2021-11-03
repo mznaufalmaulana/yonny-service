@@ -7,7 +7,6 @@ namespace App\Services\Admin;
 use App\Contracts\Admin\Master\ProductTypeInterface;
 use App\Http\Requests\ProductTypeRequest;
 use App\Repositories\ProductTypeRepository;
-use function PHPUnit\Framework\throwException;
 
 class ProductTypeService implements ProductTypeInterface
 {
@@ -25,47 +24,31 @@ class ProductTypeService implements ProductTypeInterface
   public function getListProductType()
   {
     $priductType = $this->productTypeRepository->getListProductTypeRepo();
-    if($priductType){
-      return $priductType;
-    }
-    throw new \Exception('Data not found');
+    return $priductType;
   }
 
   public function getProductTypeById($id)
   {
     $priductType = $this->productTypeRepository->getProductTypeByIdRepo($id);
-    if($priductType){
-      return $priductType;
-    }
-    throw new \Exception('Data not found');
+    return $priductType;
   }
 
   public function storeProductType(ProductTypeRequest $request)
   {
-    if ($request->validated()){
-      $result = $this->productTypeRepository->storeProductTypeRepo($request);
-      return $result;
-    }
-    throw new \Exception('Failed Store');
+    $result = $this->productTypeRepository->storeProductTypeRepo($request);
+    return $result;
   }
 
   public function updateProductType($id, ProductTypeRequest $request)
   {
-    if ($request->validated() && $id){
-      $result = $this->productTypeRepository->updateProductTypeRepo($id, $request);
-      return $result;
-    }
-    throw new \Exception('Failed update');
-
+    $result = $this->productTypeRepository->updateProductTypeRepo($id, $request);
+    return $result;
   }
 
   public function deleteProductType($id)
   {
-    if($id){
-      $result = $this->productTypeRepository->deleteProductTypeRepo($id);
-      return $result;
-    }
-    throw new \Exception('Failed delete');
+    $result = $this->productTypeRepository->deleteProductTypeRepo($id);
+    return $result;
   }
 
 }

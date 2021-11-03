@@ -14,7 +14,9 @@ Route::prefix('product-type')->middleware('api')->group(function (){
 });
 
 Route::fallback(function(){
-  return abort(401);
+  return response()->json([
+    'message' => 'not found'
+  ], 404);
 });
 
 

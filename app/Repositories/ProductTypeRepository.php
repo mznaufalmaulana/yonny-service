@@ -21,12 +21,12 @@ class ProductTypeRepository
 
   public function storeProductTypeRepo(ProductTypeRequest $request)
   {
-    return ProductTypeModel::create($request->validated());
+    return ProductTypeModel::create($request->validationData());
   }
 
   public function updateProductTypeRepo($id, ProductTypeRequest $request)
   {
-    return ProductTypeModel::where('id', $id)->update($request->validated());
+    return ProductTypeModel::where('id', $id)->update($request->validationData());
   }
 
   public function deleteProductTypeRepo($id)
