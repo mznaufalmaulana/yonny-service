@@ -15,6 +15,7 @@ class CreateEmailMessageTable extends Migration
     {
         Schema::create('tbl_email_message', function (Blueprint $table) {
             $table->increments('id');
+          $table->unsignedInteger('email_id');
             $table->text('message');
             $table->timestamps();
         });

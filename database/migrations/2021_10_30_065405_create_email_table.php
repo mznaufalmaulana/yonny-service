@@ -15,7 +15,6 @@ class CreateEmailTable extends Migration
     {
         Schema::create('tbl_email', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('message_id');
             $table->string('email_address')->unique();
             $table->tinyInteger('is_subcribe');
             $table->timestamps();

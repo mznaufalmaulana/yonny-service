@@ -50,7 +50,7 @@ class ProductController extends Controller
     try {
       $request->validated();
       $result = $this->product->storeProduct($request);
-      return $this->returnSuccess($result , "ok");
+      return $this->returnSuccess($result, "ok");
     }
     catch (Exception $ex)
     {

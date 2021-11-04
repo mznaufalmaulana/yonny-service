@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProductPhoto extends Model
+class ProductPhotoModel extends Model
 {
-  protected $table = 'tbl_photo';
+  protected $table = 'tbl_product_photo';
   protected $primaryKey = 'id';
   protected $fillable = [
-    'photo_name'
+    'product_id', 'photo_name'
   ];
 }

@@ -13,4 +13,5 @@ interface ProductInterface
   public function storeProduct(ProductRequest $request);
   public function updateProduct($id, ProductRequest $request);
   public function deleteProduct($id);
+  public function storeProductPhoto($photoFile, $photoName);
 }
