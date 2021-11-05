@@ -31,8 +31,14 @@ class ProductService implements ProductInterface
 
   public function getProductById($id)
   {
-    $product = $this->productRepository->getProductByIdRepo($id);
-    return $product;
+    try {
+      $this->productRepository->isProductExist($id);
+      return $this->productRepository->getProductByIdRepo($id);
+    }
+    catch (\Exception $ex)
+    {
+      throw $ex;
+    }
   }
 
   public function storeProduct(ProductRequest $request)
@@ -40,14 +46,18 @@ class ProductService implements ProductInterface
     DB::beginTransaction();
     try {
       $product = $this->productRepository->storeProductRepo($request);
-      $this->productRepository->storeCategoryOfProduct($request->product_category_id, $product->id);
+      $this->productRepository->storeCategoryOfProductRepo($request->product_category_id, $product->id);
 
-      $photoName = time().'_'.$request->file('product_photo')->getClientOriginalName();
-      $this->productRepository->storeProductPhoto($product->id, $photoName);
+      foreach ($request->file('product_photo') as $file)
+      {
+        $photoName = time().'_'.$file->getClientOriginalName();
+        $photoNameWithPath = 'public/product/'.$photoName;
+        $this->productRepository->storeProductPhotoRepo($product->id, $photoNameWithPath);
+        $this->storeProductPhotoFile($file, $photoName);
+      }
 
-      $this->storeProductPhoto($request->file('product_photo'), $photoName);
       DB::commit();
-      return $product;
+      return true;
     }
     catch (\Exception $ex)
     {
@@ -58,18 +68,54 @@ class ProductService implements ProductInterface
 
   public function updateProduct($id, ProductRequest $request)
   {
-    $product = $this->productRepository->updateProductRepo($id, $request);
-    return $product;
+    DB::beginTransaction();
+    try {
+      $product = $this->productRepository->updateProductRepo($id, $request);
+      $this->productRepository->storeCategoryOfProduct($request->product_category_id, $product->id);
+
+      DB::commit();
+      return true;
+    }
+    catch (\Exception $ex)
+    {
+      DB::rollBack();
+      throw $ex;
+    }
   }
 
   public function deleteProduct($id)
   {
-    $product = $this->productRepository->deleteProductRepo($id);
-    return $product;
+    DB::beginTransaction();
+    try {
+      $this->productRepository->isProductExist($id);
+      $this->productRepository->deleteProductRepo($id);
+      $this->productRepository->deleteCategoryOfProductByProductRepo($id);
+
+      $photos = $this->productRepository->getProductPhotoByProductIdRepo($id);
+      foreach ($photos as $photo)
+      {
+        $this->deleteProductPhotoFile($photo->photo_name);
+      }
+      $this->productRepository->deleteProductPhotoByProductRepo($id);
+
+      DB::commit();
+      return true;
+    }
+    catch (\Exception $ex)
+    {
+      DB::rollBack();
+      throw $ex;
+    }
   }
 
-  public function storeProductPhoto($photoFile, $photoName)
+  public function storeProductPhotoFile($photoFile, $photoName)
   {
     Storage::putFileAs('public/product', $photoFile, $photoName);
   }
+
+  public function deleteProductPhotoFile($photoName)
+  {
+    Storage::disk('local')->delete($photoName);
+  }
+
 }

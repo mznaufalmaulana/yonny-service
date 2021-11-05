@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -25,7 +26,7 @@ class ProductController extends Controller
   {
     try {
       $products = $this->product->getListProduct();
-      return $this->returnSuccess($products, "ok");
+      return $this->returnSuccess($products, "success");
     }
     catch (Exception $ex)
     {
@@ -33,11 +34,11 @@ class ProductController extends Controller
     }
   }
 
-  public function getProductById($id): JsonResponse
+  public function getProductById($id)
   {
     try {
-      $products = $this->product->getProductById($id);
-      return $this->returnSuccess($products, "ok");
+      $product = $this->product->getProductById($id);
+      return $this->returnSuccess($product, "success");
     }
     catch (Exception $ex)
     {
@@ -50,7 +51,8 @@ class ProductController extends Controller
     try {
       $request->validated();
       $result = $this->product->storeProduct($request);
-      return $this->returnSuccess($result, "ok");
+
+      return $this->returnSuccess($result, "success");
     }
     catch (Exception $ex)
     {
@@ -63,7 +65,7 @@ class ProductController extends Controller
     try {
       $request->validated();
       $result = $this->product->updateProduct($id, $request);
-      return $this->returnSuccess($result , "ok");
+      return $this->returnSuccess($result , "success");
     }
     catch (Exception $ex)
     {
@@ -75,7 +77,7 @@ class ProductController extends Controller
   {
     try {
       $result = $this->product->deleteProduct($id);
-      return $this->returnSuccess($result , "ok");
+      return $this->returnSuccess($result , "success");
     }
     catch (Exception $ex)
     {

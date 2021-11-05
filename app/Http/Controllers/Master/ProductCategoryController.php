@@ -24,7 +24,7 @@ class ProductCategoryController extends Controller
   {
     try {
       $categories = $this->category->getListCategory();
-      return $this->returnSuccess($categories, "ok");
+      return $this->returnSuccess($categories, "success");
     }
     catch (Exception $ex)
     {
@@ -36,7 +36,7 @@ class ProductCategoryController extends Controller
   {
     try {
       $categories = $this->category->getCategoryById($id);
-      return $this->returnSuccess($categories, "ok");
+      return $this->returnSuccess($categories, "success");
     }
     catch (Exception $ex)
     {
@@ -49,7 +49,7 @@ class ProductCategoryController extends Controller
     try {
       $request->validated();
       $result = $this->category->storeCategory($request);
-      return $this->returnSuccess($result , "ok");
+      return $this->returnSuccess($result , "success");
     }
     catch (Exception $ex)
     {
@@ -62,7 +62,7 @@ class ProductCategoryController extends Controller
     try {
       $request->validated();
       $result = $this->category->updateCategory($id, $request);
-      return $this->returnSuccess($result , "ok");
+      return $this->returnSuccess($result , "success");
     }
     catch (Exception $ex)
     {
@@ -74,7 +74,7 @@ class ProductCategoryController extends Controller
   {
     try {
       $result = $this->category->deleteCategory($id);
-      return $this->returnSuccess($result , "ok");
+      return $this->returnSuccess($result , "success");
     }
     catch (Exception $ex)
     {

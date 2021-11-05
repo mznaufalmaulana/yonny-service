@@ -25,7 +25,7 @@ class ProductTypeController extends Controller
   {
     try {
       $productTypes = $this->productType->getListProductType();
-      return $this->returnSuccess($productTypes, "ok");
+      return $this->returnSuccess($productTypes, "success");
     }
     catch (Exception $ex)
     {
@@ -37,7 +37,7 @@ class ProductTypeController extends Controller
   {
     try {
       $productTypes = $this->productType->getProductTypeById($id);
-      return $this->returnSuccess($productTypes, "ok");
+      return $this->returnSuccess($productTypes, "success");
     }
     catch (Exception $ex)
     {
@@ -50,7 +50,7 @@ class ProductTypeController extends Controller
     try {
       $request->validated();
       $result = $this->productType->storeProductType($request);
-      return $this->returnSuccess($result , "ok");
+      return $this->returnSuccess($result , "success");
     }
     catch (Exception $ex)
     {
@@ -63,7 +63,7 @@ class ProductTypeController extends Controller
     try {
       $request->validated();
       $result = $this->productType->updateProductType($id, $request);
-      return $this->returnSuccess($result , "ok");
+      return $this->returnSuccess($result , "success");
     }
     catch (Exception $ex)
     {
@@ -75,7 +75,7 @@ class ProductTypeController extends Controller
   {
     try {
       $result = $this->productType->deleteProductType($id);
-      return $this->returnSuccess($result , "ok");
+      return $this->returnSuccess($result , "success");
     }
     catch (Exception $ex)
     {

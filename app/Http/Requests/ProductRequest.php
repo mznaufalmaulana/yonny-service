@@ -17,7 +17,7 @@ class ProductRequest extends FormRequest
       'description' =>  'required | string | min:4',
       'is_active' =>  'required | numeric',
       'share_count' =>  'required | numeric | min:0',
-      'product_photo' =>  'required | mimes:jpeg,jpg,png | max:3000'
+      'product_photo' =>  'required | max:5000'
     ];
   }
 
