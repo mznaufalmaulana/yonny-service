@@ -4,10 +4,12 @@
 namespace App\Repositories;
 
 
+use App\Http\Requests\PhotoRequest;
 use App\Http\Requests\ProductRequest;
 use App\Models\CategorytoProductModel;
 use App\Models\ProductModel;
 use App\Models\ProductPhotoModel;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 
 class ProductRepository
@@ -17,10 +19,8 @@ class ProductRepository
   {
     $products = DB::table('tbl_product as tpd')
                 ->join('ms_product_type as mpt', 'tpd.product_type_id', 'mpt.id')
-                ->join('brg_product_category as bpc', 'tpd.id', 'bpc.product_id')
-                ->join('ms_category as mc', 'bpc.category_id', 'mc.id')
                 ->select(
-                  'tpd.id', 'mc.category_name', 'mpt.type_name',
+                  'tpd.id', 'mpt.type_name', 'tpd.product_name',
                   'tpd.is_active', 'tpd.share_count'
                 )->get();
     return $products;
@@ -29,27 +29,29 @@ class ProductRepository
   //Get Product
   public function getProductByIdRepo($id)
   {
-//    return ProductModel::findOrFail($id, [
-//      'id', 'product_type_id',
-//      'product_name', 'share_count', 'is_active']);
-
     $product = DB::table('tbl_product as tpd')
                 ->join('ms_product_type as mpt', 'tpd.product_type_id', 'mpt.id')
-                ->join('tbl_product_photo as tpp', 'tpd.id', 'tpp.product_id')
-                ->join('brg_product_category as bpc', 'tpd.id', 'bpc.product_id')
-                ->join('ms_category as mc', 'bpc.category_id', 'mc.id')
                 ->where('tpd.id', $id)
                 ->select(
-                  'tpd.id', 'mc.id as category_id', 'mpt.id as product_type_id',
+                  'tpd.id', 'mpt.id as product_type_id',
                   'tpd.product_name', 'tpd.description', 'tpd.is_active',
-                  'tpd.share_count', 'tpp.photo_name'
+                  'tpd.share_count'
                 )->get();
     return $product;
   }
 
+  public function getCategoryProductByProductId($id)
+  {
+    return DB::table('brg_product_category as bpc')
+            ->join('ms_category as mc', 'mc.id', 'bpc.category_id')
+            ->where('bpc.product_id', $id)
+            ->select('mc.id', 'mc.category_name')
+            ->get();
+  }
+
   public function getProductPhotoByProductIdRepo($id)
   {
-    return ProductPhotoModel::where('product_id', $id)->select(
+    return DB::table('tbl_product_photo')->where('product_id', $id)->select(
       'id', 'photo_name'
     )->get();
   }
@@ -67,9 +69,10 @@ class ProductRepository
       $product = ProductModel::create([
         'product_type_id' =>  $request->product_type_id,
         'product_name' => $request->product_name,
+        'product_slug' => \Str::slug($request->product_name,'-'),
         'description' => $request->description,
         'is_active' =>  $request->is_active,
-        'share_count' =>  $request->share_count
+        'share_count' =>  Config::get('constants_val.count_start')
       ]);
       return $product;
   }
@@ -94,12 +97,19 @@ class ProductRepository
   //Update Product
   public function updateProductRepo($id, ProductRequest $request)
   {
-    return ProductModel::where('id', $id)->update($request->validationData());
+    return ProductModel::where('id', $id)->update([
+      'product_type_id' =>  $request->product_type_id,
+      'product_name' => $request->product_name,
+      'product_slug' => \Str::slug($request->product_name,'-'),
+      'description' => $request->description,
+      'is_active' =>  $request->is_active,
+      'share_count' =>  $request->share_count
+    ]);
   }
 
-  public function updateProductPhoto($id)
+  public function updateProductPhotoRepo($id, $productPhotoName)
   {
-
+    return ProductPhotoModel::where('id', $id)->update([ 'photo_name'  =>  $productPhotoName]);
   }
 
   //Delete Product

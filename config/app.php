@@ -177,6 +177,9 @@ return [
 
         App\Providers\Admin\MasterServiceProvider::class,
         App\Providers\Admin\ProductServiceProvider::class,
+        App\Providers\Admin\ProjectServiceProvider::class,
+        App\Providers\Admin\SocialMediaServiceProvider::class,
+        App\Providers\Admin\ContactServiceProvider::class,
 
     ],
 

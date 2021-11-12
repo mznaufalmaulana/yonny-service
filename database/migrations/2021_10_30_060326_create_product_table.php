@@ -17,6 +17,7 @@ class CreateProductTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('product_type_id');
             $table->string('product_name');
+            $table->string('product_slug');
             $table->text('description');
             $table->tinyInteger('is_active');
             $table->integer('share_count');

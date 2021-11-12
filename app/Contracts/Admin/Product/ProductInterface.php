@@ -4,6 +4,7 @@
 namespace App\Contracts\Admin\Product;
 
 
+use App\Http\Requests\PhotoRequest;
 use App\Http\Requests\ProductRequest;
 
 interface ProductInterface
@@ -13,6 +14,12 @@ interface ProductInterface
   public function storeProduct(ProductRequest $request);
   public function updateProduct($id, ProductRequest $request);
   public function deleteProduct($id);
+
+  public function getListProductPhoto($productId);
+  public function storeProductPhoto($productId, PhotoRequest $request);
+  public function updateProductPhoto($id, PhotoRequest $request);
+  public function deleteProductPhoto($id);
+
   public function storeProductPhotoFile($photoFile, $photoName);
   public function deleteProductPhotoFile($photoName);
 }
