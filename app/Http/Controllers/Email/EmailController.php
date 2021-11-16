@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Email;
 use App\Contracts\Admin\Email\EmailInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BroadcastRequest;
+use App\Http\Requests\EmailMessageRequest;
 use App\Http\Requests\EmailRequest;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -108,5 +109,16 @@ class EmailController extends Controller
     }
   }
 
-//  public function
+  public function emailMessage(EmailMessageRequest $request)
+  {
+    try {
+      $request->validated();
+      $result = $this->email->emailMessage($request);
+      return $this->returnSuccess($result, 'success');
+    }
+    catch (Exception $ex)
+    {
+      return $this->returnFail($ex->getMessage(), 'fail');
+    }
+  }
 }

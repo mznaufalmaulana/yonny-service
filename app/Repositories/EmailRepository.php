@@ -3,6 +3,7 @@
 
 namespace App\Repositories;
 
+use App\Models\EmailMessageModel;
 use App\Models\EmailModel;
 
 class EmailRepository
@@ -19,7 +20,7 @@ class EmailRepository
             ->get();
   }
 
-  public function getEmailByListId($listId)
+  public function getEmailByListIdRepo($listId)
   {
     return EmailModel::whereIn('id', $listId)
           ->select('email_address')
@@ -48,8 +49,23 @@ class EmailRepository
     return EmailModel::destroy($id);
   }
 
-  public function isEmailExist($id)
+  public function storeEmailMessageRepo($email)
+  {
+    return EmailMessageModel::create([
+      'email_id' => $email->email_id,
+      'message' => $email->message
+    ]);
+  }
+
+  public function isEmailExistRepo($id)
   {
     return EmailModel::findOrFail($id);
+  }
+
+  public function isEmailAddressExistRepo($address)
+  {
+    return EmailModel::where('email_address', $address)
+      ->select('id', 'email_address')
+      ->get();
   }
 }

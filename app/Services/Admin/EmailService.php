@@ -9,6 +9,7 @@ use App\Mail\BroadcastMail;
 use App\Mail\SubscribeMail;
 use App\Repositories\EmailRepository;
 use Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Mail;
 use Symfony\Component\Mime\Header\MailboxListHeader;
@@ -70,7 +71,7 @@ class EmailService implements EmailInterface
   public function deleteEmail($id)
   {
     try {
-      $this->emailRepository->isEmailExist($id);
+      $this->emailRepository->isEmailExistRepo($id);
       $this->emailRepository->deleteEmailRepo($id);
       return true;
     }
@@ -91,7 +92,7 @@ class EmailService implements EmailInterface
       $content->link = "link";
       $content->footer = "Thanks";
 
-//      Mail::to($email->email_address)->send(new SubscribeMail($content));
+      Mail::to($email->email_address)->send(new SubscribeMail($content));
       return true;
     }
     catch (Exception $ex)
@@ -103,7 +104,7 @@ class EmailService implements EmailInterface
   public function broadcastEmail($broadcast)
   {
     try {
-      $emails = $this->emailRepository->getEmailByListId($broadcast->email_id_list);
+      $emails = $this->emailRepository->getEmailByListIdRepo($broadcast->email_id_list);
       foreach ($emails as $email)
       {
         $content = new \stdClass();
@@ -117,6 +118,33 @@ class EmailService implements EmailInterface
     }
     catch (Exception $ex)
     {
+      throw $ex;
+    }
+  }
+
+  public function emailMessage($email)
+  {
+    DB::beginTransaction();
+    try {
+      $result = $this->emailRepository->isEmailAddressExistRepo($email->email_address);
+      if($result)
+      {
+        $email->email_id = $result[0]->id;
+        $this->emailRepository->storeEmailRepo($email);
+      }
+      else
+      {
+        $email->is_subscribe = Config::get('constants_val.subscribe_false');
+        $result = $this->storeEmail($email);
+        $this->emailRepository->storeEmailRepo($email);
+      }
+
+      DB::commit();
+      return true;
+    }
+    catch (Exception $ex)
+    {
+      DB::rollBack();
       throw $ex;
     }
   }

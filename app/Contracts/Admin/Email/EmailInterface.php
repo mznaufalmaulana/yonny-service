@@ -12,4 +12,5 @@ interface EmailInterface
     public function updateEmail($id, $email);
     public function deleteEmail($id);
     public function broadcastEmail($broadcast);
+    public function emailMessage($email);
 }
