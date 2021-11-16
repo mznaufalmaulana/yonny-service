@@ -180,6 +180,9 @@ return [
         App\Providers\Admin\ProjectServiceProvider::class,
         App\Providers\Admin\SocialMediaServiceProvider::class,
         App\Providers\Admin\ContactServiceProvider::class,
+        App\Providers\Admin\EmailServiceProvider::class,
+        App\Providers\Admin\PromoServiceProvider::class,
+
 
     ],
 

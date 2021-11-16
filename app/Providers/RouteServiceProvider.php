@@ -45,6 +45,7 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapApiRoutes();
         $this->mapWebRoutes();
         $this->mapAdminRoutes();
+        $this->mapStoreRoute();
     }
 
     /**
@@ -108,10 +109,27 @@ class RouteServiceProvider extends ServiceProvider
         ->namespace($this->namespace)
         ->group(base_path('routes/admin/contact.php'));
 
-     Route::prefix('admin')
-            ->middleware('api')
-            ->namespace($this->namespace)
-            ->group(base_path('routes/admin/region.php'));
+      Route::prefix('admin')
+        ->middleware('api')
+        ->namespace($this->namespace)
+        ->group(base_path('routes/admin/region.php'));
 
+      Route::prefix('admin')
+        ->middleware('api')
+        ->namespace($this->namespace)
+        ->group(base_path('routes/admin/email.php'));
+
+      Route::prefix('admin')
+        ->middleware('api')
+        ->namespace($this->namespace)
+        ->group(base_path('routes/admin/promo.php'));
+    }
+
+    public function mapStoreRoute()
+    {
+      Route::prefix('store')
+        ->middleware('api')
+        ->namespace($this->namespace)
+        ->group(base_path('routes/store/email_subscribe.php'));
     }
 }

@@ -6,25 +6,19 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class EmailRequest extends FormRequest
+class BroadcastRequest extends FormRequest
 {
   public function rules(): array
+  {
+    if(request()->isMethod('post'))
     {
-      if(request()->isMethod('post'))
-      {
-        return [
-          'email_address' =>  'required | email',
-        ];
-      }
-      else if (request()->isMethod('put'))
-      {
-        return [
-          'email_address' =>  'required | email',
-          'is_subscribe' => 'required | numeric | between:0,1'
-        ];
-      }
-      return [];
+      return [
+        'broadcast_message' =>  'required | string',
+        'email_id_list' => 'required | array'
+      ];
     }
+    return [];
+  }
 
   public function authorize(): bool
   {

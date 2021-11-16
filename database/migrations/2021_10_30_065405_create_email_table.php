@@ -16,7 +16,7 @@ class CreateEmailTable extends Migration
         Schema::create('tbl_email', function (Blueprint $table) {
             $table->increments('id');
             $table->string('email_address')->unique();
-            $table->tinyInteger('is_subcribe');
+            $table->tinyInteger('is_subscribe');
             $table->timestamps();
         });
     }
