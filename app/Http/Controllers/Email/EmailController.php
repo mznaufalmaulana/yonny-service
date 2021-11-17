@@ -109,11 +109,36 @@ class EmailController extends Controller
     }
   }
 
-  public function emailMessage(EmailMessageRequest $request)
+  public function getEmailMessage()
+  {
+    try {
+      $result = $this->email->getEmailMessage();
+      return $this->returnSuccess($result, 'success');
+    }
+    catch (Exception $ex)
+    {
+      return $this->returnFail($ex->getMessage(), 'fail');
+    }
+  }
+
+  public function receiveEmailMessage(EmailMessageRequest $request)
   {
     try {
       $request->validated();
-      $result = $this->email->emailMessage($request);
+      $result = $this->email->receiveEmailMessage($request);
+      return $this->returnSuccess($result, 'success');
+    }
+    catch (Exception $ex)
+    {
+      return $this->returnFail($ex->getMessage(), 'fail');
+    }
+  }
+
+  public function sendEmailMessage(EmailMessageRequest $request)
+  {
+    try {
+      $request->validated();
+      $result = $this->email->sendEmailMessage($request);
       return $this->returnSuccess($result, 'success');
     }
     catch (Exception $ex)

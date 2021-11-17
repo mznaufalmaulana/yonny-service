@@ -122,7 +122,12 @@ class EmailService implements EmailInterface
     }
   }
 
-  public function emailMessage($email)
+  public function getEmailMessage()
+  {
+    // TODO: Implement getEmailMessage() method.
+  }
+
+  public function receveEmailMessage($email)
   {
     DB::beginTransaction();
     try {
@@ -147,5 +152,10 @@ class EmailService implements EmailInterface
       DB::rollBack();
       throw $ex;
     }
+  }
+
+  public function sendEmailMessage($email)
+  {
+    // TODO: Implement sendEmailMessage() method.
   }
 }
