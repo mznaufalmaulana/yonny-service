@@ -130,6 +130,6 @@ class RouteServiceProvider extends ServiceProvider
       Route::prefix('store')
         ->middleware('api')
         ->namespace($this->namespace)
-        ->group(base_path('routes/store/email_subscribe.php'));
+        ->group(base_path('routes/store/email_store.php'));
     }
 }

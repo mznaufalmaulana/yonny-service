@@ -21,7 +21,13 @@ class RegionService implements RegionInterface
 
   public function getListRegion()
   {
-    return $this->regionRepository->getListRegionRepo();
+    try {
+      return $this->regionRepository->getListRegionRepo();
+    }
+    catch (Exception $ex)
+    {
+      throw $ex;
+    }
   }
 
   public function getRegionById($id)

@@ -16,21 +16,33 @@ class ProductCategoryRepository
 
   public function getCategoryByIdRepo($id)
   {
-    return ProductCategoryModel::findOrFail($id, ['id', 'category_parent', 'category_name']);
+    return ProductCategoryModel::find($id, ['id', 'category_parent', 'category_name']);
   }
 
-  public function storeCategoryRepo(ProductCategoryRequest $request)
+  public function storeCategoryRepo($category)
   {
-    return ProductCategoryModel::create($request->validationData());
+    return ProductCategoryModel::create([
+              'category_parent' =>  $category->category_parent,
+              'category_name' => $category->category_name,
+            ]);
   }
 
-  public function updateCategoryRepo($id, ProductCategoryRequest $request)
+  public function updateCategoryRepo($id, $category)
   {
-    return ProductCategoryModel::where('id', $id)->update($request->validationData());
+    return ProductCategoryModel::where('id', $id)
+            ->update([
+              'category_parent' =>  $category->category_parent,
+              'category_name' => $category->category_name,
+            ]);
   }
 
   public function deleteCategoryRepo($id)
   {
     return ProductCategoryModel::destroy($id);
+  }
+
+  public function isCategoryExistRepo($id)
+  {
+    return ProductCategoryModel::findOrFail($id);
   }
 }

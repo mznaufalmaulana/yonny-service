@@ -109,7 +109,7 @@ class EmailController extends Controller
     }
   }
 
-  public function getEmailMessage()
+  public function getEmailMessage(): JsonResponse
   {
     try {
       $result = $this->email->getEmailMessage();
@@ -121,11 +121,11 @@ class EmailController extends Controller
     }
   }
 
-  public function receiveEmailMessage(EmailMessageRequest $request)
+  public function receiveEmailMessage(EmailMessageRequest $request): JsonResponse
   {
     try {
       $request->validated();
-      $result = $this->email->receiveEmailMessage($request);
+      $result = $this->email->receveEmailMessage($request);
       return $this->returnSuccess($result, 'success');
     }
     catch (Exception $ex)
@@ -134,11 +134,23 @@ class EmailController extends Controller
     }
   }
 
-  public function sendEmailMessage(EmailMessageRequest $request)
+  public function sendEmailMessage(EmailMessageRequest $request): JsonResponse
   {
     try {
       $request->validated();
       $result = $this->email->sendEmailMessage($request);
+      return $this->returnSuccess($result, 'success');
+    }
+    catch (Exception $ex)
+    {
+      return $this->returnFail($ex->getMessage(), 'fail');
+    }
+  }
+
+  public function deleteEmailMessage($id): JsonResponse
+  {
+    try {
+      $result = $this->email->deleteEmailMessage($id);
       return $this->returnSuccess($result, 'success');
     }
     catch (Exception $ex)

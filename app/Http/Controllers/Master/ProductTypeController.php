@@ -29,7 +29,7 @@ class ProductTypeController extends Controller
     }
     catch (Exception $ex)
     {
-      return $this->returnFail("", $ex->getMessage()) ;
+      return $this->returnFail($ex->getMessage(), 'fail') ;
     }
   }
 
@@ -41,7 +41,7 @@ class ProductTypeController extends Controller
     }
     catch (Exception $ex)
     {
-      return $this->returnFail("", $ex->getMessage()) ;
+      return $this->returnFail($ex->getMessage(), 'fail') ;
     }
   }
 
@@ -54,7 +54,7 @@ class ProductTypeController extends Controller
     }
     catch (Exception $ex)
     {
-      return $this->returnFail("", $ex->getMessage()) ;
+      return $this->returnFail($ex->getMessage(), 'fail') ;
     }
   }
 
@@ -67,7 +67,7 @@ class ProductTypeController extends Controller
     }
     catch (Exception $ex)
     {
-      return $this->returnFail("", $ex->getMessage()) ;
+      return $this->returnFail($ex->getMessage(), 'fail') ;
     }
   }
 
@@ -79,7 +79,7 @@ class ProductTypeController extends Controller
     }
     catch (Exception $ex)
     {
-      return $this->returnFail("", $ex->getMessage()) ;
+      return $this->returnFail($ex->getMessage(), 'fail') ;
     }
   }
 }

@@ -15,4 +15,5 @@ interface EmailInterface
     public function getEmailMessage();
     public function receveEmailMessage($email);
     public function sendEmailMessage($email);
+    public function deleteEmailMessage($id);
 }

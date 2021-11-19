@@ -16,21 +16,31 @@ class ProductTypeRepository
 
   public function getProductTypeByIdRepo($id)
   {
-    return ProductTypeModel::findOrFail($id, ['id', 'type_name']);
+    return ProductTypeModel::find($id, ['id', 'type_name']);
   }
 
-  public function storeProductTypeRepo(ProductTypeRequest $request)
+  public function storeProductTypeRepo($type)
   {
-    return ProductTypeModel::create($request->validationData());
+    return ProductTypeModel::create([
+              'type_name' => $type->type_name
+            ]);
   }
 
-  public function updateProductTypeRepo($id, ProductTypeRequest $request)
+  public function updateProductTypeRepo($id, $type)
   {
-    return ProductTypeModel::where('id', $id)->update($request->validationData());
+    return ProductTypeModel::where('id', $id)
+            ->update([
+              'type_name' => $type->type_name
+            ]);
   }
 
   public function deleteProductTypeRepo($id)
   {
     return ProductTypeModel::destroy($id);
+  }
+
+  public function isTypeExist($id)
+  {
+    return ProductTypeModel::findOrFail($id);
   }
 }

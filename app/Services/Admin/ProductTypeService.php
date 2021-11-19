@@ -7,6 +7,7 @@ namespace App\Services\Admin;
 use App\Contracts\Admin\Master\ProductTypeInterface;
 use App\Http\Requests\ProductTypeRequest;
 use App\Repositories\ProductTypeRepository;
+use Exception;
 
 class ProductTypeService implements ProductTypeInterface
 {
@@ -23,32 +24,64 @@ class ProductTypeService implements ProductTypeInterface
 
   public function getListProductType()
   {
-    $priductType = $this->productTypeRepository->getListProductTypeRepo();
-    return $priductType;
+    try {
+      $priductType = $this->productTypeRepository->getListProductTypeRepo();
+      return $priductType;
+    }
+    catch (Exception $ex)
+    {
+      throw $ex;
+    }
   }
 
   public function getProductTypeById($id)
   {
-    $priductType = $this->productTypeRepository->getProductTypeByIdRepo($id);
-    return $priductType;
+    try {
+      $this->productTypeRepository->isTypeExist($id);
+      return $this->productTypeRepository->getProductTypeByIdRepo($id);
+    }
+    catch (Exception $ex)
+    {
+      throw $ex;
+    }
   }
 
-  public function storeProductType(ProductTypeRequest $request)
+  public function storeProductType($request)
   {
-    $result = $this->productTypeRepository->storeProductTypeRepo($request);
-    return $result;
+    try {
+      $this->productTypeRepository->storeProductTypeRepo($request);
+      return true;
+    }
+    catch (Exception $ex)
+    {
+      throw $ex;
+    }
   }
 
-  public function updateProductType($id, ProductTypeRequest $request)
+  public function updateProductType($id, $request)
   {
-    $result = $this->productTypeRepository->updateProductTypeRepo($id, $request);
-    return $result;
+    try {
+      $this->productTypeRepository->isTypeExist($id);
+      $this->productTypeRepository->updateProductTypeRepo($id, $request);
+      return true;
+    }
+    catch (Exception $ex)
+    {
+      throw $ex;
+    }
   }
 
   public function deleteProductType($id)
   {
-    $result = $this->productTypeRepository->deleteProductTypeRepo($id);
-    return $result;
+    try {
+      $this->productTypeRepository->isTypeExist($id);
+      $this->productTypeRepository->deleteProductTypeRepo($id);
+      return true;
+    }
+    catch (Exception $ex)
+    {
+      throw $ex;
+    }
   }
 
 }

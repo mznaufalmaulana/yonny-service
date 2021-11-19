@@ -14,7 +14,7 @@ class EmailMessageRequest extends FormRequest
     {
       return [
         'email_address' =>  'required | email',
-        'message' =>  'required |string'
+        'message' =>  'required | string'
       ];
     }
     return [];
@@ -22,7 +22,7 @@ class EmailMessageRequest extends FormRequest
 
   public function authorize(): bool
   {
-    return false;
+    return true;
   }
 
   protected function failedValidation(Validator $validator)

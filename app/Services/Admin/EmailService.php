@@ -6,6 +6,7 @@ namespace App\Services\Admin;
 
 use App\Contracts\Admin\Email\EmailInterface;
 use App\Mail\BroadcastMail;
+use App\Mail\SendMail;
 use App\Mail\SubscribeMail;
 use App\Repositories\EmailRepository;
 use Exception;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Mail;
 use Symfony\Component\Mime\Header\MailboxListHeader;
+use function PHPUnit\Framework\isEmpty;
 
 class EmailService implements EmailInterface
 {
@@ -33,7 +35,7 @@ class EmailService implements EmailInterface
   public function getEmailById($id)
   {
     try {
-      $this->emailRepository->isEmailExist($id);
+      $this->emailRepository->isEmailExistRepo($id);
       return $this->emailRepository->getEmailByIdRepo($id);
     }
     catch (Exception $ex)
@@ -58,7 +60,7 @@ class EmailService implements EmailInterface
   public function updateEmail($id, $email)
   {
     try {
-      $this->emailRepository->isEmailExist($id);
+      $this->emailRepository->isEmailExistRepo($id);
       $this->emailRepository->updateEmailRepo($id, $email);
       return true;
     }
@@ -124,7 +126,13 @@ class EmailService implements EmailInterface
 
   public function getEmailMessage()
   {
-    // TODO: Implement getEmailMessage() method.
+    try {
+      return $this->emailRepository->getEmailMessage();
+    }
+    catch (Exception $ex)
+    {
+      throw $ex;
+    }
   }
 
   public function receveEmailMessage($email)
@@ -132,7 +140,7 @@ class EmailService implements EmailInterface
     DB::beginTransaction();
     try {
       $result = $this->emailRepository->isEmailAddressExistRepo($email->email_address);
-      if($result)
+      if(count($result) != 0)
       {
         $email->email_id = $result[0]->id;
         $this->emailRepository->storeEmailRepo($email);
@@ -140,8 +148,9 @@ class EmailService implements EmailInterface
       else
       {
         $email->is_subscribe = Config::get('constants_val.subscribe_false');
-        $result = $this->storeEmail($email);
-        $this->emailRepository->storeEmailRepo($email);
+        $emailResult = $this->emailRepository->storeEmailRepo($email);
+        $email->email_id = $emailResult->id;
+        $this->emailRepository->storeEmailMessageRepo($email);
       }
 
       DB::commit();
@@ -156,6 +165,44 @@ class EmailService implements EmailInterface
 
   public function sendEmailMessage($email)
   {
-    // TODO: Implement sendEmailMessage() method.
+    DB::beginTransaction();
+    try {
+      $result = $this->emailRepository->isEmailAddressExistRepo($email->email_address);
+      if(count($result) != 0) {
+
+        $content = new \stdClass();
+        $content->title = "Hello From Batu Yonny";
+        $content->body = "You are will be recieve news update from us";
+        $content->link = "link";
+        $content->footer = "Thanks";
+
+        Mail::to($email->email_address)->send(new SendMail($content));
+        DB::commit();
+        return true;
+      }
+      else
+      {
+        throw new Exception('email not found');
+      }
+    }
+    catch (Exception $ex)
+    {
+      DB::rollBack();
+      throw $ex;
+    }
   }
+
+  public function deleteEmailMessage($id)
+  {
+    try {
+      $this->emailRepository->isEmailMessageExistRepo($id);
+      $this->emailRepository->deleteEmailMessageRepo($id);
+      return true;
+    }
+    catch (Exception $ex)
+    {
+      throw $ex;
+    }
+  }
+
 }

@@ -6,6 +6,7 @@ namespace App\Services\Admin;
 
 use App\Contracts\Admin\Master\ProductCategoryInterface;
 use App\Http\Requests\ProductCategoryRequest;
+use App\Models\CategorytoProductModel;
 use App\Repositories\ProductCategoryRepository;
 use Exception;
 
@@ -24,31 +25,63 @@ class ProductCategoryService implements ProductCategoryInterface
 
   public function getListCategory()
   {
-    $category = $this->categoryRepository->getListCategoryRepo();
-    return $category;
+    try {
+      $category = $this->categoryRepository->getListCategoryRepo();
+      return $category;
+    }
+    catch (Exception $ex)
+    {
+      throw $ex;
+    }
   }
 
   public function getCategoryById($id)
   {
-    $category = $this->categoryRepository->getCategoryByIdRepo($id);
-    return $category;
+    try {
+      $category = $this->categoryRepository->getCategoryByIdRepo($id);
+      return $category;
+    }
+    catch (Exception $ex)
+    {
+      throw $ex;
+    }
+
   }
 
-  public function storeCategory(ProductCategoryRequest $request)
+  public function storeCategory($category)
   {
-    $result = $this->categoryRepository->storeCategoryRepo($request);
-    return $result;
+    try {
+      $this->categoryRepository->storeCategoryRepo($category);
+      return true;
+    }
+    catch (Exception $ex)
+    {
+      throw $ex;
+    }
   }
 
-  public function updateCategory($id, ProductCategoryRequest $request)
+  public function updateCategory($id, $category)
   {
-    $result = $this->categoryRepository->updateCategoryRepo($id, $request);
-    return $result;
+    try {
+      $this->categoryRepository->isCategoryExistRepo($id);
+      $this->categoryRepository->updateCategoryRepo($id, $category);
+      return true;
+    }
+    catch (Exception $ex)
+    {
+      throw $ex;
+    }
   }
 
   public function deleteCategory($id)
   {
-    $result = $this->categoryRepository->deleteCategoryRepo($id);
-    return $result;
+    try {
+      $this->categoryRepository->deleteCategoryRepo($id);
+      return true;
+    }
+    catch (Exception $ex)
+    {
+      throw $ex;
+    }
   }
 }

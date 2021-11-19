@@ -5,6 +5,7 @@ namespace App\Repositories;
 
 use App\Models\EmailMessageModel;
 use App\Models\EmailModel;
+use Illuminate\Support\Facades\DB;
 
 class EmailRepository
 {
@@ -25,6 +26,14 @@ class EmailRepository
     return EmailModel::whereIn('id', $listId)
           ->select('email_address')
           ->get();
+  }
+
+  public function getEmailMessage()
+  {
+    return DB::table('tbl_email as e')
+            ->join('tbl_email_message as em', 'e.id', 'em.email_id')
+            ->select('em.id', 'e.email_address', 'em.message')
+            ->get();
   }
 
   public function storeEmailRepo($email)
@@ -57,6 +66,11 @@ class EmailRepository
     ]);
   }
 
+  public function deleteEmailMessageRepo($id)
+  {
+    return EmailMessageModel::destroy($id);
+  }
+
   public function isEmailExistRepo($id)
   {
     return EmailModel::findOrFail($id);
@@ -67,5 +81,10 @@ class EmailRepository
     return EmailModel::where('email_address', $address)
       ->select('id', 'email_address')
       ->get();
+  }
+
+  public function isEmailMessageExistRepo($id)
+  {
+    return EmailMessageModel::findOrFail($id);
   }
 }
