@@ -4,12 +4,13 @@
 namespace App\Services\Admin;
 
 
-use App\Contracts\Admin\Authentication\authenticationInterface;
+
+use App\Contracts\Admin\Authentication\AuthenticationInterface;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 
-class AuthenticationService implements authenticationInterface
+class AuthenticationService implements AuthenticationInterface
 {
   private $userRepository;
   public function __construct(UserRepository $userRepository)
