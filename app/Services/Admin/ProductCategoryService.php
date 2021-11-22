@@ -23,6 +23,18 @@ class ProductCategoryService implements ProductCategoryInterface
     $this->categoryRepository = $categoryRepository;
   }
 
+  public function getListCategoryParent()
+  {
+    try {
+      $category = $this->categoryRepository->getListCategoryParentRepo();
+      return $category;
+    }
+    catch (Exception $ex)
+    {
+      throw $ex;
+    }
+  }
+
   public function getListCategory()
   {
     try {

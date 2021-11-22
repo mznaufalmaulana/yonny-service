@@ -4,7 +4,7 @@
 namespace App\Services\Admin;
 
 
-use App\Contracts\Admin\Region\RegionInterface;
+use App\Contracts\Admin\Master\RegionInterface;
 use App\Repositories\RegionRepository;
 use Exception;
 

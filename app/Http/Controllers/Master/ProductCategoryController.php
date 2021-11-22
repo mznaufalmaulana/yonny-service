@@ -20,6 +20,18 @@ class ProductCategoryController extends Controller
     $this->category = $category;
   }
 
+  public function getListCategoryParent()
+  {
+    try {
+      $categories = $this->category->getListCategoryParent();
+      return $this->returnSuccess($categories, "success");
+    }
+    catch (Exception $ex)
+    {
+      return $this->returnFail($ex->getMessage(), 'fail') ;
+    }
+  }
+
   public function getListCategory(): JsonResponse
   {
     try {

@@ -9,6 +9,12 @@ use App\Models\ProductCategoryModel;
 
 class ProductCategoryRepository
 {
+
+  public function getListCategoryParentRepo()
+  {
+    return ProductCategoryModel::where('category_parent', 0)->select('id', 'category_parent', 'category_name')->get();
+  }
+
   public function getListCategoryRepo()
   {
     return ProductCategoryModel::select('id', 'category_parent', 'category_name')->get();

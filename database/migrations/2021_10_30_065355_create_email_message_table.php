@@ -14,10 +14,11 @@ class CreateEmailMessageTable extends Migration
     public function up()
     {
         Schema::create('tbl_email_message', function (Blueprint $table) {
-            $table->increments('id');
+          $table->increments('id');
+          $table->string('name');
           $table->unsignedInteger('email_id');
-            $table->text('message');
-            $table->timestamps();
+          $table->text('message');
+          $table->timestamps();
         });
     }
 

@@ -1,7 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('region')->middleware('api')->group(function () {
+Route::prefix('region')->middleware('auth:sanctum')->group(function () {
 
   Route::get('list', 'Region\RegionController@getListRegion');
   Route::get('{id}', 'Region\RegionController@getRegionById');

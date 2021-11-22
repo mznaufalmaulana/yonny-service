@@ -20,6 +20,7 @@ class CreateProductTable extends Migration
             $table->string('product_slug');
             $table->text('description');
             $table->tinyInteger('is_active');
+            $table->integer('seen_count');
             $table->integer('share_count');
             $table->timestamps();
         });

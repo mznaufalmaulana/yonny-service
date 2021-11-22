@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Contracts\Admin\Region;
+namespace App\Contracts\Admin\Master;
 
 
 interface RegionInterface

@@ -18,6 +18,7 @@ class CreateProjectTable extends Migration
             $table->string('project_name');
             $table->string('project_slug');
             $table->text('description');
+            $table->integer('seen_count');
             $table->integer('share_count');
             $table->timestamps();
         });

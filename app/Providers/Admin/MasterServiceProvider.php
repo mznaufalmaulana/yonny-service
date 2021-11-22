@@ -5,7 +5,7 @@ namespace App\Providers\Admin;
 use App\Contracts\Admin\Master\ProductCategoryInterface;
 use App\Contracts\Admin\Master\ProductTypeInterface;
 use App\Contracts\Admin\Product\ProductInterface;
-use App\Contracts\Admin\Region\RegionInterface;
+use App\Contracts\Admin\Master\RegionInterface;
 use App\Services\Admin\ProductCategoryService;
 use App\Services\Admin\ProductService;
 use App\Services\Admin\ProductTypeService;
