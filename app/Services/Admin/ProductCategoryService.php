@@ -47,6 +47,22 @@ class ProductCategoryService implements ProductCategoryInterface
     }
   }
 
+  public function getListMenuProductCategory($parentId = 0)
+  {
+    $categories = $this->categoryRepository->getListCategoryParentRepo($parentId);
+    $menu = array();
+    foreach ($categories as $category)
+    {
+      if($result = $this->getListMenuProductCategory($category->id))
+      {
+        $category->child = $result;
+      }
+      array_push($menu, $category);
+    }
+
+    return $menu;
+  }
+
   public function getCategoryById($id)
   {
     try {

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Region;
 
-use App\Contracts\Admin\Region\RegionInterface;
+use App\Contracts\Admin\Master\RegionInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegionRequest;
 use Exception;

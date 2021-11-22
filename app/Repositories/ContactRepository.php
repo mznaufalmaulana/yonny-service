@@ -25,6 +25,13 @@ class ContactRepository
             ->get();
   }
 
+  public function getContactByRegionId($regionId)
+  {
+    return ContactModel::where('region_id',$regionId)
+      ->select('address','phone', 'email')
+      ->get();
+  }
+
   public function storeContactRepo($contact)
   {
     return ContactModel::create([

@@ -6,17 +6,21 @@ namespace App\Services\Admin;
 
 use App\Contracts\Admin\Contact\ContactInterface;
 use App\Repositories\ContactRepository;
+use App\Repositories\RegionRepository;
 use Exception;
 
 class ContactService implements ContactInterface
 {
   private $contactRepository;
+  private $regionRepository;
   public function __construct
   (
-    ContactRepository $contactRepository
+    ContactRepository $contactRepository,
+    RegionRepository $regionRepository
   )
   {
     $this->contactRepository = $contactRepository;
+    $this->regionRepository = $regionRepository;
   }
 
   public function getListContact()
@@ -34,6 +38,19 @@ class ContactService implements ContactInterface
     {
       throw $ex;
     }
+  }
+
+  public function getContactArea()
+  {
+    $regions = $this->regionRepository->getListRegionRepo();
+    $regionContact = array();
+    foreach ($regions as $region)
+    {
+      $contacts = $this->contactRepository->getContactByRegionId($region->id);
+      $region->contact = $contacts;
+      array_push($regionContact, $region);
+    }
+    return $regionContact;
   }
 
   public function storeContact($contact)

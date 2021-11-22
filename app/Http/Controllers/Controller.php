@@ -15,6 +15,7 @@ class Controller extends BaseController
     public function returnSuccess($data="", $message = "") : JsonResponse
     {
       return response()->json([
+        'status' => 200,
         'message'  => $message,
         'data'  => $data
       ], 200);
@@ -23,6 +24,7 @@ class Controller extends BaseController
   public function returnFail($data="", $message = "") : JsonResponse
   {
     return response()->json([
+      'status' => 500,
       'message'  => $message,
       'data'  => $data
     ], 500);

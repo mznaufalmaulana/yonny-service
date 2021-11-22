@@ -20,8 +20,9 @@ class AuthenticationService implements AuthenticationInterface
 
   public function doRegis($user)
   {
-    return $this->userRepository->storeUserRepo($user);
-;  }
+    $this->userRepository->storeUserRepo($user);
+    return true;
+  }
 
   public function doAuth($user)
   {

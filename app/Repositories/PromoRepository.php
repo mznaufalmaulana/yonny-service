@@ -10,7 +10,7 @@ class PromoRepository
 {
   public function getListPromoRepo()
   {
-    return PromoModel::select('photo_name', 'link', 'order', 'is_headline')
+    return PromoModel::select('id','photo_name', 'link', 'order', 'is_headline')
             ->where('is_headline', 0)
             ->orderBy('order', 'ASC')
             ->get();
@@ -18,7 +18,7 @@ class PromoRepository
 
   public function getListPromoHeadlineRepo()
   {
-    return PromoModel::select('photo_name', 'link', 'order', 'is_headline')
+    return PromoModel::select('id','photo_name', 'link', 'order', 'is_headline')
       ->where('is_headline', 1)
       ->orderBy('order', 'ASC')
       ->get();

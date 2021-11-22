@@ -43,6 +43,18 @@ class ContactController extends Controller
       }
     }
 
+    public function getContactArea()
+    {
+      try {
+        $cantacts = $this->contact->getContactArea();
+        return $this->returnSuccess($cantacts, 'success');
+      }
+      catch (Exception $ex)
+      {
+        return $this->returnFail($ex->getMessage(), 'fail');
+      }
+    }
+
     public function storeContact(ContactRequest $request): JsonResponse
     {
       try {

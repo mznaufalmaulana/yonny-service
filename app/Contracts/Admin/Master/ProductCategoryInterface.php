@@ -7,6 +7,7 @@ interface ProductCategoryInterface
 {
   public function getListCategoryParent();
   public function getListCategory();
+  public function getListMenuProductCategory($parentId);
   public function getCategoryById($id);
   public function storeCategory($category);
   public function updateCategory($id, $category);

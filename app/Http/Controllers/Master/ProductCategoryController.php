@@ -56,6 +56,18 @@ class ProductCategoryController extends Controller
     }
   }
 
+  public function getMenuProductCategory(): JsonResponse
+  {
+    try {
+      $result = $this->category->getListMenuProductCategory();
+      return $this->returnSuccess($result, "success");
+    }
+    catch (Exception $ex)
+    {
+      return $this->returnFail("", $ex->getMessage()) ;
+    }
+  }
+
   public function storeCategory(ProductCategoryRequest $request): JsonResponse
   {
     try {
