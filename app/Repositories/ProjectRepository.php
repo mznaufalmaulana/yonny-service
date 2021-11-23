@@ -15,28 +15,29 @@ class ProjectRepository
   //  List project
   public function getListProjectRepo()
   {
-    return ProjectModel::select('id', 'project_name', 'share_count')->get();
+    return ProjectModel::select('id', 'project_name', 'created_at as project_due', 'seen_count', 'share_count')->get();
   }
 
   // Get project
   public function getProjectByIdRepo($id)
   {
     return ProjectModel::where('id', $id)
-            ->select('id','project_name', 'description', 'share_count')
+            ->select('id','project_name', 'description',
+                      'created_at as project_due','seen_count', 'share_count')
             ->get();
   }
 
   public function getProjectPhotoByProjectIdRepo($id)
   {
     return ProjectPhotoModel::where('project_id', $id)
-            ->select('id', 'photo_name')
+            ->select('id', 'photo_name as photo_path')
             ->get();
   }
 
   public function getProjectPhotoByIdRepo($photoId)
   {
     return ProjectPhotoModel::where('id', $photoId)
-            ->select('id', 'photo_name')
+            ->select('id', 'photo_name as photo_path')
             ->get();
   }
 
@@ -47,6 +48,7 @@ class ProjectRepository
       'project_name' => $project->project_name,
       'project_slug' => \Str::slug($project->project_name, '-'),
       'description' => $project->description,
+      'seen_count' => Config::get('constants_val.count_start'),
       'share_count' => Config::get('constants_val.count_start')
     ]);
   }
@@ -66,6 +68,7 @@ class ProjectRepository
       'project_name' => $project->project_name,
       'project_slug' => \Str::slug($project->project_name, '-'),
       'description' =>  $project->description,
+      'seen_count' =>  $project->seen_count,
       'share_count' =>  $project->share_count
     ]);
   }

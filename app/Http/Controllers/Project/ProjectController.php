@@ -56,6 +56,18 @@ class ProjectController extends Controller
     }
   }
 
+  public function incrementShareProject($id)
+  {
+    try {
+      $product = $this->project->incrementShareProject($id);
+      return $this->returnSuccess($product, "success");
+    }
+    catch (Exception $ex)
+    {
+      return $this->returnFail("", $ex->getMessage()) ;
+    }
+  }
+
   public function updateProject($id, ProjectRequest $request)
   {
     try {

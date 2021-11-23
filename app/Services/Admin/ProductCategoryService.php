@@ -8,31 +8,43 @@ use App\Contracts\Admin\Master\ProductCategoryInterface;
 use App\Http\Requests\ProductCategoryRequest;
 use App\Models\CategorytoProductModel;
 use App\Repositories\ProductCategoryRepository;
+use App\Repositories\ProductRepository;
 use Exception;
 
 class ProductCategoryService implements ProductCategoryInterface
 {
 
   private $categoryRepository;
-
+  private $productRepository;
   public function __construct
   (
-    ProductCategoryRepository $categoryRepository
+    ProductCategoryRepository $categoryRepository,
+    ProductRepository $productRepository
   )
   {
     $this->categoryRepository = $categoryRepository;
+    $this->productRepository = $productRepository;
   }
 
-  public function getListCategoryParent()
+  public function getListCategoryParent($parentId = 0)
   {
-    try {
-      $category = $this->categoryRepository->getListCategoryParentRepo();
-      return $category;
-    }
-    catch (Exception $ex)
+    $categories = $this->categoryRepository->getListCategoryParentRepo($parentId);
+    $menu = array();
+    foreach ($categories as $category)
     {
-      throw $ex;
+      $childs = $this->categoryRepository->getListCategoryParentRepo($category->id);
+      $total = 0;
+      foreach ($childs as $child)
+      {
+        $temp = $this->productRepository->getProductByCategoryId($child->id);
+        $total += count($temp);
+      }
+      $result = $this->productRepository->getProductByCategoryId($category->id);
+      $category->tatal_product = $total+count($result);
+      array_push($menu, $category);
     }
+
+    return $menu;
   }
 
   public function getListCategory()

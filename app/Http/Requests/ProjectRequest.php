@@ -23,7 +23,8 @@ class ProjectRequest extends FormRequest
       return [
         'project_name'  =>  'required | string',
         'description' =>  'required | string',
-        'share_count' =>  'numeric | min:0',
+        'seen_count' =>  'sometimes | required | numeric | min:0',
+        'share_count' =>  'sometimes | required | numeric | min:0',
       ];
     }
     return [];

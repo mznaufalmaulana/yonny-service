@@ -34,6 +34,18 @@ class ProductController extends Controller
     }
   }
 
+  public function getListLatestProduct(): JsonResponse
+  {
+    try {
+      $products = $this->product->getListLatestProduct();
+      return $this->returnSuccess($products, "success");
+    }
+    catch (Exception $ex)
+    {
+      return $this->returnFail("", $ex->getMessage()) ;
+    }
+  }
+
   public function getProductById($id): JsonResponse
   {
     try {
@@ -52,6 +64,18 @@ class ProductController extends Controller
       $request->validated();
       $result = $this->product->storeProduct($request);
       return $this->returnSuccess($result, "success");
+    }
+    catch (Exception $ex)
+    {
+      return $this->returnFail("", $ex->getMessage()) ;
+    }
+  }
+
+  public function incrementShareProduct($id): JsonResponse
+  {
+    try {
+      $product = $this->product->incrementShareProduct($id);
+      return $this->returnSuccess($product, "success");
     }
     catch (Exception $ex)
     {

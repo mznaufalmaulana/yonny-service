@@ -66,6 +66,14 @@ class ProjectService implements ProjectInterface
     }
   }
 
+  public function incrementShareProject($id)
+  {
+    $project = $this->projectRepository->isProjectExist($id);
+    $project->share_count +=1;
+    $this->projectRepository->updateProjectRepo($id, $project);
+    return true;
+  }
+
   public function updateProject($id, $request)
   {
     try {

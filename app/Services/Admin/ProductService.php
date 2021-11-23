@@ -6,6 +6,7 @@ namespace App\Services\Admin;
 use App\Contracts\Admin\Product\ProductInterface;
 use App\Http\Requests\PhotoRequest;
 use App\Http\Requests\ProductRequest;
+use App\Repositories\ProductCategoryRepository;
 use App\Repositories\ProductRepository;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -14,13 +15,16 @@ class ProductService implements ProductInterface
 {
 
   private $productRepository;
+  private $productCategoryRepository;
 
   public function __construct
   (
-    ProductRepository $productRepository
+    ProductRepository $productRepository,
+    ProductCategoryRepository $productCategoryRepository
   )
   {
     $this->productRepository = $productRepository;
+    $this->productCategoryRepository = $productCategoryRepository;
   }
 
   public function getListProduct()
@@ -29,7 +33,7 @@ class ProductService implements ProductInterface
       $products = $this->productRepository->getListProductRepo();
       foreach ($products as $product)
       {
-        $categories = $this->productRepository->getCategoryProductByProductId($product->id);
+        $categories = $this->productCategoryRepository->getCategoryProductByProductId($product->id);
         $product->product_category_id = $categories;
       }
       return $products;
@@ -46,10 +50,21 @@ class ProductService implements ProductInterface
       $this->productRepository->isProductExist($id);
       $product = $this->productRepository->getProductByIdRepo($id);
       $photos = $this->productRepository->getProductPhotoByProductIdRepo($id);
-      $categories = $this->productRepository->getCategoryProductByProductId($id);
+      $categories = $this->productCategoryRepository->getCategoryProductByProductId($id);
       $product[0]->product_category_id = $categories;
       $product[0]->photo = $photos;
       return $product;
+    }
+    catch (\Exception $ex)
+    {
+      throw $ex;
+    }
+  }
+
+  public function getListLatestProduct()
+  {
+    try {
+      return $this->productRepository->getListLatestProductRepo();
     }
     catch (\Exception $ex)
     {
@@ -86,7 +101,15 @@ class ProductService implements ProductInterface
     }
   }
 
-  public function updateProduct($id, ProductRequest $request)
+  public function incrementShareProduct($id)
+  {
+    $product = $this->productRepository->isProductExist($id);
+    $product->share_count +=1;
+    $this->productRepository->updateProductRepo($id, $product);
+    return true;
+  }
+
+  public function updateProduct($id, $request)
   {
     DB::beginTransaction();
     try {

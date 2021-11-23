@@ -10,6 +10,6 @@ class ProjectModel extends Model
     protected $primaryKey = 'id';
     protected $fillable = [
       'project_name', 'project_slug', 'description',
-      'share_count',
+      'seen_count', 'share_count', 'created_at'
     ];
 }

@@ -29,6 +29,7 @@ class ProductRequest extends FormRequest
         'product_name'  =>  'sometimes | required | min:4',
         'description' =>  'sometimes | required | string | min:4',
         'is_active' =>  'sometimes | required | numeric',
+        'seen_count' =>  'sometimes | required | numeric | min:0',
         'share_count' =>  'sometimes | required | numeric | min:0',
       ];
     }

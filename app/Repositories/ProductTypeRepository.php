@@ -6,12 +6,18 @@ namespace App\Repositories;
 
 use App\Http\Requests\ProductTypeRequest;
 use App\Models\ProductTypeModel;
+use Illuminate\Support\Facades\DB;
 
 class ProductTypeRepository
 {
   public function getListProductTypeRepo()
   {
-    return ProductTypeModel::select('id', 'type_name')->get();
+    return DB::table('ms_product_type as mpt')
+            ->leftJoin('tbl_product as tp', 'mpt.id', '=', 'tp.product_type_id')
+            ->select('mpt.type_name',
+              DB::raw("(select count(*) from tbl_product tpi where mpt.id = tpi.product_type_id) as total_product")
+            )->distinct()
+            ->get();
   }
 
   public function getProductTypeByIdRepo($id)

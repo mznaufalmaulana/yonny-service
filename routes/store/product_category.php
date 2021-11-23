@@ -7,6 +7,10 @@ Route::prefix('menu')->group(function () {
   Route::get('product-category', [ProductCategoryController::class, 'getMenuProductCategory']);
 });
 
+Route::prefix('product-category')->group(function () {
+  Route::get('list-parent', [ProductCategoryController::class, 'getListCategoryParent']);
+});
+
 Route::fallback(function () {
   return response()->json([
     'message' => 'not found'

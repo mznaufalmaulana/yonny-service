@@ -6,6 +6,7 @@ namespace App\Repositories;
 
 use App\Http\Requests\ProductCategoryRequest;
 use App\Models\ProductCategoryModel;
+use Illuminate\Support\Facades\DB;
 
 class ProductCategoryRepository
 {
@@ -23,6 +24,15 @@ class ProductCategoryRepository
   public function getCategoryByIdRepo($id)
   {
     return ProductCategoryModel::find($id, ['id', 'category_parent', 'category_name']);
+  }
+
+  public function getCategoryProductByProductId($id)
+  {
+    return DB::table('brg_product_category as bpc')
+      ->join('ms_category as mc', 'mc.id', 'bpc.category_id')
+      ->where('bpc.product_id', $id)
+      ->select('mc.id', 'mc.category_name')
+      ->get();
   }
 
   public function storeCategoryRepo($category)

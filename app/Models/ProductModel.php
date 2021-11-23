@@ -10,6 +10,7 @@ class ProductModel extends Model
     protected $primaryKey = 'id';
     protected $fillable =[
       'product_type_id', 'product_name', 'product_slug',
-      'description', 'is_active', 'share_count',
+      'description', 'is_active', 'seen_count',
+      'share_count',
     ];
 }

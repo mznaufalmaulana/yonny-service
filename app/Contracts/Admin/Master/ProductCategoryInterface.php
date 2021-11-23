@@ -5,7 +5,7 @@ namespace App\Contracts\Admin\Master;
 
 interface ProductCategoryInterface
 {
-  public function getListCategoryParent();
+  public function getListCategoryParent($parentId);
   public function getListCategory();
   public function getListMenuProductCategory($parentId);
   public function getCategoryById($id);

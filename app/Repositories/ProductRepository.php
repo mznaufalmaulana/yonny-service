@@ -21,9 +21,21 @@ class ProductRepository
                 ->join('ms_product_type as mpt', 'tpd.product_type_id', 'mpt.id')
                 ->select(
                   'tpd.id', 'mpt.type_name', 'tpd.product_name',
-                  'tpd.is_active', 'tpd.share_count'
+                  'tpd.product_slug', 'tpd.is_active', 'tpd.seen_count',
+                  'tpd.share_count'
                 )->get();
     return $products;
+  }
+
+  public function getListLatestProductRepo()
+  {
+    return DB::table('tbl_product as tpd')
+      ->select('tpd.id', 'tpd.product_name',
+        DB::raw('(select tpp.photo_name from tbl_product_photo tpp where tpd.id = tpp.product_id limit 1) as photo_name')
+      )
+      ->orderBy('tpd.id','DESC')
+      ->limit(Config::get('constants_val.latest_product_limit'))
+      ->get();
   }
 
   //Get Product
@@ -33,20 +45,20 @@ class ProductRepository
                 ->join('ms_product_type as mpt', 'tpd.product_type_id', 'mpt.id')
                 ->where('tpd.id', $id)
                 ->select(
-                  'tpd.id', 'mpt.id as product_type_id',
-                  'tpd.product_name', 'tpd.description', 'tpd.is_active',
-                  'tpd.share_count'
+                  'tpd.id', 'mpt.id as product_type_id', 'mpt.type_name', 'tpd.product_name',
+                  'tpd.product_slug', 'tpd.description', 'tpd.is_active',
+                  'tpd.seen_count', 'tpd.share_count'
                 )->get();
     return $product;
   }
 
-  public function getCategoryProductByProductId($id)
+  public function getProductByCategoryId($id)
   {
     return DB::table('brg_product_category as bpc')
-            ->join('ms_category as mc', 'mc.id', 'bpc.category_id')
-            ->where('bpc.product_id', $id)
-            ->select('mc.id', 'mc.category_name')
-            ->get();
+      ->join('tbl_product as tp', 'bpc.product_id', '=', 'tp.id')
+      ->where('bpc.category_id', $id)
+      ->select('tp.*')
+      ->get();
   }
 
   public function getProductPhotoByProductIdRepo($id)
@@ -72,6 +84,7 @@ class ProductRepository
         'product_slug' => \Str::slug($request->product_name,'-'),
         'description' => $request->description,
         'is_active' =>  $request->is_active,
+        'seen_count' =>  Config::get('constants_val.count_start'),
         'share_count' =>  Config::get('constants_val.count_start')
       ]);
       return $product;
@@ -95,7 +108,7 @@ class ProductRepository
   }
 
   //Update Product
-  public function updateProductRepo($id, ProductRequest $request)
+  public function updateProductRepo($id, $request)
   {
     return ProductModel::where('id', $id)->update([
       'product_type_id' =>  $request->product_type_id,
@@ -103,6 +116,7 @@ class ProductRepository
       'product_slug' => \Str::slug($request->product_name,'-'),
       'description' => $request->description,
       'is_active' =>  $request->is_active,
+      'seen_count' =>  $request->seen_count,
       'share_count' =>  $request->share_count
     ]);
   }

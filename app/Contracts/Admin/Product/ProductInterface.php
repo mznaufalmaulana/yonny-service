@@ -10,9 +10,11 @@ use App\Http\Requests\ProductRequest;
 interface ProductInterface
 {
   public function getListProduct();
+  public function getListLatestProduct();
   public function getProductById($id);
   public function storeProduct(ProductRequest $request);
-  public function updateProduct($id, ProductRequest $request);
+  public function incrementShareProduct($id);
+  public function updateProduct($id, $request);
   public function deleteProduct($id);
 
   public function getListProductPhoto($productId);
