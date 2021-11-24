@@ -71,6 +71,18 @@ class ProductController extends Controller
     }
   }
 
+  public function getListProductByCategoryId($id)
+  {
+    try {
+      $product = $this->product->getListProductByCategoryId($id);
+      return $this->returnSuccess($product, "success");
+    }
+    catch (Exception $ex)
+    {
+      return $this->returnFail("", $ex->getMessage()) ;
+    }
+  }
+
   public function storeProduct(ProductRequest $request): JsonResponse
   {
     try {

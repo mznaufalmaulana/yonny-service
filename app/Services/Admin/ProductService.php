@@ -92,6 +92,11 @@ class ProductService implements ProductInterface
     }
   }
 
+  public function getListProductByCategoryId($id)
+  {
+      return $this->productRepository->getListProductByCategoryIdRepo($id);
+  }
+
   public function storeProduct(ProductRequest $request)
   {
     DB::beginTransaction();

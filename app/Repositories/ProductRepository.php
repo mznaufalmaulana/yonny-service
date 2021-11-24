@@ -83,14 +83,14 @@ class ProductRepository
     return $product;
   }
 
-//  public function getProductByCategoryId($id)
-//  {
-//    return DB::table('brg_product_category as bpc')
-//      ->join('tbl_product as tp', 'bpc.product_id', '=', 'tp.id')
-//      ->where('bpc.category_id', $id)
-//      ->select('tp.*')
-//      ->get();
-//  }
+  public function getListProductByCategoryIdRepo($id)
+  {
+    return DB::table('brg_product_category as bpc')
+      ->join('tbl_product as tp', 'bpc.product_id', '=', 'tp.id')
+      ->where('bpc.category_id', $id)
+      ->select('tp.*')
+      ->get(10);
+  }
 
   public function getProductPhotoByProductIdRepo($id)
   {
