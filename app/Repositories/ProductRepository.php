@@ -30,6 +30,9 @@ class ProductRepository
   public function getListProductStoreRepo()
   {
     return DB::table('tbl_product as tpd')
+      ->join('ms_product_type as mpt', 'tpd.product_type_id', '=', 'mpt.id')
+      ->join('brg_product_category as bpc', 'tpd.id','=', 'bpc.product_id')
+      ->join('ms_category as mc', 'bpc.category_id', '=', 'mc.id')
       ->select(
         'tpd.id', 'tpd.product_name',
         'tpd.product_slug', 'tpd.is_active',
@@ -88,7 +91,7 @@ class ProductRepository
     return DB::table('brg_product_category as bpc')
       ->join('tbl_product as tp', 'bpc.product_id', '=', 'tp.id')
       ->where('bpc.category_id', $id)
-      ->select('tp.*')
+      ->select('tp.id','tp.product_name', 'tp.product_slug')
       ->get(10);
   }
 
