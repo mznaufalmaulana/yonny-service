@@ -43,6 +43,18 @@ class ProjectService implements ProjectInterface
     }
   }
 
+  public function getListProjectStore($request)
+  {
+    $projectQuery =  $this->projectRepository->getListProjectStoreRepo();
+    if ($request->sort && in_array($request->sort, ['asc','desc']))
+    {
+      $projectQuery = $this->projectRepository->querySort($projectQuery, $request->sort);
+    }
+    $projectQuery = $this->projectRepository->queryPaging($projectQuery);
+
+    return  $projectQuery->appends($request->input())->toArray();
+  }
+
   public function storeProject($project)
   {
     DB::beginTransaction();

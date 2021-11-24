@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Product;
 use App\Contracts\Admin\Product\ProductInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PhotoRequest;
+use App\Http\Requests\ProductPagingRequest;
 use App\Http\Requests\ProductRequest;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -26,6 +27,18 @@ class ProductController extends Controller
   {
     try {
       $products = $this->product->getListProduct();
+      return $this->returnSuccess($products, "success");
+    }
+    catch (Exception $ex)
+    {
+      return $this->returnFail("", $ex->getMessage()) ;
+    }
+  }
+
+  public function getListProductStore(ProductPagingRequest $request)
+  {
+    try {
+      $products = $this->product->getListProductStore($request);
       return $this->returnSuccess($products, "success");
     }
     catch (Exception $ex)

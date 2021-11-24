@@ -12,6 +12,7 @@ interface ProjectInterface
 {
   public function getListProject();
   public function getProjectById($id);
+  public function getListProjectStore($request);
   public function storeProject($project);
   public function incrementShareProject($id);
   public function updateProject($id, $request);

@@ -27,6 +27,37 @@ class ProductRepository
     return $products;
   }
 
+  public function getListProductStoreRepo()
+  {
+    return DB::table('tbl_product as tpd')
+      ->select(
+        'tpd.id', 'tpd.product_name',
+        'tpd.product_slug', 'tpd.is_active',
+        DB::raw('(select tpp.photo_name from tbl_product_photo tpp where tpd.id = tpp.product_id limit 1) as photo_name')
+      );
+  }
+
+  public function queryCategory($query, $categoryId)
+  {
+    return $query->where('mc.id', $categoryId);
+  }
+
+  public function queryType($query, $typrId)
+  {
+    return $query->where('mpt.id', $typrId);
+  }
+
+  public function querySort($query, $sort)
+  {
+    return $query->orderBy('tpd.id', $sort);
+  }
+
+  public function queryPaging($query)
+  {
+    return $query->paginate(Config::get('constants_val.product_paging_limit'));
+  }
+
+
   public function getListLatestProductRepo()
   {
     return DB::table('tbl_product as tpd')
@@ -45,21 +76,21 @@ class ProductRepository
                 ->join('ms_product_type as mpt', 'tpd.product_type_id', 'mpt.id')
                 ->where('tpd.id', $id)
                 ->select(
-                  'tpd.id', 'mpt.id as product_type_id', 'mpt.type_name', 'tpd.product_name',
+                  'tpd.id', 'mpt.type_name', 'tpd.product_name',
                   'tpd.product_slug', 'tpd.description', 'tpd.is_active',
                   'tpd.seen_count', 'tpd.share_count'
                 )->get();
     return $product;
   }
 
-  public function getProductByCategoryId($id)
-  {
-    return DB::table('brg_product_category as bpc')
-      ->join('tbl_product as tp', 'bpc.product_id', '=', 'tp.id')
-      ->where('bpc.category_id', $id)
-      ->select('tp.*')
-      ->get();
-  }
+//  public function getProductByCategoryId($id)
+//  {
+//    return DB::table('brg_product_category as bpc')
+//      ->join('tbl_product as tp', 'bpc.product_id', '=', 'tp.id')
+//      ->where('bpc.category_id', $id)
+//      ->select('tp.*')
+//      ->get();
+//  }
 
   public function getProductPhotoByProductIdRepo($id)
   {

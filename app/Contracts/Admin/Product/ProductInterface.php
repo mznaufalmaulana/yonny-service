@@ -10,6 +10,7 @@ use App\Http\Requests\ProductRequest;
 interface ProductInterface
 {
   public function getListProduct();
+  public function getListProductStore($request);
   public function getListLatestProduct();
   public function getProductById($id);
   public function storeProduct(ProductRequest $request);

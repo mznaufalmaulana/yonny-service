@@ -34,7 +34,7 @@ class ProductService implements ProductInterface
       foreach ($products as $product)
       {
         $categories = $this->productCategoryRepository->getCategoryProductByProductId($product->id);
-        $product->product_category_id = $categories;
+        $product->product_category = $categories;
       }
       return $products;
     }
@@ -44,6 +44,26 @@ class ProductService implements ProductInterface
     }
   }
 
+  public function getListProductStore($request)
+  {
+    $productQuery = $this->productRepository->getListProductStoreRepo();
+    if ($request->category)
+    {
+      $productQuery = $this->productRepository->queryCategory($productQuery, $request->category);
+    }
+    if ($request->type)
+    {
+      $productQuery = $this->productRepository->queryType($productQuery, $request->type);
+    }
+    if ($request->sort && in_array($request->sort, ['asc','desc']))
+    {
+      $productQuery = $this->productRepository->querySort($productQuery, $request->sort);
+    }
+    $productQuery = $this->productRepository->queryPaging($productQuery);
+    return $productQuery->appends($request->input())->toArray();
+    //$productQuery->toArray()['current_page']
+  }
+
   public function getProductById($id)
   {
     try {
@@ -51,7 +71,7 @@ class ProductService implements ProductInterface
       $product = $this->productRepository->getProductByIdRepo($id);
       $photos = $this->productRepository->getProductPhotoByProductIdRepo($id);
       $categories = $this->productCategoryRepository->getCategoryProductByProductId($id);
-      $product[0]->product_category_id = $categories;
+      $product[0]->product_category = $categories;
       $product[0]->photo = $photos;
       return $product;
     }

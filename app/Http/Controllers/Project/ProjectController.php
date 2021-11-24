@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PhotoRequest;
 use App\Http\Requests\ProjectRequest;
 use Exception;
+use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
@@ -36,6 +37,18 @@ class ProjectController extends Controller
     try {
       $project = $this->project->getProjectById($id);
       return $this->returnSuccess($project, 'success');
+    }
+    catch (Exception $ex)
+    {
+      return $this->returnFail('', $ex->getMessage());
+    }
+  }
+
+  public function getListProjectStore(Request $request)
+  {
+    try {
+      $projects = $this->project->getListProjectStore($request);
+      return $this->returnSuccess($projects, 'success');
     }
     catch (Exception $ex)
     {
