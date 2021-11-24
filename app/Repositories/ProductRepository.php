@@ -79,7 +79,7 @@ class ProductRepository
                 ->join('ms_product_type as mpt', 'tpd.product_type_id', 'mpt.id')
                 ->where('tpd.id', $id)
                 ->select(
-                  'tpd.id', 'mpt.type_name', 'tpd.product_name',
+                  'tpd.id','mpt.id as type_id','mpt.type_name', 'tpd.product_name',
                   'tpd.product_slug', 'tpd.description', 'tpd.is_active',
                   'tpd.seen_count', 'tpd.share_count'
                 )->get();

@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('product-category')->middleware('auth:sanctum')->group(function (){
+Route::prefix('product-category')->middleware('api')->group(function (){
 
   Route::get('list', 'Master\ProductCategoryController@getListCategory');
   Route::get('list-parent', 'Master\ProductCategoryController@getListCategoryParent');
