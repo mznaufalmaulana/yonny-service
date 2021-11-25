@@ -24,64 +24,38 @@ class ProductTypeService implements ProductTypeInterface
 
   public function getListProductType()
   {
-    try {
-      $priductType = $this->productTypeRepository->getListProductTypeRepo();
-      return $priductType;
-    }
-    catch (Exception $ex)
-    {
-      throw $ex;
-    }
+    $priductType = $this->productTypeRepository->getListProductTypeRepo();
+
+    return $priductType;
   }
 
   public function getProductTypeById($id)
   {
-    try {
-      $this->productTypeRepository->isTypeExist($id);
-      return $this->productTypeRepository->getProductTypeByIdRepo($id);
-    }
-    catch (Exception $ex)
-    {
-      throw $ex;
-    }
+    $this->productTypeRepository->isTypeExist($id);
+    return $this->productTypeRepository->getProductTypeByIdRepo($id);
   }
 
   public function storeProductType($request)
   {
-    try {
-      $this->productTypeRepository->storeProductTypeRepo($request);
-      return true;
-    }
-    catch (Exception $ex)
-    {
-      throw $ex;
-    }
+    $this->productTypeRepository->storeProductTypeRepo($request);
+
+    return true;
   }
 
   public function updateProductType($id, $request)
   {
-    try {
-      $this->productTypeRepository->isTypeExist($id);
-      $this->productTypeRepository->updateProductTypeRepo($id, $request);
-      return true;
-    }
-    catch (Exception $ex)
-    {
-      throw $ex;
-    }
+    $this->productTypeRepository->isTypeExist($id);
+    $this->productTypeRepository->updateProductTypeRepo($id, $request);
+
+    return true;
   }
 
   public function deleteProductType($id)
   {
-    try {
-      $this->productTypeRepository->isTypeExist($id);
-      $this->productTypeRepository->deleteProductTypeRepo($id);
-      return true;
-    }
-    catch (Exception $ex)
-    {
-      throw $ex;
-    }
+    $this->productTypeRepository->isTypeExist($id);
+    $this->productTypeRepository->deleteProductTypeRepo($id);
+
+    return true;
   }
 
 }

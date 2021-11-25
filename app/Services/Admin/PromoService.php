@@ -8,6 +8,7 @@ use App\Contracts\Admin\Promo\PromoInterface;
 use App\Repositories\PromoRepository;
 use DB;
 use Exception;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
 
 class PromoService implements PromoInterface
@@ -23,56 +24,34 @@ class PromoService implements PromoInterface
 
   public function getListPromo()
   {
-    try {
-      return $this->promoRepository->getListPromoRepo();
-    }
-    catch (Exception $ex)
-    {
-      throw $ex;
-    }
+    return $this->promoRepository->getListPromoRepo();
   }
 
   public function getListPromoHeadline()
   {
-    try {
-      return $this->promoRepository->getListPromoHeadlineRepo();
-    }
-    catch (Exception $ex)
-    {
-      throw $ex;
-    }
+    return $this->promoRepository->getListPromoHeadlineRepo();
   }
 
   public function getPromoById($id)
   {
-    try {
-      $this->promoRepository->isPromoExist($id);
-      return $this->promoRepository->getPromoByIdRepo($id);
-    }
-    catch (Exception $ex)
-    {
-      throw $ex;
-    }
+    $this->promoRepository->isPromoExist($id);
+    return $this->promoRepository->getPromoByIdRepo($id);
   }
 
   public function storePromo($promo)
   {
-    try {
-      if($promo->hasFile('photo_name') && $promo->file('photo_name')->isValid())
-      {
-        $photoName = time().'_'.$promo->file('photo_name')->getClientOriginalName();
-        $photoNameWithPath = 'public/promo/'.$photoName;
-        $this->storePromoPhotoFile($promo->file('photo_name'), $photoName);
-        $promo->photo_name = $photoNameWithPath;
-        $this->promoRepository->storePromoRepo($promo);
-        return true;
-      }
-      throw new Exception();
-    }
-    catch (Exception $ex)
+    if($promo->hasFile('photo_name') && $promo->file('photo_name')->isValid())
     {
-      throw $ex;
+      $photoName = time().'_'.$promo->file('photo_name')->getClientOriginalName();
+      $photoNameWithPath = Config::get('constants_val.path_photo_promo').$photoName;
+      $this->storePromoPhotoFile($promo->file('photo_name'), $photoName);
+      $promo->photo_name = $photoNameWithPath;
+      $this->promoRepository->storePromoRepo($promo);
+
+      return true;
     }
+    throw new Exception();
+
   }
 
   public function updatePromo($id, $promo)
@@ -84,7 +63,7 @@ class PromoService implements PromoInterface
       if ($promo->hasFile('photo_name'))
       {
         $photoName = time().'_'.$promo->file('photo_name')->getClientOriginalName();
-        $photoNameWithPath = 'public/promo/'.$photoName;
+        $photoNameWithPath = Config::get('constants_val.path_photo_promo').$photoName;
         $this->deletePromoPhotoFile($photoPath[0]->photo_name);
         $this->storePromoPhotoFile($promo->file('photo_name'), $photoPath[0]->photo_name);
         $promo->photo_name = $photoNameWithPath;
@@ -108,26 +87,21 @@ class PromoService implements PromoInterface
 
   public function deletePromo($id)
   {
-    try {
-      $this->promoRepository->isPromoExist($id);
-      $result = $this->promoRepository->getPromoByIdRepo($id);
-      $this->deletePromoPhotoFile($result[0]->photo_name);
-      $this->promoRepository->deletePromoRepo($id);
-      return true;
-    }
-    catch (Exception $ex)
-    {
-      throw $ex;
-    }
+    $this->promoRepository->isPromoExist($id);
+    $result = $this->promoRepository->getPromoByIdRepo($id);
+    $this->deletePromoPhotoFile($result[0]->photo_name);
+    $this->promoRepository->deletePromoRepo($id);
+
+    return true;
   }
 
   public function storePromoPhotoFile($photoFile, $photoName)
   {
-    Storage::putFileAs('public/promo', $photoFile, $photoName);
+    Storage::putFileAs(Config::get('constants_val.path_photo_promo'), $photoFile, $photoName);
   }
 
   public function deletePromoPhotoFile($photoName)
   {
-    Storage::disk('local')->delete($photoName);
+    Storage::disk(Config::get('constants_val.storage_location'))->delete($photoName);
   }
 }

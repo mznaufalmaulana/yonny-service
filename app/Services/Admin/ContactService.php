@@ -30,14 +30,8 @@ class ContactService implements ContactInterface
 
   public function getContactById($id)
   {
-    try {
-      $this->contactRepository->isContactExist($id);
-      return $this->contactRepository->getContactByIdRepo($id);
-    }
-    catch (Exception $ex)
-    {
-      throw $ex;
-    }
+    $this->contactRepository->isContactExist($id);
+    return $this->contactRepository->getContactByIdRepo($id);
   }
 
   public function getContactArea()
@@ -47,8 +41,11 @@ class ContactService implements ContactInterface
     foreach ($regions as $region)
     {
       $contacts = $this->contactRepository->getContactByRegionId($region->id);
-      $region->contact = $contacts;
-      array_push($regionContact, $region);
+      if(count($contacts)!=0)
+      {
+        $region->contact = $contacts;
+        array_push($regionContact, $region);
+      }
     }
     return $regionContact;
   }

@@ -17,27 +17,27 @@ class ProductRepository
   //List Product
   public function getListProductRepo()
   {
-    $products = DB::table('tbl_product as tpd')
-                ->join('ms_product_type as mpt', 'tpd.product_type_id', 'mpt.id')
-                ->select(
-                  'tpd.id', 'mpt.type_name', 'tpd.product_name',
-                  'tpd.product_slug', 'tpd.is_active', 'tpd.seen_count',
-                  'tpd.share_count'
-                )->get();
-    return $products;
+    return DB::table('tbl_product as tpd')
+            ->join('ms_product_type as mpt', 'tpd.product_type_id', 'mpt.id')
+            ->select(
+              'tpd.id', 'mpt.type_name', 'tpd.product_name',
+              'tpd.product_slug', 'tpd.is_active', 'tpd.seen_count',
+              'tpd.share_count'
+            )
+            ->get();
   }
 
   public function getListProductStoreRepo()
   {
     return DB::table('tbl_product as tpd')
-      ->join('ms_product_type as mpt', 'tpd.product_type_id', '=', 'mpt.id')
-      ->join('brg_product_category as bpc', 'tpd.id','=', 'bpc.product_id')
-      ->join('ms_category as mc', 'bpc.category_id', '=', 'mc.id')
-      ->select(
-        'tpd.id', 'tpd.product_name',
-        'tpd.product_slug', 'tpd.is_active',
-        DB::raw('(select tpp.photo_name from tbl_product_photo tpp where tpd.id = tpp.product_id limit 1) as photo_name')
-      );
+            ->join('ms_product_type as mpt', 'tpd.product_type_id', '=', 'mpt.id')
+            ->join('brg_product_category as bpc', 'tpd.id','=', 'bpc.product_id')
+            ->join('ms_category as mc', 'bpc.category_id', '=', 'mc.id')
+            ->select(
+              'tpd.id', 'tpd.product_name',
+              'tpd.product_slug', 'tpd.is_active',
+              DB::raw('(select tpp.photo_name from tbl_product_photo tpp where tpd.id = tpp.product_id limit 1) as photo_name')
+            );
   }
 
   public function queryCategory($query, $categoryId)
@@ -64,81 +64,80 @@ class ProductRepository
   public function getListLatestProductRepo()
   {
     return DB::table('tbl_product as tpd')
-      ->select('tpd.id', 'tpd.product_name',
-        DB::raw('(select tpp.photo_name from tbl_product_photo tpp where tpd.id = tpp.product_id limit 1) as photo_name')
-      )
-      ->orderBy('tpd.id','DESC')
-      ->limit(Config::get('constants_val.latest_product_limit'))
-      ->get();
+            ->select('tpd.id', 'tpd.product_name',
+              DB::raw('(select tpp.photo_name from tbl_product_photo tpp where tpd.id = tpp.product_id limit 1) as photo_name')
+            )
+            ->orderBy('tpd.id','DESC')
+            ->limit(Config::get('constants_val.latest_product_limit'))
+            ->get();
   }
 
   //Get Product
   public function getProductByIdRepo($id)
   {
-    $product = DB::table('tbl_product as tpd')
-                ->join('ms_product_type as mpt', 'tpd.product_type_id', 'mpt.id')
-                ->where('tpd.id', $id)
-                ->select(
-                  'tpd.id','mpt.id as type_id','mpt.type_name', 'tpd.product_name',
-                  'tpd.product_slug', 'tpd.description', 'tpd.is_active',
-                  'tpd.seen_count', 'tpd.share_count'
-                )->get();
-    return $product;
+    return DB::table('tbl_product as tpd')
+            ->join('ms_product_type as mpt', 'tpd.product_type_id', 'mpt.id')
+            ->where('tpd.id', $id)
+            ->select(
+              'tpd.id','mpt.id as type_id','mpt.type_name', 'tpd.product_name',
+              'tpd.product_slug', 'tpd.description', 'tpd.is_active',
+              'tpd.seen_count', 'tpd.share_count'
+            )
+            ->get();
   }
 
   public function getListProductByCategoryIdRepo($id)
   {
     return DB::table('brg_product_category as bpc')
-      ->join('tbl_product as tp', 'bpc.product_id', '=', 'tp.id')
-      ->where('bpc.category_id', $id)
-      ->select('tp.id','tp.product_name', 'tp.product_slug')
-      ->get(10);
+            ->join('tbl_product as tp', 'bpc.product_id', '=', 'tp.id')
+            ->where('bpc.category_id', $id)
+            ->select('tp.id','tp.product_name', 'tp.product_slug')
+            ->get();
   }
 
   public function getProductPhotoByProductIdRepo($id)
   {
-    return DB::table('tbl_product_photo')->where('product_id', $id)->select(
-      'id', 'photo_name'
-    )->get();
+    return DB::table('tbl_product_photo')
+            ->where('product_id', $id)
+            ->select('id', 'photo_name')
+            ->get();
   }
 
   public function getProductPhotoByIdRepo($id)
   {
-    return ProductPhotoModel::where('id', $id)->select(
-      'id', 'photo_name'
-    )->get();
+    return ProductPhotoModel::where('id', $id)
+            ->select('id', 'photo_name')
+            ->get();
   }
 
   //Store Product
   public function storeProductRepo(ProductRequest $request)
   {
-      $product = ProductModel::create([
-        'product_type_id' =>  $request->product_type_id,
-        'product_name' => $request->product_name,
-        'product_slug' => \Str::slug($request->product_name,'-'),
-        'description' => $request->description,
-        'is_active' =>  $request->is_active,
-        'seen_count' =>  Config::get('constants_val.count_start'),
-        'share_count' =>  Config::get('constants_val.count_start')
-      ]);
-      return $product;
+    return ProductModel::create([
+              'product_type_id' =>  $request->product_type_id,
+              'product_name' => $request->product_name,
+              'product_slug' => \Str::slug($request->product_name,'-'),
+              'description' => $request->description,
+              'is_active' =>  $request->is_active,
+              'seen_count' =>  Config::get('constants_val.count_start'),
+              'share_count' =>  Config::get('constants_val.count_start')
+            ]);
   }
 
   public function storeCategoryOfProductRepo($category_id, $product_id)
   {
-    $result = CategorytoProductModel::create([
-      'category_id' =>  $category_id,
-      'product_id'  =>  $product_id,
-    ]);
-    return $result;
+    return CategorytoProductModel::create([
+              'category_id' =>  $category_id,
+              'product_id'  =>  $product_id,
+            ]);
   }
 
   public function storeProductPhotoRepo($productId, $productPhotoName)
   {
     return ProductPhotoModel::create([
-      'product_id'  =>  $productId,
-      'photo_name'  =>  $productPhotoName
-    ]);
+              'product_id'  =>  $productId,
+              'photo_name'  =>  $productPhotoName
+            ]);
   }
 
   //Update Product
@@ -157,7 +156,8 @@ class ProductRepository
 
   public function updateProductPhotoRepo($id, $productPhotoName)
   {
-    return ProductPhotoModel::where('id', $id)->update([ 'photo_name'  =>  $productPhotoName]);
+    return ProductPhotoModel::where('id', $id)
+            ->update([ 'photo_name'  =>  $productPhotoName]);
   }
 
   //Delete Product

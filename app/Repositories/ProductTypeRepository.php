@@ -14,7 +14,7 @@ class ProductTypeRepository
   {
     return DB::table('ms_product_type as mpt')
             ->leftJoin('tbl_product as tp', 'mpt.id', '=', 'tp.product_type_id')
-            ->select('mpt.type_name',
+            ->select('mpt.id', 'mpt.type_name',
               DB::raw("(select count(*) from tbl_product tpi where mpt.id = tpi.product_type_id) as total_product")
             )->distinct()
             ->get();
@@ -22,7 +22,10 @@ class ProductTypeRepository
 
   public function getProductTypeByIdRepo($id)
   {
-    return ProductTypeModel::find($id, ['id', 'type_name']);
+    return DB::table('ms_product_type as mpt')
+            ->where('mpt.id', $id)
+            ->select('mpt.id', 'mpt.type_name')
+            ->get();
   }
 
   public function storeProductTypeRepo($type)

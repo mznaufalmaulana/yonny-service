@@ -5,35 +5,40 @@ namespace App\Repositories;
 
 
 use App\Models\SocialMediaModel;
+use Illuminate\Support\Facades\DB;
 
 class SocialMediaRepository
 {
   public function getListSocialMediaRepo()
   {
-    return SocialMediaModel::select('id', 'icon', 'link')->get();
+    return DB::table('tbl_social_media as sm')
+            ->select('sm.id', 'sm.icon', 'sm.link')
+            ->get();
   }
 
   public function getSocialMediaByIdRepo($id)
   {
-    return SocialMediaModel::where('id', $id)
-            ->select('id', 'icon', 'link')
+    return DB::table('tbl_social_media as sm')
+            ->where('id', $id)
+            ->select('sm.id', 'sm.icon', 'sm.link')
             ->get();
   }
 
   public function storeSocialMediaRepo($socialMedia)
   {
     return SocialMediaModel::create([
-      'icon' => $socialMedia->icon,
-      'link'  => $socialMedia->link,
-    ]);
+              'icon' => $socialMedia->icon,
+              'link'  => $socialMedia->link,
+            ]);
   }
 
   public function updateSocialMediaRepo($id, $socialMedia)
   {
-    return SocialMediaModel::where('id', $id)->update([
-      'icon' => $socialMedia->icon,
-      'link' => $socialMedia->link,
-    ]);
+    return SocialMediaModel::where('id', $id)
+            ->update([
+              'icon' => $socialMedia->icon,
+              'link' => $socialMedia->link,
+            ]);
   }
 
   public function deleteSocialMediaRepo($id)

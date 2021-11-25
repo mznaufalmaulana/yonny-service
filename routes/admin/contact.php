@@ -1,14 +1,15 @@
 <?php
 
+use App\Http\Controllers\Contact\ContactController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('contact')->middleware('api')->group(function () {
 
-  Route::get('list', 'Contact\ContactController@getListContact');
-  Route::get('{id}', 'Contact\ContactController@getContactById');
-  Route::post('store', 'Contact\ContactController@storeContact');
-  Route::put('{id}/update', 'Contact\ContactController@updateContact');
-  Route::delete('{id}/delete', 'Contact\ContactController@deleteContact');
+  Route::get('list', [ContactController::class, 'getListContact']);
+  Route::get('{id}', [ContactController::class, 'getContactById']);
+  Route::post('store', [ContactController::class, 'storeContact']);
+  Route::put('{id}/update', [ContactController::class, 'updateContact']);
+  Route::delete('{id}/delete', [ContactController::class, 'deleteContact']);
 
 });
 

@@ -20,10 +20,10 @@ class ProductCategoryController extends Controller
     $this->category = $category;
   }
 
-  public function getListCategoryParent()
+  public function getListCategory(): JsonResponse
   {
     try {
-      $categories = $this->category->getListCategoryParent();
+      $categories = $this->category->getListCategory();
       return $this->returnSuccess($categories, "success");
     }
     catch (Exception $ex)
@@ -32,10 +32,10 @@ class ProductCategoryController extends Controller
     }
   }
 
-  public function getListCategory(): JsonResponse
+  public function getListCategoryParent(): JsonResponse
   {
     try {
-      $categories = $this->category->getListCategory();
+      $categories = $this->category->getListCategoryParent();
       return $this->returnSuccess($categories, "success");
     }
     catch (Exception $ex)

@@ -5,19 +5,22 @@ namespace App\Repositories;
 
 
 use App\Models\RegionModel;
+use Illuminate\Support\Facades\DB;
 
 class RegionRepository
 {
   public function getListRegionRepo()
   {
-    return RegionModel::select('id', 'region')
+    return DB::table('ms_region as mr')
+            ->select('mr.id', 'mr.region')
             ->get();
   }
 
   public function getRegionByIdRepo($id)
   {
-    return RegionModel::where('id',$id)
-            ->select('id', 'region')
+    return DB::table('ms_region as mr')
+            ->where('id', $id)
+            ->select('mr.id', 'mr.region')
             ->get();
   }
 

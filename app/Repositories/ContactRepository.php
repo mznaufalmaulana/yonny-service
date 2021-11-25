@@ -5,31 +5,33 @@ namespace App\Repositories;
 
 
 use App\Models\ContactModel;
+use Illuminate\Support\Facades\DB;
 
 class ContactRepository
 {
   public function getListContactRepo()
   {
-    return ContactModel::select(
-            'id', 'region_id', 'address',
-            'phone', 'email')
+    return DB::table('tbl_contact as tc')
+            ->join('ms_region as mr', 'tc.region_id', '=', 'mr.id')
+            ->select('tc.id', 'mr.region', 'tc.address', 'tc.phone', 'tc.email')
             ->get();
   }
 
   public function getContactByIdRepo($id)
   {
-    return ContactModel::where('id',$id)
-            ->select(
-              'id', 'region_id', 'address',
-              'phone', 'email')
+    return DB::table('tbl_contact as tc')
+            ->join('ms_region as mr', 'tc.region_id', '=', 'mr.id')
+            ->where('tc.id', $id)
+            ->select('tc.id', 'mr.region', 'tc.address', 'tc.phone', 'tc.email')
             ->get();
   }
 
   public function getContactByRegionId($regionId)
   {
-    return ContactModel::where('region_id',$regionId)
-      ->select('address','phone', 'email')
-      ->get();
+    return DB::table('tbl_contact as tc')
+            ->where('tc.region_id', $regionId)
+            ->select( 'tc.address', 'tc.phone', 'tc.email')
+            ->get();
   }
 
   public function storeContactRepo($contact)

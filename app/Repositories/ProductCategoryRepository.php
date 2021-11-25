@@ -13,17 +13,25 @@ class ProductCategoryRepository
 
   public function getListCategoryParentRepo($parentId = 0)
   {
-    return ProductCategoryModel::where('category_parent', $parentId)->select('id', 'category_parent', 'category_name')->get();
+    return DB::table('ms_category as mc')
+            ->where('mc.category_parent', $parentId)
+            ->select('mc.id', 'mc.category_parent', 'mc.category_name')
+            ->get();
   }
 
   public function getListCategoryRepo()
   {
-    return ProductCategoryModel::select('id', 'category_parent', 'category_name')->get();
+    return DB::table('ms_category as mc')
+            ->select('mc.id', 'mc.category_parent', 'mc.category_name')
+            ->get();
   }
 
   public function getCategoryByIdRepo($id)
   {
-    return ProductCategoryModel::find($id, ['id', 'category_parent', 'category_name']);
+    return DB::table('ms_category as mc')
+            ->where('mc.id', $id)
+            ->select('mc.id', 'mc.category_parent', 'mc.category_name')
+            ->get();
   }
 
   public function getCategoryProductByProductId($id)

@@ -21,62 +21,32 @@ class RegionService implements RegionInterface
 
   public function getListRegion()
   {
-    try {
-      return $this->regionRepository->getListRegionRepo();
-    }
-    catch (Exception $ex)
-    {
-      throw $ex;
-    }
+    return $this->regionRepository->getListRegionRepo();
   }
 
   public function getRegionById($id)
   {
-    try {
-      $this->regionRepository->isRegionExist($id);
-      return $this->regionRepository->getRegionByIdRepo($id);
-    }
-    catch (Exception $ex)
-    {
-      throw $ex;
-    }
+    $this->regionRepository->isRegionExist($id);
+    return $this->regionRepository->getRegionByIdRepo($id);
   }
 
   public function storeRegion($region)
   {
-    try {
-      $this->regionRepository->storeRegionRepo($region);
-      return true;
-    }
-    catch (Exception $ex)
-    {
-      throw $ex;
-    }
+    $this->regionRepository->storeRegionRepo($region);
+    return true;
   }
 
   public function updateRegion($id, $region)
   {
-    try {
-      $this->regionRepository->isRegionExist($id);
-      $this->regionRepository->updateRegionRepo($id, $region);
-      return true;
-    }
-    catch (Exception $ex)
-    {
-      throw $ex;
-    }
+    $this->regionRepository->isRegionExist($id);
+    $this->regionRepository->updateRegionRepo($id, $region);
+    return true;
   }
 
   public function deleteRegion($id)
   {
-    try {
-      $this->regionRepository->isRegionExist($id);
-      $this->regionRepository->deleteRegionRepo($id);
-      return true;
-    }
-    catch (Exception $ex)
-    {
-      throw $ex;
-    }
+    $this->regionRepository->isRegionExist($id);
+    $this->regionRepository->deleteRegionRepo($id);
+    return true;
   }
 }

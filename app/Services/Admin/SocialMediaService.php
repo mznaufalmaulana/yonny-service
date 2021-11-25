@@ -26,51 +26,29 @@ class SocialMediaService implements SocialMediaInterface
 
   public function getSocialMediaById($id)
   {
-    try {
-      $this->socialMediaRepository->isSocialMediaExist($id);
-      return $this->socialMediaRepository->getSocialMediaByIdRepo($id);
-    }
-    catch (Exception $ex)
-    {
-      throw $ex;
-    }
+    $this->socialMediaRepository->isSocialMediaExist($id);
+    return $this->socialMediaRepository->getSocialMediaByIdRepo($id);
   }
 
   public function storeSocialMedia($socialMedia)
   {
-    try {
-      $this->socialMediaRepository->storeSocialMediaRepo($socialMedia);
-      return true;
-    }
-    catch (Exception $ex)
-    {
-      throw $ex;
-    }
+    $this->socialMediaRepository->storeSocialMediaRepo($socialMedia);
+    return true;
   }
 
   public function updateSocialMedia($id, $socialMedia)
   {
-    try {
-      $this->socialMediaRepository->isSocialMediaExist($id);
-      $this->socialMediaRepository->updateSocialMediaRepo($id, $socialMedia);
-      return true;
-    }
-    catch (Exception $ex)
-    {
-      throw $ex;
-    }
+    $this->socialMediaRepository->isSocialMediaExist($id);
+    $this->socialMediaRepository->updateSocialMediaRepo($id, $socialMedia);
+
+    return true;
   }
 
   public function deleteSocialMedia($id)
   {
-    try {
-      $this->socialMediaRepository->isSocialMediaExist($id);
-      $this->socialMediaRepository->deleteSocialMediaRepo($id);
-      return true;
-    }
-    catch (Exception $ex)
-    {
-      throw $ex;
-    }
+    $this->socialMediaRepository->isSocialMediaExist($id);
+    $this->socialMediaRepository->deleteSocialMediaRepo($id);
+
+    return true;
   }
 }

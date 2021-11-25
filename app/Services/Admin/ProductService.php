@@ -8,6 +8,7 @@ use App\Http\Requests\PhotoRequest;
 use App\Http\Requests\ProductRequest;
 use App\Repositories\ProductCategoryRepository;
 use App\Repositories\ProductRepository;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -29,19 +30,14 @@ class ProductService implements ProductInterface
 
   public function getListProduct()
   {
-    try {
-      $products = $this->productRepository->getListProductRepo();
-      foreach ($products as $product)
-      {
-        $categories = $this->productCategoryRepository->getCategoryProductByProductId($product->id);
-        $product->product_category = $categories;
-      }
-      return $products;
-    }
-    catch (\Exception $ex)
+    $products = $this->productRepository->getListProductRepo();
+    foreach ($products as $product)
     {
-      throw $ex;
+      $categories = $this->productCategoryRepository->getCategoryProductByProductId($product->id);
+      $product->product_category = $categories;
     }
+
+    return $products;
   }
 
   public function getListProductStore($request)
@@ -60,41 +56,31 @@ class ProductService implements ProductInterface
       $productQuery = $this->productRepository->querySort($productQuery, $request->sort);
     }
     $productQuery = $this->productRepository->queryPaging($productQuery);
+
     return $productQuery->appends($request->input())->toArray();
     //$productQuery->toArray()['current_page']
   }
 
   public function getProductById($id)
   {
-    try {
-      $this->productRepository->isProductExist($id);
-      $product = $this->productRepository->getProductByIdRepo($id);
-      $photos = $this->productRepository->getProductPhotoByProductIdRepo($id);
-      $categories = $this->productCategoryRepository->getCategoryProductByProductId($id);
-      $product[0]->product_category = $categories;
-      $product[0]->photo = $photos;
-      return $product;
-    }
-    catch (\Exception $ex)
-    {
-      throw $ex;
-    }
+    $this->productRepository->isProductExist($id);
+    $product = $this->productRepository->getProductByIdRepo($id);
+    $photos = $this->productRepository->getProductPhotoByProductIdRepo($id);
+    $categories = $this->productCategoryRepository->getCategoryProductByProductId($id);
+    $product[0]->product_category = $categories;
+    $product[0]->photo = $photos;
+
+    return $product;
   }
 
   public function getListLatestProduct()
   {
-    try {
-      return $this->productRepository->getListLatestProductRepo();
-    }
-    catch (\Exception $ex)
-    {
-      throw $ex;
-    }
+    return $this->productRepository->getListLatestProductRepo();
   }
 
   public function getListProductByCategoryId($id)
   {
-      return $this->productRepository->getListProductByCategoryIdRepo($id);
+    return $this->productRepository->getListProductByCategoryIdRepo($id);
   }
 
   public function storeProduct(ProductRequest $request)
@@ -131,6 +117,7 @@ class ProductService implements ProductInterface
     $product = $this->productRepository->isProductExist($id);
     $product->share_count +=1;
     $this->productRepository->updateProductRepo($id, $product);
+
     return true;
   }
 
@@ -183,73 +170,58 @@ class ProductService implements ProductInterface
 
   public function getListProductPhoto($productId)
   {
-    try {
-      $this->productRepository->isProductExist($productId);
-      return $this->productRepository->getProductPhotoByProductIdRepo($productId);
-    }
-    catch (\Exception $ex)
-    {
-      throw $ex;
-    }
+    $this->productRepository->isProductExist($productId);
+    return $this->productRepository->getProductPhotoByProductIdRepo($productId);
   }
 
-  public function storeProductPhoto($productId, PhotoRequest $request)
+  public function storeProductPhoto($productId, $request)
   {
-    try {
-      $this->productRepository->isProductExist($productId);
-      $photoName = time().'_'.$request->file('photo')->getClientOriginalName();
-      $photoNameWithPath = 'public/product/'.$photoName;
-      $this->productRepository->storeProductPhotoRepo($productId, $photoNameWithPath);
-      $this->storeProductPhotoFile($request->file('photo'), $photoName);
+    $this->productRepository->isProductExist($productId);
+    $photoName = time().'_'.$request->file('photo')->getClientOriginalName();
+    $photoNameWithPath = Config::get('constants_val.path_photo_product').$photoName;
+    $this->productRepository->storeProductPhotoRepo($productId, $photoNameWithPath);
+    $this->storeProductPhotoFile($request->file('photo'), $photoName);
 
-      return true;
-    }
-    catch (\Exception $ex)
-    {
-      throw $ex;
-    }
+    return true;
   }
 
-  public function updateProductPhoto($id, PhotoRequest $request)
+  public function updateProductPhoto($id, $request)
   {
+    DB::beginTransaction();
     try {
       $photoPath = $this->productRepository->getProductPhotoByIdRepo($id);
       $photoName = time().'_'.$request->file('photo')->getClientOriginalName();
-      $photoNameWithPath = 'public/product/'.$photoName;
+      $photoNameWithPath = Config::get('constants_val.path_photo_product').$photoName;
       $this->deleteProductPhotoFile($photoPath[0]->photo_name);
       $this->productRepository->updateProductPhotoRepo($id, $photoNameWithPath);
       $this->storeProductPhotoFile($request->file('photo'), $photoName);
 
+      DB::commit();
       return true;
     }
     catch (\Exception $ex)
     {
+      DB::rollBack();
       throw $ex;
     }
   }
 
   public function deleteProductPhoto($id)
   {
-    try {
-      $photoPath = $this->productRepository->getProductPhotoByIdRepo($id);
-      $this->deleteProductPhotoFile($photoPath[0]->photo_name);
-      $this->productRepository->deleteProductPhotoByIdRepo($id);
+    $photoPath = $this->productRepository->getProductPhotoByIdRepo($id);
+    $this->deleteProductPhotoFile($photoPath[0]->photo_name);
+    $this->productRepository->deleteProductPhotoByIdRepo($id);
 
-      return true;
-    }
-    catch (\Exception $ex)
-    {
-      throw $ex;
-    }
+    return true;
   }
 
   public function storeProductPhotoFile($photoFile, $photoName)
   {
-    Storage::putFileAs('public/product', $photoFile, $photoName);
+    Storage::putFileAs(Config::get('constants_val.path_photo_product'), $photoFile, $photoName);
   }
 
   public function deleteProductPhotoFile($photoName)
   {
-    Storage::disk('local')->delete($photoName);
+    Storage::disk(Config::get('constants_val.storage_location'))->delete($photoName);
   }
 }

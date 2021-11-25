@@ -20,8 +20,8 @@ interface ProductInterface
   public function deleteProduct($id);
 
   public function getListProductPhoto($productId);
-  public function storeProductPhoto($productId, PhotoRequest $request);
-  public function updateProductPhoto($id, PhotoRequest $request);
+  public function storeProductPhoto($productId, $request);
+  public function updateProductPhoto($id, $request);
   public function deleteProductPhoto($id);
 
   public function storeProductPhotoFile($photoFile, $photoName);

@@ -15,15 +15,20 @@ class ProjectRepository
   //  List project
   public function getListProjectRepo()
   {
-    return ProjectModel::select('id', 'project_name', 'project_slug', 'created_at as project_due', 'seen_count', 'share_count')->get();
+    return DB::table('tbl_project as tp')
+            ->select('tp.id','tp.project_name', 'tp.created_at as project_due',
+              'tp.seen_count', 'tp.share_count')
+            ->get();
   }
 
   public function getListProjectStoreRepo()
   {
     return DB::table('tbl_project as tp')
-      ->select('tp.id','tp.project_name', 'tp.project_slug', 'tp.description',
-        'tp.created_at as project_due','tp.seen_count', 'tp.share_count',
-        DB::raw('(select tpp.photo_name from tbl_project_photo tpp where tp.id = tpp.project_id limit 1) as photo_name'));
+            ->select('tp.id','tp.project_name', 'tp.project_slug',
+              'tp.description', 'tp.created_at as project_due','tp.seen_count',
+              'tp.share_count',
+              DB::raw('(select tpp.photo_name from tbl_project_photo tpp where tp.id = tpp.project_id limit 1) as photo_name')
+            );
   }
 
   public function querySort($query, $sort)
@@ -39,24 +44,27 @@ class ProjectRepository
   // Get project
   public function getProjectByIdRepo($id)
   {
-    return ProjectModel::where('id', $id)
-            ->select('id','project_name', 'description',
-                      'created_at as project_due','seen_count', 'share_count')
+    return DB::table('tbl_project as tpj')
+            ->where('id', $id)
+            ->select('tpj.id','tpj.project_name', 'tpj.project_slug', 'tpj.description',
+              'tpj.created_at as project_due','tpj.seen_count', 'tpj.share_count')
             ->get();
   }
 
   public function getProjectPhotoByProjectIdRepo($id)
   {
-    return ProjectPhotoModel::where('project_id', $id)
-            ->select('id', 'photo_name as photo_path')
+    return DB::table('tbl_project_photo as tpjp')
+            ->where('project_id', $id)
+            ->select('tpjp.id', 'tpjp.photo_name as photo_path')
             ->get();
   }
 
   public function getProjectPhotoByIdRepo($photoId)
   {
-    return ProjectPhotoModel::where('id', $photoId)
-            ->select('id', 'photo_name as photo_path')
-            ->get();
+    return DB::table('tbl_project_photo as tpjp')
+      ->where('id', $photoId)
+      ->select('tpjp.id', 'tpjp.photo_name as photo_path')
+      ->get();
   }
 
   // Store project

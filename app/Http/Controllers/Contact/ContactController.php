@@ -43,7 +43,7 @@ class ContactController extends Controller
       }
     }
 
-    public function getContactArea()
+    public function getContactArea(): JsonResponse
     {
       try {
         $cantacts = $this->contact->getContactArea();

@@ -26,6 +26,12 @@ class ProductCategoryService implements ProductCategoryInterface
     $this->productRepository = $productRepository;
   }
 
+  public function getListCategory()
+  {
+    $category = $this->categoryRepository->getListCategoryRepo();
+    return $category;
+  }
+
   public function getListCategoryParent($parentId = 0)
   {
     $categories = $this->categoryRepository->getListCategoryParentRepo($parentId);
@@ -36,27 +42,15 @@ class ProductCategoryService implements ProductCategoryInterface
       $total = 0;
       foreach ($childs as $child)
       {
-        $temp = $this->productRepository->getProductByCategoryId($child->id);
+        $temp = $this->productRepository->getListProductByCategoryIdRepo($child->id);
         $total += count($temp);
       }
-      $result = $this->productRepository->getProductByCategoryId($category->id);
+      $result = $this->productRepository->getListProductByCategoryIdRepo($category->id);
       $category->tatal_product = $total+count($result);
       array_push($menu, $category);
     }
 
     return $menu;
-  }
-
-  public function getListCategory()
-  {
-    try {
-      $category = $this->categoryRepository->getListCategoryRepo();
-      return $category;
-    }
-    catch (Exception $ex)
-    {
-      throw $ex;
-    }
   }
 
   public function getListMenuProductCategory($parentId = 0)
@@ -77,51 +71,32 @@ class ProductCategoryService implements ProductCategoryInterface
 
   public function getCategoryById($id)
   {
-    try {
-      $category = $this->categoryRepository->getCategoryByIdRepo($id);
-      return $category;
-    }
-    catch (Exception $ex)
-    {
-      throw $ex;
-    }
+    $this->categoryRepository->isCategoryExistRepo($id);
+    $category = $this->categoryRepository->getCategoryByIdRepo($id);
 
+    return $category;
   }
 
   public function storeCategory($category)
   {
-    try {
-      $this->categoryRepository->storeCategoryRepo($category);
-      return true;
-    }
-    catch (Exception $ex)
-    {
-      throw $ex;
-    }
+    $this->categoryRepository->storeCategoryRepo($category);
+
+    return true;
   }
 
   public function updateCategory($id, $category)
   {
-    try {
-      $this->categoryRepository->isCategoryExistRepo($id);
-      $this->categoryRepository->updateCategoryRepo($id, $category);
-      return true;
-    }
-    catch (Exception $ex)
-    {
-      throw $ex;
-    }
+    $this->categoryRepository->isCategoryExistRepo($id);
+    $this->categoryRepository->updateCategoryRepo($id, $category);
+
+    return true;
   }
 
   public function deleteCategory($id)
   {
-    try {
-      $this->categoryRepository->deleteCategoryRepo($id);
-      return true;
-    }
-    catch (Exception $ex)
-    {
-      throw $ex;
-    }
+    $this->categoryRepository->isCategoryExistRepo($id);
+    $this->categoryRepository->deleteCategoryRepo($id);
+
+    return true;
   }
 }

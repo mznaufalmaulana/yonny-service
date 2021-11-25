@@ -30,17 +30,12 @@ class ProjectService implements ProjectInterface
 
   public function getProjectById($id)
   {
-    try {
-      $this->projectRepository->isProjectExist($id);
-      $project = $this->projectRepository->getProjectByIdRepo($id);
-      $photos = $this->projectRepository->getProjectPhotoByProjectIdRepo($id);
-      $project[0]->photo = $photos;
-      return $project;
-    }
-    catch (\Exception $ex)
-    {
-      throw $ex;
-    }
+    $this->projectRepository->isProjectExist($id);
+    $project = $this->projectRepository->getProjectByIdRepo($id);
+    $photos = $this->projectRepository->getProjectPhotoByProjectIdRepo($id);
+    $project[0]->photo = $photos;
+
+    return $project;
   }
 
   public function getListProjectStore($request)
@@ -63,7 +58,7 @@ class ProjectService implements ProjectInterface
       foreach ($project->file('project_photo') as $file)
       {
         $photoName = time().'_'.$file->getClientOriginalName();
-        $photoNameWithPath = 'public/project/'.$photoName;
+        $photoNameWithPath = Config::get('constants_val.path_photo_project').$photoName;
         $this->projectRepository->storeProjectPhotoRepo($result->id, $photoNameWithPath);
         $this->storeProjectPhotoFile($file, $photoName);
       }
@@ -83,21 +78,16 @@ class ProjectService implements ProjectInterface
     $project = $this->projectRepository->isProjectExist($id);
     $project->share_count +=1;
     $this->projectRepository->updateProjectRepo($id, $project);
+
     return true;
   }
 
   public function updateProject($id, $request)
   {
-    try {
-      $this->projectRepository->isProjectExist($id);
-      $this->projectRepository->updateProjectRepo($id, $request);
+    $this->projectRepository->isProjectExist($id);
+    $this->projectRepository->updateProjectRepo($id, $request);
 
-      return true;
-    }
-    catch (\Exception $ex)
-    {
-      throw $ex;
-    }
+    return true;
   }
 
   public function deleteProject($id)
@@ -125,14 +115,8 @@ class ProjectService implements ProjectInterface
 
   public function getListProjectPhoto($projectId)
   {
-    try {
-      $this->projectRepository->isProjectExist($projectId);
-      return $this->projectRepository->getProjectPhotoByProjectIdRepo($projectId);
-    }
-    catch (\Exception $ex)
-    {
-      throw $ex;
-    }
+    $this->projectRepository->isProjectExist($projectId);
+    return $this->projectRepository->getProjectPhotoByProjectIdRepo($projectId);
   }
 
   public function storeProjectPhoto($projectId, $projectPhoto)
@@ -140,7 +124,7 @@ class ProjectService implements ProjectInterface
     try {
       $this->projectRepository->isProjectExist($projectId);
       $photoName = time().'_'.$projectPhoto->file('photo')->getClientOriginalName();
-      $photoNameWithPath = 'public/project/'.$photoName;
+      $photoNameWithPath = Config::get('constants_val.path_photo_project').$photoName;
       $this->projectRepository->storeProjectPhotoRepo($projectId, $photoNameWithPath);
       $this->storeProjectPhotoFile($projectPhoto->file('photo'), $photoName);
 
@@ -157,7 +141,7 @@ class ProjectService implements ProjectInterface
     try {
       $photoPath = $this->projectRepository->getProjectPhotoByIdRepo($id);
       $photoName = time().'_'.$projectPhoto->file('photo')->getClientOriginalName();
-      $photoNameWithPath = 'public/project/'.$photoName;
+      $photoNameWithPath = Config::get('constants_val.path_photo_project').$photoName;
       $this->deleteProjectPhotoFile($photoPath[0]->photo_name);
       $this->projectRepository->updateProjectPhotoRepo($id, $photoNameWithPath);
       $this->storeProjectPhotoFile($projectPhoto->file('photo'),  $photoName);
@@ -188,11 +172,11 @@ class ProjectService implements ProjectInterface
 
   public function storeProjectPhotoFile($photoFile, $photoName)
   {
-    Storage::putFileAs('public/project', $photoFile, $photoName);
+    Storage::putFileAs(Config::get('constants_val.path_photo_project'), $photoFile, $photoName);
   }
 
   public function deleteProjectPhotoFile($photoName)
   {
-    Storage::disk('local')->delete($photoName);
+    Storage::disk(Config::get('constants_val.storage_location'))->delete($photoName);
   }
 }
