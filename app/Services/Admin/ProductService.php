@@ -83,7 +83,7 @@ class ProductService implements ProductInterface
     return $this->productRepository->getListProductByCategoryIdRepo($id);
   }
 
-  public function storeProduct(ProductRequest $request)
+  public function storeProduct($request)
   {
     DB::beginTransaction();
     try {

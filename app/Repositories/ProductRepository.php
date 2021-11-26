@@ -111,7 +111,7 @@ class ProductRepository
   }
 
   //Store Product
-  public function storeProductRepo(ProductRequest $request)
+  public function storeProductRepo($request)
   {
     return ProductModel::create([
               'product_type_id' =>  $request->product_type_id,

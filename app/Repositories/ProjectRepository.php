@@ -16,7 +16,7 @@ class ProjectRepository
   public function getListProjectRepo()
   {
     return DB::table('tbl_project as tp')
-            ->select('tp.id','tp.project_name', 'tp.created_at as project_due',
+            ->select('tp.id','tp.project_name', 'tp.project_slug', 'tp.created_at as project_due',
               'tp.seen_count', 'tp.share_count')
             ->get();
   }
@@ -55,16 +55,16 @@ class ProjectRepository
   {
     return DB::table('tbl_project_photo as tpjp')
             ->where('project_id', $id)
-            ->select('tpjp.id', 'tpjp.photo_name as photo_path')
+            ->select('tpjp.id', 'tpjp.photo_name')
             ->get();
   }
 
   public function getProjectPhotoByIdRepo($photoId)
   {
     return DB::table('tbl_project_photo as tpjp')
-      ->where('id', $photoId)
-      ->select('tpjp.id', 'tpjp.photo_name as photo_path')
-      ->get();
+            ->where('id', $photoId)
+            ->select('tpjp.id', 'tpjp.photo_name')
+            ->get();
   }
 
   // Store project
