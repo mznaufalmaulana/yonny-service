@@ -89,7 +89,7 @@ class ProductController extends Controller
     try {
 //      dd($request);
 //      $request->validated();
-      $result = $this->product->storeProduct($request);
+//      $result = $this->product->storeProduct($request);
       return $this->returnSuccess($request->all(), "success");
     }
     catch (Exception $ex)
