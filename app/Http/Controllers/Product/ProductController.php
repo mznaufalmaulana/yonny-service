@@ -87,9 +87,10 @@ class ProductController extends Controller
   public function storeProduct(Request $request): JsonResponse
   {
     try {
+//      dd($request);
 //      $request->validated();
       $result = $this->product->storeProduct($request);
-      return $this->returnSuccess($result, "success");
+      return $this->returnSuccess($request->all(), "success");
     }
     catch (Exception $ex)
     {
