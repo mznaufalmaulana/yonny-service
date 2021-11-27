@@ -87,8 +87,16 @@ class ProductController extends Controller
   public function storeProduct(ProductRequest $request): JsonResponse
   {
     try {
-//      $result = $this->product->storeProduct($request);
-      return $this->returnSuccess($request->validationData(), "success");
+      $result = $this->product->storeProduct($request);
+//      $request->product_photo = explode(",",$request->product_photo[0]);
+//      $temp = [];
+//      foreach ($request->file('product_photo') as $file)
+//      {
+////        $temp = time().'_'.$file->getClientOriginalName();
+//        array_push($temp, $file->getClientOriginalName());
+//
+//      }
+      return $this->returnSuccess($result, "success");
     }
     catch (Exception $ex)
     {

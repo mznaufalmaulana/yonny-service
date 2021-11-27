@@ -88,22 +88,24 @@ class ProductService implements ProductInterface
     DB::beginTransaction();
     try {
       $product = $this->productRepository->storeProductRepo($request);
-
+      $request->product_category_id = explode(",",$request->product_category_id[0]);
       foreach ($request->product_category_id as $category)
       {
         $this->productRepository->storeCategoryOfProductRepo($category, $product->id);
       }
 
-      foreach ($request->file('product_photo') as $file)
-      {
-        $photoName = time().'_'.$file->getClientOriginalName();
-        $photoNameWithPath = 'public/product/'.$photoName;
-        $this->productRepository->storeProductPhotoRepo($product->id, $photoNameWithPath);
-        $this->storeProductPhotoFile($file, $photoName);
-      }
+//      foreach ($request->file('product_photo') as $file)
+//      {
+//        $photoName = time().'_'.$file->getClientOriginalName();
+//        $photoNameWithPath = 'public/product/'.$photoName;
+//        $this->productRepository->storeProductPhotoRepo($product->id, $photoNameWithPath);
+//        $this->storeProductPhotoFile($file, $photoName);
+//      }
 
       DB::commit();
-      return true;
+      $result = new \stdClass();
+      $result->product_id = $product->id;
+      return $result;
     }
     catch (\Exception $ex)
     {
