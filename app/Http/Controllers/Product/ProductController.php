@@ -9,6 +9,7 @@ use App\Http\Requests\ProductPagingRequest;
 use App\Http\Requests\ProductRequest;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -86,9 +87,8 @@ class ProductController extends Controller
   public function storeProduct(ProductRequest $request): JsonResponse
   {
     try {
-      $request->validated();
-      $result = $this->product->storeProduct($request);
-      return $this->returnSuccess($result, "success");
+//      $result = $this->product->storeProduct($request);
+      return $this->returnSuccess($request->validationData(), "success");
     }
     catch (Exception $ex)
     {
@@ -111,7 +111,6 @@ class ProductController extends Controller
   public function updateProduct($id, ProductRequest $request): JsonResponse
   {
     try {
-      $request->validated();
       $result = $this->product->updateProduct($id, $request);
       return $this->returnSuccess($result, "success");
     }
