@@ -92,7 +92,6 @@ class ProductController extends Controller
 //      $temp = [];
 //      foreach ($request->file('product_photo') as $file)
 //      {
-////        $temp = time().'_'.$file->getClientOriginalName();
 //        array_push($temp, $file->getClientOriginalName());
 //
 //      }

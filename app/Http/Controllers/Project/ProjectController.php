@@ -59,7 +59,6 @@ class ProjectController extends Controller
   public function storeProject(ProjectRequest $request)
   {
     try {
-      $request->validated();
       $project = $this->project->storeProject($request);
       return $this->returnSuccess($project, 'success');
     }
@@ -84,7 +83,6 @@ class ProjectController extends Controller
   public function updateProject($id, ProjectRequest $request)
   {
     try {
-      $request->validated();
       $project = $this->project->updateProject($id, $request);
       return $this->returnSuccess($project, 'success');
     }
@@ -121,7 +119,6 @@ class ProjectController extends Controller
   public function storeProjectPhoto($photoId, PhotoRequest $request)
   {
     try {
-      $request->validated();
       $result = $this->project->storeProjectPhoto($photoId, $request);
       return $this->returnSuccess($result, "success");
     }

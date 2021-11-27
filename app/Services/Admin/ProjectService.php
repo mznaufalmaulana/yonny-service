@@ -54,17 +54,19 @@ class ProjectService implements ProjectInterface
   {
     DB::beginTransaction();
     try {
-      $result = $this->projectRepository->storeProjectRepo($project);
-      foreach ($project->file('project_photo') as $file)
-      {
-        $photoName = time().'_'.$file->getClientOriginalName();
-        $photoNameWithPath = Config::get('constants_val.path_photo_project').$photoName;
-        $this->projectRepository->storeProjectPhotoRepo($result->id, $photoNameWithPath);
-        $this->storeProjectPhotoFile($file, $photoName);
-      }
+      $proj = $this->projectRepository->storeProjectRepo($project);
+//      foreach ($project->file('project_photo') as $file)
+//      {
+//        $photoName = time().'_'.$file->getClientOriginalName();
+//        $photoNameWithPath = Config::get('constants_val.path_photo_project').$photoName;
+//        $this->projectRepository->storeProjectPhotoRepo($result->id, $photoNameWithPath);
+//        $this->storeProjectPhotoFile($file, $photoName);
+//      }
 
       DB::commit();
-      return true;
+      $result = new \stdClass();
+      $result->project_id = $proj->id;
+      return $result;
     }
     catch (\Exception $ex)
     {
