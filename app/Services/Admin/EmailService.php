@@ -85,9 +85,10 @@ class EmailService implements EmailInterface
 
   public function subscribeEmail($email)
   {
-    try {
-      $email->is_subscribe = Config::get('constants_val.subscribe_true');
-      $this->emailRepository->storeEmailRepo($email);
+    $email->is_subscribe = Config::get('constants_val.subscribe_true');
+    $result = $this->emailRepository->storeEmailRepo($email);
+    if($result)
+    {
       $content = new \stdClass();
       $content->title = "Hello From Batu Yonny";
       $content->body = "You are will be recieve news update from us";
@@ -97,10 +98,11 @@ class EmailService implements EmailInterface
       Mail::to($email->email_address)->send(new SubscribeMail($content));
       return true;
     }
-    catch (Exception $ex)
+    else
     {
-      throw $ex;
+      throw new Exception("You have subcribed");
     }
+
   }
 
   public function broadcastEmail($broadcast)

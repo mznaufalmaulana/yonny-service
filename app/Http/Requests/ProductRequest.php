@@ -24,13 +24,13 @@ class ProductRequest extends FormRequest
     else if (request()->isMethod('put'))
     {
       return [
-        'product_category_id' =>  'sometimes | required | array',
-        'product_type_id' =>  'sometimes | required | numeric',
-        'product_name'  =>  'sometimes | required | min:4',
-        'description' =>  'sometimes | required | string | min:4',
-        'is_active' =>  'sometimes | required | numeric',
-        'seen_count' =>  'sometimes | required | numeric | min:0',
-        'share_count' =>  'sometimes | required | numeric | min:0',
+        'product_category_id' =>  'required | array',
+        'product_type_id' =>  'required | numeric',
+        'product_name'  =>  'required | min:4',
+        'description' =>  'required | string | min:4',
+        'is_active' =>  'required | numeric',
+        'seen_count' =>  'required | numeric | min:0',
+        'share_count' =>  'required | numeric | min:0',
       ];
     }
     return [];

@@ -14,8 +14,8 @@ Route::prefix('project')->middleware('api')->group(function () {
 
   Route::get('{id}/project-photo-list', [ProjectController::class, 'getListProjectPhoto']);
   Route::post('{id}/store-project-photo', [ProjectController::class, 'storeProjectPhoto']);
-  Route::put('{id}/update-project-photo', 'Project\ProjectController@updateProjectPhoto');
-  Route::delete('{id}/delete-project-photo', 'Project\ProjectController@deleteProjectPhoto');
+  Route::put('{id}/update-project-photo', [ProjectController::class, 'updateProjectPhoto']);
+  Route::delete('{id}/delete-project-photo', [ProjectController::class, 'deleteProjectPhoto']);
 
 });
 
