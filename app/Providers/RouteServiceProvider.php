@@ -128,6 +128,11 @@ class RouteServiceProvider extends ServiceProvider
         ->middleware('api')
         ->namespace($this->namespace)
         ->group(base_path('routes/admin/authentication.php'));
+
+      Route::prefix('admin')
+        ->middleware('api')
+        ->namespace($this->namespace)
+        ->group(base_path('routes/admin/user.php'));
     }
 
     public function mapStoreRoute()

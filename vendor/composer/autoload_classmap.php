@@ -46,6 +46,7 @@ return array(
     'App\\Http\\Requests\\LoginRequest' => $baseDir . '/app/Http/Requests/LoginRequest.php',
     'App\\Http\\Requests\\PhotoRequest' => $baseDir . '/app/Http/Requests/PhotoRequest.php',
     'App\\Http\\Requests\\ProductCategoryRequest' => $baseDir . '/app/Http/Requests/ProductCategoryRequest.php',
+    'App\\Http\\Requests\\ProductPagingRequest' => $baseDir . '/app/Http/Requests/ProductPagingRequest.php',
     'App\\Http\\Requests\\ProductRequest' => $baseDir . '/app/Http/Requests/ProductRequest.php',
     'App\\Http\\Requests\\ProductTypeRequest' => $baseDir . '/app/Http/Requests/ProductTypeRequest.php',
     'App\\Http\\Requests\\ProjectRequest' => $baseDir . '/app/Http/Requests/ProjectRequest.php',

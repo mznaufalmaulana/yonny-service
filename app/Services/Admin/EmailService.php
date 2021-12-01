@@ -3,8 +3,9 @@
 
 namespace App\Services\Admin;
 
-
 use App\Contracts\Admin\Email\EmailInterface;
+use App\Jobs\BroadcastMailJob;
+use App\Jobs\SubscribeMailJob;
 use App\Mail\BroadcastMail;
 use App\Mail\SendMail;
 use App\Mail\SubscribeMail;
@@ -13,8 +14,6 @@ use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Mail;
-use Symfony\Component\Mime\Header\MailboxListHeader;
-use function PHPUnit\Framework\isEmpty;
 
 class EmailService implements EmailInterface
 {
@@ -85,30 +84,31 @@ class EmailService implements EmailInterface
 
   public function subscribeEmail($email)
   {
-    $email->is_subscribe = Config::get('constants_val.subscribe_true');
-    $result = $this->emailRepository->storeEmailRepo($email);
-    if($result)
-    {
+    try {
+      $email->is_subscribe = Config::get('constants_val.subscribe_true');
+      $this->emailRepository->storeEmailRepo($email);
+
       $content = new \stdClass();
       $content->title = "Hello From Batu Yonny";
       $content->body = "You are will be recieve news update from us";
       $content->link = "link";
       $content->footer = "Thanks";
 
-      Mail::to($email->email_address)->send(new SubscribeMail($content));
+      SubscribeMailJob::dispatch($email->email_address,$content)->onQueue('subscribe');
+
       return true;
     }
-    else
+    catch (Exception $ex)
     {
       throw new Exception("You have subcribed");
     }
-
   }
 
   public function broadcastEmail($broadcast)
   {
     try {
       $emails = $this->emailRepository->getEmailByListIdRepo($broadcast->email_id_list);
+      $timeCount = 0;
       foreach ($emails as $email)
       {
         $content = new \stdClass();
@@ -116,7 +116,12 @@ class EmailService implements EmailInterface
         $content->body = "New collection special for you order now !!!";
         $content->link = "link";
         $content->footer = "Thanks";
-        Mail::to($email->email_address)->send(new BroadcastMail($content));
+
+        $delaySeconds = $timeCount*5;
+        $timeCount++;
+        BroadcastMailJob::dispatch($email->email_address,$content)
+          ->onQueue('broadcast')
+          ->delay(now()->addSeconds($delaySeconds));
       }
       return true;
     }

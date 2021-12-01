@@ -183,6 +183,8 @@ return [
         App\Providers\Admin\EmailServiceProvider::class,
         App\Providers\Admin\PromoServiceProvider::class,
         App\Providers\Admin\AuthenticationProvider::class,
+        App\Providers\Admin\UserServiceProvider::class,
+
 
     ],
 
