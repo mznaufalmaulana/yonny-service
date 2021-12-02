@@ -3,7 +3,7 @@
 use App\Http\Controllers\Region\RegionController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('region')->middleware('api')->group(function () {
+Route::prefix('region')->middleware('auth:sanctum')->group(function () {
   Route::get('list', [RegionController::class, 'getListRegion']);
   Route::get('{id}', [RegionController::class, 'getRegionById']);
   Route::post('store', [RegionController::class, 'storeRegion']);
