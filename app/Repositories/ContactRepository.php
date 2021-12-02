@@ -22,7 +22,7 @@ class ContactRepository
     return DB::table('tbl_contact as tc')
             ->join('ms_region as mr', 'tc.region_id', '=', 'mr.id')
             ->where('tc.id', $id)
-            ->select('tc.id', 'mr.region', 'tc.address', 'tc.phone', 'tc.email')
+            ->select('tc.id', 'mr.id as region_id', 'mr.region', 'tc.address', 'tc.phone', 'tc.email')
             ->get();
   }
 
