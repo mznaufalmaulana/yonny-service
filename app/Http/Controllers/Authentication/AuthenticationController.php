@@ -37,7 +37,7 @@ class AuthenticationController extends Controller
       return response()->json([
         'message' => 'success',
         'data' =>  $result['user'],
-        'access-token'  =>  $result['token'],
+        'token'  =>  $result['token'],
       ])->withCookie($result['cookie']);
     }
     catch (Exception $ex)
