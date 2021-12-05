@@ -58,7 +58,6 @@ class PromoController extends Controller
     public function storePromo(PromoRequest $request): JsonResponse
     {
       try {
-        $request->validated();
         $result = $this->promo->storePromo($request);
         return $this->returnSuccess($result, 'success');
       }

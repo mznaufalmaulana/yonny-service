@@ -51,7 +51,6 @@ class PromoService implements PromoInterface
       return true;
     }
     throw new Exception();
-
   }
 
   public function updatePromo($id, $promo)
