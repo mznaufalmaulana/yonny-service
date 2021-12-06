@@ -15,7 +15,7 @@ return [
   'path_photo_project' => 'public/project/',
 
   //promo
-  'path_photo_promo' => 'public/promo/',
+  'path_photo_promo' => 'promo/',
 
   //storage
   'storage_location' => 'local',

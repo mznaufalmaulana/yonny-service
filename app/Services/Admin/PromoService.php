@@ -96,11 +96,11 @@ class PromoService implements PromoInterface
 
   public function storePromoPhotoFile($photoFile, $photoName)
   {
-    Storage::putFileAs(Config::get('constants_val.path_photo_promo'), $photoFile, $photoName);
+    Storage::putFileAs('public/'.Config::get('constants_val.path_photo_promo'), $photoFile, $photoName);
   }
 
   public function deletePromoPhotoFile($photoName)
   {
-    Storage::disk(Config::get('constants_val.storage_location'))->delete($photoName);
+    Storage::disk(Config::get('constants_val.storage_location'))->delete('public/'.$photoName);
   }
 }
