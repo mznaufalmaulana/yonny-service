@@ -41,6 +41,11 @@ class ProductRepository
             ->where('tpd.is_active','=', '1');
   }
 
+  public function queryProductName($query, $name)
+  {
+    return $query->where('tpd.product_name', 'like', "%$name%");
+  }
+
   public function queryCategory($query, $categoryId)
   {
     return $query->where('mc.id', $categoryId);

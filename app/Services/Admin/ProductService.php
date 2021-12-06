@@ -43,6 +43,10 @@ class ProductService implements ProductInterface
   public function getListProductStore($request)
   {
     $productQuery = $this->productRepository->getListProductStoreRepo();
+    if ($request->name)
+    {
+      $productQuery = $this->productRepository->queryProductName($productQuery, $request->name);
+    }
     if ($request->category)
     {
       $productQuery = $this->productRepository->queryCategory($productQuery, $request->category);

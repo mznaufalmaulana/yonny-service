@@ -11,6 +11,7 @@ class ProductPagingRequest extends FormRequest
   public function rules(): array
   {
     return [
+      'name' => 'nullable | string',
       'category' => 'nullable | numeric | min:0',
       'type' => 'nullable | numeric | min:0',
       'sort' => 'nullable | string',
