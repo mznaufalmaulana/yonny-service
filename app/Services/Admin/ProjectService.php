@@ -174,11 +174,11 @@ class ProjectService implements ProjectInterface
 
   public function storeProjectPhotoFile($photoFile, $photoName)
   {
-    Storage::putFileAs(Config::get('constants_val.path_photo_project'), $photoFile, $photoName);
+    Storage::putFileAs('public/'.Config::get('constants_val.path_photo_project'), $photoFile, $photoName);
   }
 
   public function deleteProjectPhotoFile($photoName)
   {
-    Storage::disk(Config::get('constants_val.storage_location'))->delete($photoName);
+    Storage::disk(Config::get('constants_val.storage_location'))->delete('public/'.$photoName);
   }
 }

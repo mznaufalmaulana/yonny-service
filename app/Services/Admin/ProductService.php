@@ -101,7 +101,7 @@ class ProductService implements ProductInterface
 //      foreach ($request->file('product_photo') as $file)
 //      {
 //        $photoName = time().'_'.$file->getClientOriginalName();
-//        $photoNameWithPath = 'public/product/'.$photoName;
+//        $photoNameWithPath = Config::get('constants_val.path_photo_product').$photoName;
 //        $this->productRepository->storeProductPhotoRepo($product->id, $photoNameWithPath);
 //        $this->storeProductPhotoFile($file, $photoName);
 //      }
@@ -223,11 +223,11 @@ class ProductService implements ProductInterface
 
   public function storeProductPhotoFile($photoFile, $photoName)
   {
-    Storage::putFileAs(Config::get('constants_val.path_photo_product'), $photoFile, $photoName);
+    Storage::putFileAs('public/'.Config::get('constants_val.path_photo_product'), $photoFile, $photoName);
   }
 
   public function deleteProductPhotoFile($photoName)
   {
-    Storage::disk(Config::get('constants_val.storage_location'))->delete($photoName);
+    Storage::disk(Config::get('constants_val.storage_location'))->delete('public/'.$photoName);
   }
 }
