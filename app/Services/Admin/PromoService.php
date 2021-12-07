@@ -67,7 +67,7 @@ class PromoService implements PromoInterface
         $photoName = time().'_'.$promo->file('photo_name')->getClientOriginalName();
         $photoNameWithPath = Config::get('constants_val.path_photo_promo').$photoName;
         $this->deletePromoPhotoFile($photoPath[0]->photo_name);
-        $this->storePromoPhotoFile($promo->file('photo_name'), $photoPath[0]->photo_name);
+        $this->storePromoPhotoFile($promo->file('photo_name'), $photoName);
         $promo->photo_name = $photoNameWithPath;
       }
       else

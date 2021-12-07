@@ -13,7 +13,7 @@ class PromoRequest extends FormRequest
     if(request()->isMethod('post'))
     {
       return [
-        'photo_name'  =>  'required | image | mimes:jpg,jpeg,png | max:5000',
+        'photo_name'  =>  'required | image | mimetypes:image/jpeg,image/png,image/jpg | max:5000',
         'link' =>  'required | string',
         'order' =>  'required | numeric | min:0',
         'is_headline' =>  'required | numeric |digits_between: 0,1',
@@ -22,7 +22,7 @@ class PromoRequest extends FormRequest
     else if (request()->isMethod('put'))
     {
       return [
-        'photo_name'  =>  'sometimes | image | mimes:jpg,jpeg,png | max:5000',
+        'photo_name'  =>  'sometimes | image | mimetypes:image/jpeg,image/png,image/jpg | max:5000',
         'link' =>  'required | string',
         'order' =>  'required | numeric | min:0',
         'is_headline' =>  'required | numeric |digits_between: 0,1',
