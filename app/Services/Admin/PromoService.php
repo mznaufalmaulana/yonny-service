@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Services\Admin;
-
 
 use App\Contracts\Admin\Promo\PromoInterface;
 use App\Repositories\PromoRepository;
@@ -20,6 +18,11 @@ class PromoService implements PromoInterface
   )
   {
     $this->promoRepository = $promoRepository;
+  }
+
+  public function getListPromoAll()
+  {
+    return $this->promoRepository->getListPromoAllRepo();
   }
 
   public function getListPromo()

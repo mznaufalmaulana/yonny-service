@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Services\Admin;
 
 use App\Contracts\Admin\Email\EmailInterface;

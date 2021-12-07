@@ -10,26 +10,38 @@ use Illuminate\Http\JsonResponse;
 
 class PromoController extends Controller
 {
-    private $promo;
-    public function __construct
-    (
-      PromoInterface $promo
-    )
-    {
-      $this->promo = $promo;
-    }
+  private $promo;
+  public function __construct
+  (
+    PromoInterface $promo
+  )
+  {
+    $this->promo = $promo;
+  }
 
-    public function getListPromo(): JsonResponse
-    {
-      try {
-        $promos = $this->promo->getListPromo();
-        return $this->returnSuccess($promos, 'success');
-      }
-      catch (Exception $ex)
-      {
-        return $this->returnFail($ex->getMessage(), 'fail');
-      }
+  public function getListPromoAll(): JsonResponse
+  {
+    try {
+      $promos = $this->promo->getListPromoAll();
+      return $this->returnSuccess($promos, 'success');
     }
+    catch (Exception $ex)
+    {
+      return $this->returnFail($ex->getMessage(), 'fail');
+    }
+  }
+
+  public function getListPromo(): JsonResponse
+  {
+    try {
+      $promos = $this->promo->getListPromo();
+      return $this->returnSuccess($promos, 'success');
+    }
+    catch (Exception $ex)
+    {
+      return $this->returnFail($ex->getMessage(), 'fail');
+    }
+  }
 
   public function getListPromoHeadline(): JsonResponse
   {

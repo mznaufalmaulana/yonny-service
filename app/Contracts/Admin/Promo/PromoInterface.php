@@ -6,6 +6,7 @@ namespace App\Contracts\Admin\Promo;
 
 interface PromoInterface
 {
+  public function getListPromoAll();
   public function getListPromo();
   public function getListPromoHeadline();
   public function getPromoById($id);
