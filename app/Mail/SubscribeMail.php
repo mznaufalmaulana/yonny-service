@@ -25,6 +25,8 @@ class SubscribeMail extends Mailable
         'link'  => $this->content->link,
         'footer'  =>  $this->content->footer,
       ];
-      return $this->markdown('email.subscribe_mail', compact('data'));
+      return $this->from(env('MAIL_FROM_ADDRESS'), config('constants_val.email_name'))
+              ->subject(config('constants_val.subscribe_subject'))
+              ->markdown('email.subscribe_mail', compact('data'));
     }
 }

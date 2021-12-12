@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Mail\BroadcastMail;
+use App\Mail\BroadcastMailPromo;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -14,14 +15,8 @@ class BroadcastMailJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
     public $tries = 3;
-    public $timeout = 120;
-
+    public $timeout = 60;
     private $emailAddress;
     private $content;
     public function __construct($emailAddress, $content)
@@ -30,14 +25,16 @@ class BroadcastMailJob implements ShouldQueue
       $this->content = $content;
     }
 
-    /**
-     * Execute the job.
-     *
-     * @return void
-     */
     public function handle()
     {
-      $broadcastEmail = new BroadcastMail($this->content);
+      if ( 1 == $this->content->isPromo )
+      {
+        $broadcastEmail = new BroadcastMailPromo($this->content);
+      }
+      else
+      {
+        $broadcastEmail = new BroadcastMail($this->content);
+      }
       Mail::to($this->emailAddress)->send($broadcastEmail);
     }
 }

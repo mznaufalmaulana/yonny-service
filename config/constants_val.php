@@ -12,6 +12,7 @@ return [
 
   //project
   'project_paging_limit' => 10,
+  'project_popular_limit' => 3,
   'path_photo_project' => 'project/',
 
   //promo
@@ -19,4 +20,10 @@ return [
 
   //storage
   'storage_location' => 'local',
+
+  //email
+  'email_name' => 'Batu Yonny',
+  'subscribe_subject' => 'Subscribe Batu Yonny',
+  'broadcast_subject' => 'Promo Product Batu Yonny',
+  'send_subject' => 'Batu Yonny',
 ];

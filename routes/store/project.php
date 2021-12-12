@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('project')->group(function () {
   Route::get('list', [ProjectController::class, 'getListProjectStore']);
+  Route::get('list/popular', [ProjectController::class, 'getListPupolarProjectStore']);
   Route::get('detail/share-count/{id}', [ProjectController::class, 'incrementShareProject']);
   Route::get('detail/{id}', [ProjectController::class, 'getProjectById']);
 });

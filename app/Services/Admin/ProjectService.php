@@ -50,6 +50,11 @@ class ProjectService implements ProjectInterface
     return  $projectQuery->appends($request->input())->toArray();
   }
 
+  public function getListPopularProject()
+  {
+    return $this->projectRepository->getListPopularProject();
+  }
+
   public function storeProject($project)
   {
     DB::beginTransaction();
@@ -59,11 +64,12 @@ class ProjectService implements ProjectInterface
 //      {
 //        $photoName = time().'_'.$file->getClientOriginalName();
 //        $photoNameWithPath = Config::get('constants_val.path_photo_project').$photoName;
-//        $this->projectRepository->storeProjectPhotoRepo($result->id, $photoNameWithPath);
+//        $this->projectRepository->storeProjectPhotoRepo($proj->id, $photoNameWithPath);
 //        $this->storeProjectPhotoFile($file, $photoName);
 //      }
 
       DB::commit();
+
       $result = new \stdClass();
       $result->project_id = $proj->id;
       return $result;
@@ -181,4 +187,5 @@ class ProjectService implements ProjectInterface
   {
     Storage::disk(Config::get('constants_val.storage_location'))->delete('public/'.$photoName);
   }
+
 }

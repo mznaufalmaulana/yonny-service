@@ -14,27 +14,19 @@ class SubscribeMailJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
+    public $tries = 3;
+    public $timeout = 60;
     private $emailAddress;
     private $content;
     public function __construct($emailAddress, $content)
     {
-        $this->emailAddress = $emailAddress;
-        $this->content = $content;
+      $this->emailAddress = $emailAddress;
+      $this->content = $content;
     }
 
-    /**
-     * Execute the job.
-     *
-     * @return void
-     */
     public function handle()
     {
-        $subEmail = new SubscribeMail($this->content);
-        Mail::to($this->emailAddress)->send($subEmail);
+      $subEmail = new SubscribeMail($this->content);
+      Mail::to($this->emailAddress)->send($subEmail);
     }
 }

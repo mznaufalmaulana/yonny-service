@@ -16,6 +16,7 @@ interface ProductInterface
   public function getProductById($id);
   public function storeProduct($request);
   public function incrementShareProduct($id);
+  public function incrementSeenProduct($id);
   public function updateProduct($id, $request);
   public function deleteProduct($id);
 

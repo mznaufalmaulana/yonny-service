@@ -16,13 +16,13 @@ class PromoRequest extends FormRequest
         'photo_name'  =>  'required | image | mimetypes:image/jpeg,image/png,image/jpg | max:5000',
         'link' =>  'required | string',
         'order' =>  'required | numeric | min:0',
-        'is_headline' =>  'required | numeric |digits_between: 0,1',
+        'is_headline' =>  'required | numeric | digits_between: 0,1',
       ];
     }
     else if (request()->isMethod('put'))
     {
       return [
-        'photo_name'  =>  'sometimes | image | mimetypes:image/jpeg,image/png,image/jpg | max:5000',
+        'photo_name'  =>  'nullable | image | mimetypes:image/jpeg,image/png,image/jpg | max:5000',
         'link' =>  'required | string',
         'order' =>  'required | numeric | min:0',
         'is_headline' =>  'required | numeric |digits_between: 0,1',

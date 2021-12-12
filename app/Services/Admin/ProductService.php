@@ -127,6 +127,15 @@ class ProductService implements ProductInterface
     return true;
   }
 
+  public function incrementSeenProduct($id)
+  {
+    $product = $this->productRepository->isProductExist($id);
+    $product->seen_count +=1;
+    $this->productRepository->updateProductRepo($id, $product);
+
+    return true;
+  }
+
   public function updateProduct($id, $request)
   {
     DB::beginTransaction();

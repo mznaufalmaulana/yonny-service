@@ -4,11 +4,13 @@ namespace App\Services\Admin;
 
 use App\Contracts\Admin\Email\EmailInterface;
 use App\Jobs\BroadcastMailJob;
+use App\Jobs\SendMailJob;
 use App\Jobs\SubscribeMailJob;
 use App\Mail\BroadcastMail;
 use App\Mail\SendMail;
 use App\Mail\SubscribeMail;
 use App\Repositories\EmailRepository;
+use App\Repositories\PromoRepository;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Config;
@@ -17,12 +19,15 @@ use Illuminate\Support\Facades\Mail;
 class EmailService implements EmailInterface
 {
   private $emailRepository;
+  private $promoRepository;
   public function __construct
   (
-    EmailRepository $emailRepository
+    EmailRepository $emailRepository,
+    PromoRepository $promoRepository
   )
   {
     $this->emailRepository = $emailRepository;
+    $this->promoRepository = $promoRepository;
   }
 
   public function getListEmail()
@@ -106,17 +111,26 @@ class EmailService implements EmailInterface
   public function broadcastEmail($broadcast)
   {
     try {
+      if(1 == $broadcast->is_promo)
+      {
+        $promo = $this->promoRepository->getPromoByIdRepo($broadcast->promo_id);
+        $content = new \stdClass();
+        $content->body = "";
+        $content->photoName =  $promo[0]->photo_name;
+        $content->link = $promo[0]->link;
+        $content->isPromo = $broadcast->is_promo;
+      }else {
+        $content = new \stdClass();
+        $content->body = $broadcast->broadcast_message;
+        $content->photoName =  "";
+        $content->link = "";
+        $content->isPromo = $broadcast->is_promo;
+      }
       $emails = $this->emailRepository->getEmailByListIdRepo($broadcast->email_id_list);
       $timeCount = 0;
       foreach ($emails as $email)
       {
-        $content = new \stdClass();
-        $content->title = "Hello From Batu Yonny";
-        $content->body = "New collection special for you order now !!!";
-        $content->link = "link";
-        $content->footer = "Thanks";
-
-        $delaySeconds = $timeCount*5;
+        $delaySeconds = $timeCount*2;
         $timeCount++;
         BroadcastMailJob::dispatch($email->email_address,$content)
           ->onQueue('broadcast')
@@ -173,23 +187,12 @@ class EmailService implements EmailInterface
   {
     DB::beginTransaction();
     try {
-      $result = $this->emailRepository->isEmailAddressExistRepo($email->email_address);
-      if(count($result) != 0) {
-
-        $content = new \stdClass();
-        $content->title = "Hello From Batu Yonny";
-        $content->body = "You are will be recieve news update from us";
-        $content->link = "link";
-        $content->footer = "Thanks";
-
-        Mail::to($email->email_address)->send(new SendMail($content));
-        DB::commit();
-        return true;
-      }
-      else
-      {
-        throw new Exception('email not found');
-      }
+      $result = $this->emailRepository->isEmailExistRepo($email->email_id);
+      $content = new \stdClass();
+      $content->body = $email->message;
+      SendMailJob::dispatch($result->email_address, $content)->onQueue('sendmail');
+      DB::commit();
+      return true;
     }
     catch (Exception $ex)
     {

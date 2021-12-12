@@ -115,6 +115,18 @@ class ProductController extends Controller
     }
   }
 
+  public function incrementSeenProduct($id): JsonResponse
+  {
+    try {
+      $product = $this->product->incrementSeenProduct($id);
+      return $this->returnSuccess($product, "success");
+    }
+    catch (Exception $ex)
+    {
+      return $this->returnFail("", $ex->getMessage()) ;
+    }
+  }
+
   public function updateProduct($id, ProductRequest $request): JsonResponse
   {
     try {

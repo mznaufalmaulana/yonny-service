@@ -56,6 +56,18 @@ class ProjectController extends Controller
     }
   }
 
+  public function getListPupolarProjectStore()
+  {
+    try {
+      $projects = $this->project->getListPopularProject();
+      return $this->returnSuccess($projects, 'success');
+    }
+    catch (Exception $ex)
+    {
+      return $this->returnFail('', $ex->getMessage());
+    }
+  }
+
   public function storeProject(ProjectRequest $request)
   {
     try {

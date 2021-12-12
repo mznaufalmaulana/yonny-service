@@ -1,0 +1,22 @@
+.card {
+    max-width: 800px;
+    margin: 0 auto;
+    float: none;
+    border-radius: 8px;
+    box-shadow: 10px 10px darkgrey;
+}
+
+.img-promo{
+    width: 100%;
+    /*padding: ;*/
+    /*margin: 40px;*/
+}
+
+.content-promo{
+    background-color: white;
+    /*margin: 50 50px;*/
+}
+
+.button-promo{
+    width: 150px;
+}

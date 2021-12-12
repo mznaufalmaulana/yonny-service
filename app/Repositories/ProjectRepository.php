@@ -41,6 +41,16 @@ class ProjectRepository
     return $query->paginate(Config::get('constants_val.project_paging_limit'));
   }
 
+  public function getListPopularProject()
+  {
+    return DB::table('tbl_project as tp')
+      ->select('tp.id','tp.project_name', 'tp.project_slug',
+        'tp.description', 'tp.created_at as project_due', 'tp.share_count')
+      ->orderBy('tp.share_count', 'DESC')
+      ->limit(Config::get('constants_val.project_popular_limit'))
+      ->get();
+  }
+
   // Get project
   public function getProjectByIdRepo($id)
   {

@@ -20,11 +20,10 @@ class BroadcastMail extends Mailable
     public function build()
     {
       $data = [
-        'title' => $this->content->title,
         'body'  => $this->content->body,
-        'link'  => $this->content->link,
-        'footer'  =>  $this->content->footer,
       ];
-      return $this->markdown('email.broadcast_mail', compact('data'));
+      return $this->from(env('MAIL_FROM_ADDRESS'), config('constants_val.email_name'))
+              ->subject(config('constants_val.broadcast_subject'))
+              ->text('email.broadcast_email_plain', compact('data'));
     }
 }

@@ -13,8 +13,10 @@ class BroadcastRequest extends FormRequest
     if(request()->isMethod('post'))
     {
       return [
-        'broadcast_message' =>  'required | string',
-        'email_id_list' => 'required | array'
+        'broadcast_message' =>  'nullable | string',
+        'promo_id' => 'nullable | numeric',
+        'email_id_list' => 'required | array',
+        'is_promo' => 'required | numeric | digits_between: 1,2'
       ];
     }
     return [];
