@@ -9,7 +9,7 @@ Route::prefix('promo')->middleware('api')->group(function () {
   Route::get('list/all', [PromoController::class, 'getListPromoAll']);
   Route::get('{id}', [PromoController::class, 'getPromoById']);
   Route::post('store', [PromoController::class, 'storePromo']);
-  Route::put('{id}/update', [PromoController::class, 'updatePromo']);
+  Route::post('{id}/update', [PromoController::class, 'updatePromo']);
   Route::delete('{id}/delete', [PromoController::class, 'deletePromo']);
 });
 
