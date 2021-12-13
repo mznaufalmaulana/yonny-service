@@ -9,12 +9,12 @@ Route::prefix('project')->middleware('api')->group(function () {
   Route::get('list', [ProjectController::class, 'getListProject']);
   Route::get('{id}', [ProjectController::class, 'getProjectById']);
   Route::post('store', [ProjectController::class, 'storeProject']);
-  Route::put('{id}/update', [ProjectController::class, 'updateProject']);
+  Route::post('{id}/update', [ProjectController::class, 'updateProject']);
   Route::delete('{id}/delete', [ProjectController::class, 'deleteProject']);
 
   Route::get('{id}/project-photo-list', [ProjectController::class, 'getListProjectPhoto']);
   Route::post('{id}/store-project-photo', [ProjectController::class, 'storeProjectPhoto']);
-  Route::put('{id}/update-project-photo', [ProjectController::class, 'updateProjectPhoto']);
+  Route::post('{id}/update-project-photo', [ProjectController::class, 'updateProjectPhoto']);
   Route::delete('{id}/delete-project-photo', [ProjectController::class, 'deleteProjectPhoto']);
 
 });
