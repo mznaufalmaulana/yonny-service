@@ -15,15 +15,11 @@ Route::prefix('email')->middleware('api')->group(function () {
   Route::delete('message/{id}/delete', [EmailController::class, 'deleteEmailMessage']);
 });
 
-Route::get('broadcast-template', function (){
-  $content = new \stdClass();
-  $content->title = "Hello From Batu Yonny";
-  $content->body = "You are will be receive news update from us";
-  $content->link = "link";
-  $content->footer = "Thanks";
-
-  return new \App\Mail\BroadcastMailPromo($content);
-});
+//Route::get('broadcast-template', function (){
+//  $content = new \stdClass();
+//  $content->link = "link";
+//  return new \App\Mail\SubscribeMail($content);
+//});
 
 Route::fallback(function () {
   return response()->json([

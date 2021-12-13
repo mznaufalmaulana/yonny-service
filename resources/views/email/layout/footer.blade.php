@@ -1,5 +1,7 @@
 @section('footer')
-  <div class="footer">
-    © BATUYONNY. @lang('All rights reserved.')
+  <div class="footer-email">
+    <p class="footer-text">
+      © BATUYONNY. @lang('All rights reserved.')
+    </p>
   </div>
 @endsection

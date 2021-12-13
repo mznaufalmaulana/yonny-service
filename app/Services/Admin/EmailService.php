@@ -91,14 +91,9 @@ class EmailService implements EmailInterface
     try {
       $email->is_subscribe = Config::get('constants_val.subscribe_true');
       $this->emailRepository->storeEmailRepo($email);
-
       $content = new \stdClass();
-      $content->title = "Hello From Batu Yonny";
-      $content->body = "You are will be recieve news update from us";
       $content->link = "link";
-      $content->footer = "Thanks";
-
-      SubscribeMailJob::dispatch($email->email_address,$content)->onQueue('subscribe');
+      SubscribeMailJob::dispatch($email->email_address, $content)->onQueue('subscribe');
 
       return true;
     }

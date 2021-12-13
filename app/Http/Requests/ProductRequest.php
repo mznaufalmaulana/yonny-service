@@ -24,7 +24,7 @@ class ProductRequest extends FormRequest
     else if (request()->isMethod('put'))
     {
       return [
-        'product_category_id' =>  'required | array',
+        'product_category_id' => 'required | array',
         'product_type_id' =>  'required | numeric',
         'product_name'  =>  'required | min:4',
         'description' =>  'required | string | min:4',

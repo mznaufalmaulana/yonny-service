@@ -7,39 +7,65 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Email</title>
 
-{{--  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">--}}
   <style>
-      /*.logo{*/
-      /*    align-content: center;*/
-      /*    width: 200px;*/
-      /*    height: 200px;*/
-      /*}*/
+      .logo-by{
+          margin: 0 auto;
+          max-width: 300px;
+      }
+
       .card {
           max-width: 800px;
           margin: 0 auto;
           float: none;
-          border-radius: 8px;
-          box-shadow: 10px 10px darkgrey;
+          margin-bottom: 30px;
       }
 
-      .img-promo{
-          width: 100%;
-          /*padding: ;*/
-          /*margin: 40px;*/
+      .title-email{
+          font-size: 14pt;
       }
 
-      .content-promo{
+      .content-email{
+          padding: 30px 30px 30px 30px;
           background-color: white;
-          /*margin: 50 50px;*/
+          border-radius: 5px;
       }
 
-      .button-promo{
+      .content-img{
+          margin-top: 30px;
+      }
+
+      .img-email{
+          max-width: 100%;
+          border-radius: 5px;
+      }
+
+      .content-button{
+          margin: 20px auto;
+          background-color: white;
+          text-align: center;
+      }
+
+      .button-email{
           width: 150px;
+          height: 35px;
+          border-radius: 5px;
+          border: none;
       }
 
-      .footer{
-          /*margin-top: 100px;*/
-          align-content: center;
+      .button-email:hover{
+          color: #e8e5ef;
+          background-color: #E69519;
+          border-radius: 5px;
+          border: none;
+      }
+
+      .footer-email{
+          margin-bottom: 20px;
+      }
+
+      .footer-text{
+          font-size: 9pt;
+          text-align: center;
       }
   </style>
 
