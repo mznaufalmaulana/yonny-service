@@ -110,15 +110,12 @@ class EmailService implements EmailInterface
       {
         $promo = $this->promoRepository->getPromoByIdRepo($broadcast->promo_id);
         $content = new \stdClass();
-        $content->body = "";
         $content->photoName =  $promo[0]->photo_name;
         $content->link = $promo[0]->link;
         $content->isPromo = $broadcast->is_promo;
       }else {
         $content = new \stdClass();
         $content->body = $broadcast->broadcast_message;
-        $content->photoName =  "";
-        $content->link = "";
         $content->isPromo = $broadcast->is_promo;
       }
       $emails = $this->emailRepository->getEmailByListIdRepo($broadcast->email_id_list);
@@ -127,7 +124,7 @@ class EmailService implements EmailInterface
       {
         $delaySeconds = $timeCount*2;
         $timeCount++;
-        BroadcastMailJob::dispatch($email->email_address,$content)
+        BroadcastMailJob::dispatch($email->email_address, $content)
           ->onQueue('broadcast')
           ->delay(now()->addSeconds($delaySeconds));
       }

@@ -2,8 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Mail\BroadcastMail;
-use App\Mail\BroadcastMailPromo;
+use App\Mail\SendMail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -11,7 +10,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
 
-class BroadcastMailJob implements ShouldQueue
+class SendMailJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -27,14 +26,7 @@ class BroadcastMailJob implements ShouldQueue
 
     public function handle()
     {
-      if (1 == $this->content->isPromo)
-      {
-        $broadcastEmail = new BroadcastMailPromo($this->content);
-      }
-      else
-      {
-        $broadcastEmail = new BroadcastMail($this->content);
-      }
-      Mail::to($this->emailAddress)->send($broadcastEmail);
+        $sendMail = new SendMail($this->content);
+        Mail::to($this->emailAddress)->send($sendMail);
     }
 }

@@ -137,7 +137,6 @@ class EmailController extends Controller
   public function sendEmailMessage(EmailMessageRequest $request): JsonResponse
   {
     try {
-      $request->validated();
       $result = $this->email->sendEmailMessage($request);
       return $this->returnSuccess($result, 'success');
     }
