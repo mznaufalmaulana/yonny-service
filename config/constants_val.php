@@ -22,6 +22,7 @@ return [
   'storage_location' => 'local',
 
   //email
+  'email_from' => 'batuyonny@gmail.com',
   'email_name' => 'Batu Yonny',
   'subscribe_subject' => 'Subscribe Batu Yonny',
   'broadcast_subject' => 'Promo Product Batu Yonny',
