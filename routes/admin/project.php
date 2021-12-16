@@ -4,7 +4,7 @@
 use App\Http\Controllers\Project\ProjectController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('project')->middleware('api')->group(function () {
+Route::prefix('project')->middleware('auth:sanctum')->group(function () {
 
   Route::get('list', [ProjectController::class, 'getListProject']);
   Route::get('{id}', [ProjectController::class, 'getProjectById']);

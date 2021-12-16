@@ -58,7 +58,7 @@ class ProductRepository
 
   public function querySort($query, $sort)
   {
-    return $query->orderBy('tpd.id', $sort);
+    return $query->orderBy('tpd.product_name', $sort);
   }
 
   public function queryPaging($query)

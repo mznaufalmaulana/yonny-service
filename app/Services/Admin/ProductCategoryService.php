@@ -46,7 +46,7 @@ class ProductCategoryService implements ProductCategoryInterface
         $total += count($temp);
       }
       $result = $this->productRepository->getListProductByCategoryIdRepo($category->id);
-      $category->tatal_product = $total+count($result);
+      $category->total_product = $total+count($result);
       array_push($menu, $category);
     }
 

@@ -56,7 +56,7 @@ class ProjectController extends Controller
     }
   }
 
-  public function getListPupolarProjectStore()
+  public function getListPopularProjectStore()
   {
     try {
       $projects = $this->project->getListPopularProject();
