@@ -6,11 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateRegionTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('ms_region', function (Blueprint $table) {
@@ -20,11 +15,6 @@ class CreateRegionTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('ms_region');
