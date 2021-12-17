@@ -45,7 +45,8 @@ class ProjectRepository
   {
     return DB::table('tbl_project as tp')
       ->select('tp.id','tp.project_name', 'tp.project_slug',
-        'tp.description', 'tp.created_at as project_due', 'tp.share_count')
+        'tp.description', 'tp.created_at as project_due', 'tp.share_count',
+        DB::raw('(select tpp.photo_name from tbl_project_photo as tpp where tp.id = tpp.project_id limit 1) as photo_name'))
       ->orderBy('tp.share_count', 'DESC')
       ->limit(Config::get('constants_val.project_popular_limit'))
       ->get();

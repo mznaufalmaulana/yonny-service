@@ -1,9 +1,11 @@
 <?php
+
+use App\Http\Controllers\Email\EmailController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('email')->middleware('api')->group(function () {
-  Route::post('subscribe', 'Email\EmailController@subscribeEmail');
-  Route::post('receive', 'Email\EmailController@receiveEmailMessage');
+  Route::post('subscribe', [EmailController::class, 'subscribeEmail']);
+  Route::post('receive', [EmailController::class, 'receiveEmailMessage']);
 });
 
 Route::fallback(function () {
