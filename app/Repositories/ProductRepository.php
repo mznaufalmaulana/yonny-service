@@ -48,7 +48,7 @@ class ProductRepository
 
   public function queryCategory($query, $categoryId)
   {
-    return $query->where('mc.id', $categoryId);
+    return $query->whereIn('mc.id', $categoryId);
   }
 
   public function queryType($query, $typrId)
