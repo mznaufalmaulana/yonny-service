@@ -52,6 +52,7 @@ class ProductService implements ProductInterface
     {
       $categoryChildren = $this->productCategoryRepository->getListCategoryParentRepo($request->category);
       $categoriesId = array();
+      array_push($categoriesId, $request->category);
       if($categoryChildren)
       {
         foreach ($categoryChildren as $categoryChild)
@@ -59,7 +60,6 @@ class ProductService implements ProductInterface
           array_push($categoriesId, $categoryChild->id);
         }
       }
-      array_push($categoriesId, $request->category);
       $productQuery = $this->productRepository->queryCategory($productQuery, $categoriesId);
     }
     if ($request->type)
@@ -74,6 +74,7 @@ class ProductService implements ProductInterface
 
     return $productQuery->appends($request->input())->toArray();
     //$productQuery->toArray()['current_page']
+//    return $categoriesId;
   }
 
   public function getProductById($id)

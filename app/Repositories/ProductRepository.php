@@ -38,7 +38,7 @@ class ProductRepository
               'tpd.product_slug', 'tpd.is_active',
               DB::raw('(select tpp.photo_name from tbl_product_photo tpp where tpd.id = tpp.product_id limit 1) as photo_name')
             )
-            ->where('tpd.is_active','=', '1');
+            ->where('tpd.is_active','=', Config::get('constants_val.active'));
   }
 
   public function queryProductName($query, $name)
@@ -70,8 +70,9 @@ class ProductRepository
   public function getListLatestProductRepo()
   {
     return DB::table('tbl_product as tpd')
-            ->where('tpd.is_active','=', '1')
-            ->select('tpd.id', 'tpd.product_name',
+            ->join('brg_product_category as bpc', 'tpd.id','=', 'bpc.product_id')
+            ->where('tpd.is_active','=', Config::get('constants_val.active'))
+            ->select('tpd.id', 'tpd.product_name', 'bpc.category_id',
               DB::raw('(select tpp.photo_name from tbl_product_photo tpp where tpd.id = tpp.product_id limit 1) as photo_name')
             )
             ->orderBy('tpd.id','DESC')
@@ -85,7 +86,7 @@ class ProductRepository
     return DB::table('tbl_product as tpd')
             ->join('ms_product_type as mpt', 'tpd.product_type_id', 'mpt.id')
             ->where('tpd.id', $id)
-            ->where('tpd.is_active','=', '1')
+            ->where('tpd.is_active','=', Config::get('constants_val.active'))
             ->select(
               'tpd.id','mpt.id as type_id','mpt.type_name', 'tpd.product_name',
               'tpd.product_slug', 'tpd.description', 'tpd.is_active',
@@ -99,7 +100,7 @@ class ProductRepository
     return DB::table('brg_product_category as bpc')
             ->join('tbl_product as tp', 'bpc.product_id', '=', 'tp.id')
             ->where('bpc.category_id', $id)
-            ->where('tp.is_active','=', '1')
+            ->where('tp.is_active','=', Config::get('constants_val.active'))
             ->select('tp.id','tp.product_name', 'tp.product_slug',
               DB::raw('(select tpp.photo_name from tbl_product_photo tpp where tp.id = tpp.product_id limit 1) as photo_name')
             )
