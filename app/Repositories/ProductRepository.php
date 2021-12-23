@@ -54,9 +54,13 @@ class ProductRepository
 
   public function queryType($query, $typrId)
   {
-    return $query->where('mpt.id', $typrId);
+    return $query->whereIn('mpt.id', $typrId);
   }
 
+  public function queryGroupBy($query)
+  {
+    return $query->groupBy('tpd.id');
+  }
   public function querySort($query, $sort)
   {
     return $query->orderBy('tpd.product_name', $sort);

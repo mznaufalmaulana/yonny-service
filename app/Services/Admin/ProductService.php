@@ -64,8 +64,16 @@ class ProductService implements ProductInterface
     }
     if ($request->type)
     {
-      $productQuery = $this->productRepository->queryType($productQuery, $request->type);
+      $types = array();
+      foreach ($request->type as $type)
+      {
+        array_push($types, $type);
+      }
+      $productQuery = $this->productRepository->queryType($productQuery, $types);
     }
+
+    $productQuery = $this->productRepository->queryGroupBy($productQuery);
+
     if ($request->sort && in_array($request->sort, ['asc','desc']))
     {
       $productQuery = $this->productRepository->querySort($productQuery, $request->sort);
@@ -74,7 +82,6 @@ class ProductService implements ProductInterface
 
     return $productQuery->appends($request->input())->toArray();
     //$productQuery->toArray()['current_page']
-//    return $categoriesId;
   }
 
   public function getProductById($id)
