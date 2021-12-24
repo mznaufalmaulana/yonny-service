@@ -65,10 +65,10 @@ class ProductService implements ProductInterface
     if ($request->type)
     {
       $types = array();
-      foreach ($request->type as $type)
-      {
-        array_push($types, $type);
-      }
+//      foreach ($request->type as $type)
+//      {
+        array_push($types,$request->type);
+//      }
       $productQuery = $this->productRepository->queryType($productQuery, $types);
     }
 
