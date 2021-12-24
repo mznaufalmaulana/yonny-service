@@ -34,6 +34,14 @@ class ContactRepository
             ->get();
   }
 
+  public function getContactIsOnfooter()
+  {
+    return DB::table('tbl_contact as tc')
+      ->where('tc.is_on_footer', 1)
+      ->select( 'tc.address', 'tc.phone', 'tc.email')
+      ->get();
+  }
+
   public function storeContactRepo($contact)
   {
     return ContactModel::create([

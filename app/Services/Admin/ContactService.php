@@ -50,6 +50,11 @@ class ContactService implements ContactInterface
     return $regionContact;
   }
 
+  public function getContactIsOnFooter()
+  {
+   return $this->contactRepository->getContactIsOnfooter();
+  }
+
   public function storeContact($contact)
   {
     try {

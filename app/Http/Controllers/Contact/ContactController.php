@@ -55,6 +55,18 @@ class ContactController extends Controller
       }
     }
 
+    public function getContactIsOnFooter(): JsonResponse
+    {
+      try {
+        $cantact = $this->contact->getContactIsOnFooter();
+        return $this->returnSuccess($cantact, 'success');
+      }
+      catch (Exception $ex)
+      {
+        return $this->returnFail($ex->getMessage(), 'fail');
+      }
+    }
+
     public function storeContact(ContactRequest $request): JsonResponse
     {
       try {
