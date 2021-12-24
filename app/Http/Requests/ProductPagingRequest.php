@@ -13,8 +13,8 @@ class ProductPagingRequest extends FormRequest
     return [
       'name' => 'nullable | string',
       'category' => 'nullable | numeric | min:0',
-      'type' => 'nullable | numeric',
-//      'type.*'=> 'numeric | min:0',
+      'type' => 'nullable | array',
+      'type.*'=> 'numeric | min:0',
       'sort' => 'nullable | string',
       'page' => 'nullable | numeric | min:1',
     ];
