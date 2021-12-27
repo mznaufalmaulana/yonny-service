@@ -13,6 +13,7 @@ class PromoRequest extends FormRequest
     if(request()->isMethod('post'))
     {
       return [
+        'name' => 'required | string',
         'photo_name'  =>  'nullable | image | mimetypes:image/jpeg,image/png,image/jpg | max:5000',
         'link' =>  'required | string',
         'order' =>  'required | numeric | min:0',

@@ -14,7 +14,7 @@ class AddProductIdToEmailMessageTable extends Migration
     public function up()
     {
         Schema::table('tbl_email_message', function (Blueprint $table) {
-            $table->integer('product_id')->after('email_id');
+            $table->integer('product_id')->nullable()->after('email_id');
         });
     }
 

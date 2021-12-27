@@ -9,6 +9,7 @@ class EmailMessageModel extends Model
     protected $table = 'tbl_email_message';
     protected $primaryKey = 'id';
     protected $fillable = [
-      'email_id', 'message'
+      'name', 'email_id', 'product_id',
+      'message'
     ];
 }

@@ -15,18 +15,22 @@ class ContactRequest extends FormRequest
     {
       return [
         'region_id'  =>  'required |numeric',
-        'address' =>  'required | string',
+        'first_address' =>  'required | string',
+        'second_address' =>  'required | string',
         'phone' =>  'required | numeric | digits_between:4,14',
         'email' =>  'required | email',
+        'is_on_footer' => 'required | numeric'
       ];
     }
     else if (request()->isMethod('put'))
     {
       return [
         'region_id'  =>  'required |numeric',
-        'address' =>  'required | string',
+        'first_address' =>  'required | string',
+        'second_address' =>  'required | string',
         'phone' =>  'required | numeric | digits_between:4,14',
         'email' =>  'required | email',
+        'is_on_footer' => 'required | numeric'
       ];
     }
     return [];

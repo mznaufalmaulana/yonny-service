@@ -72,7 +72,7 @@ class ProductService implements ProductInterface
       $productQuery = $this->productRepository->queryType($productQuery, $types);
     }
 
-    $productQuery = $this->productRepository->queryGroupBy($productQuery);
+//    $productQuery = $this->productRepository->queryGroupBy($productQuery);
 
     if ($request->sort && in_array($request->sort, ['asc','desc']))
     {

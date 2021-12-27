@@ -45,6 +45,7 @@ class PromoRepository
   public function storePromoRepo($promo)
   {
     return PromoModel::create([
+              'name'  =>  $promo->name,
               'photo_name'  =>  $promo->photo_name,
               'link'  =>  $promo->link,
               'order' =>  $promo->order,
@@ -55,6 +56,7 @@ class PromoRepository
   public function updatePromoRepo($id, $promo)
   {
     return PromoModel::where('id', $id)->update([
+              'name'  =>  $promo->name,
               'photo_name'  =>  $promo->photo_name,
               'link'  =>  $promo->link,
               'order' =>  $promo->order,

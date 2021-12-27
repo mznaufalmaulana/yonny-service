@@ -13,7 +13,7 @@ class ContactRepository
   {
     return DB::table('tbl_contact as tc')
             ->join('ms_region as mr', 'tc.region_id', '=', 'mr.id')
-            ->select('tc.id', 'mr.region', 'tc.address', 'tc.phone', 'tc.email')
+            ->select('tc.id', 'mr.region', 'tc.first_address', 'tc.second_address', 'tc.phone', 'tc.email')
             ->get();
   }
 
@@ -22,7 +22,7 @@ class ContactRepository
     return DB::table('tbl_contact as tc')
             ->join('ms_region as mr', 'tc.region_id', '=', 'mr.id')
             ->where('tc.id', $id)
-            ->select('tc.id', 'mr.id as region_id', 'mr.region', 'tc.address', 'tc.phone', 'tc.email')
+            ->select('tc.id', 'mr.id as region_id', 'mr.region', 'tc.first_address', 'tc.second_address', 'tc.phone', 'tc.email')
             ->get();
   }
 
@@ -30,7 +30,7 @@ class ContactRepository
   {
     return DB::table('tbl_contact as tc')
             ->where('tc.region_id', $regionId)
-            ->select( 'tc.address', 'tc.phone', 'tc.email')
+            ->select( 'tc.first_address', 'tc.second_address', 'tc.phone', 'tc.email')
             ->get();
   }
 
@@ -38,7 +38,7 @@ class ContactRepository
   {
     return DB::table('tbl_contact as tc')
       ->where('tc.is_on_footer', 1)
-      ->select( 'tc.address', 'tc.phone', 'tc.email')
+      ->select( 'tc.first_address', 'tc.second_address', 'tc.phone', 'tc.email')
       ->get();
   }
 
@@ -46,9 +46,11 @@ class ContactRepository
   {
     return ContactModel::create([
               'region_id' => $contact->region_id,
-              'address' =>  $contact->address,
+              'first_address' =>  $contact->first_address,
+              'second_address' =>  $contact->second_address,
               'phone' =>  $contact->phone,
-              'email' =>  $contact->email
+              'email' =>  $contact->email,
+              'is_on_footer' =>  $contact->is_on_footer
             ]);
   }
 
@@ -57,9 +59,11 @@ class ContactRepository
     return ContactModel::where('id', $id)
             ->update([
               'region_id' => $contact->region_id,
-              'address' =>  $contact->address,
+              'first_address' =>  $contact->first_address,
+              'second_address' =>  $contact->second_address,
               'phone' =>  $contact->phone,
-              'email' =>  $contact->email
+              'email' =>  $contact->email,
+              'is_on_footer' =>  $contact->is_on_footer
             ]);
   }
 

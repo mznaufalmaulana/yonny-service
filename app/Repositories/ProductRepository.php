@@ -34,8 +34,7 @@ class ProductRepository
             ->join('brg_product_category as bpc', 'tpd.id','=', 'bpc.product_id')
             ->join('ms_category as mc', 'bpc.category_id', '=', 'mc.id')
             ->select(
-              'tpd.id', 'tpd.product_name',
-              'tpd.product_slug', 'tpd.is_active',
+              'tpd.id', 'tpd.product_name', 'tpd.product_slug', 'tpd.is_active',
               DB::raw('(select tpp.photo_name from tbl_product_photo tpp where tpd.id = tpp.product_id limit 1) as photo_name')
             )
             ->distinct()
