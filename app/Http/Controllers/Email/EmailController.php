@@ -6,6 +6,7 @@ use App\Contracts\Admin\Email\EmailInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BroadcastRequest;
 use App\Http\Requests\EmailMessageRequest;
+use App\Http\Requests\EmailMessageToCustomerRequest;
 use App\Http\Requests\EmailRequest;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -141,7 +142,7 @@ class EmailController extends Controller
     }
   }
 
-  public function sendEmailMessage(EmailMessageRequest $request): JsonResponse
+  public function sendEmailMessage(EmailMessageToCustomerRequest $request): JsonResponse
   {
     try {
       $result = $this->email->sendEmailMessage($request);

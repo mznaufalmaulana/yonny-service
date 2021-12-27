@@ -32,7 +32,7 @@ class EmailRepository
   {
     return DB::table('tbl_email as e')
             ->join('tbl_email_message as em', 'e.id', 'em.email_id')
-            ->select('em.id', 'em.name', 'e.email_address', 'em.message')
+            ->select('em.id', 'em.name', 'e.email_address')
             ->get();
   }
 
@@ -42,7 +42,7 @@ class EmailRepository
       ->join('tbl_email_message as em', 'e.id', 'em.email_id')
       ->leftjoin('tbl_product as tpd', 'em.product_id', '=', 'tpd.id')
       ->where('em.id', $id)
-      ->select('em.id', 'e.email_address', 'em.message',
+      ->select('em.id', 'e.email_address', 'em.message', 'em.product_id as product_id',
         DB::raw('(select tpp.photo_name from tbl_product_photo tpp where tpd.id = tpp.product_id limit 1) as photo_name'))
       ->get();
   }
