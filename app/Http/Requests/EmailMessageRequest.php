@@ -13,8 +13,10 @@ class EmailMessageRequest extends FormRequest
     if(request()->isMethod('post'))
     {
       return [
-        'email_id' =>  'required | numeric',
-        'message' =>  'required | string'
+        'name' => 'required | string',
+        'email_address' =>  'required | email',
+        'message' =>  'required | string',
+        'product_id' => 'nullable |numeric'
       ];
     }
     return [];

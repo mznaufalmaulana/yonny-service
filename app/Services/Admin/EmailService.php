@@ -147,6 +147,11 @@ class EmailService implements EmailInterface
     }
   }
 
+  public function getEmailMessageById($id){
+    $this->emailRepository->isEmailMessageExistRepo($id);
+    return $this->emailRepository->getEmailMessageById($id);
+  }
+
   public function receveEmailMessage($email)
   {
     DB::beginTransaction();
@@ -155,7 +160,7 @@ class EmailService implements EmailInterface
       if(count($result) != 0)
       {
         $email->email_id = $result[0]->id;
-        $this->emailRepository->storeEmailRepo($email);
+        $this->emailRepository->storeEmailMessageRepo($email);
       }
       else
       {

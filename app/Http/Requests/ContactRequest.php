@@ -17,7 +17,7 @@ class ContactRequest extends FormRequest
         'region_id'  =>  'required |numeric',
         'first_address' =>  'required | string',
         'second_address' =>  'required | string',
-        'phone' =>  'required | numeric | digits_between:4,14',
+        'phone' =>  'required | regex:/^([0-9\s\-\+\(\)]*)$/ | min:10',
         'email' =>  'required | email',
         'is_on_footer' => 'required | numeric'
       ];
@@ -28,7 +28,7 @@ class ContactRequest extends FormRequest
         'region_id'  =>  'required |numeric',
         'first_address' =>  'required | string',
         'second_address' =>  'required | string',
-        'phone' =>  'required | numeric | digits_between:4,14',
+        'phone' =>  'required | regex:/^([0-9\s\-\+\(\)]*)$/ | min:10',
         'email' =>  'required | email',
         'is_on_footer' => 'required | numeric'
       ];

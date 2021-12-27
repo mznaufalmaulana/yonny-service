@@ -48,7 +48,6 @@ class EmailController extends Controller
   public function storeEmail(EmailRequest $request): JsonResponse
   {
     try {
-      $request->validated();
       $result = $this->email->storeEmail($request);
       return $this->returnSuccess($result, 'success');
     }
@@ -61,7 +60,6 @@ class EmailController extends Controller
   public function updateEmail($id, EmailRequest $request): JsonResponse
   {
     try {
-      $request->validated();
       $result = $this->email->updateEmail($id, $request);
       return $this->returnSuccess($result, 'success');
     }
@@ -86,7 +84,6 @@ class EmailController extends Controller
   public function subscribeEmail(EmailRequest $request): JsonResponse
   {
     try {
-      $request->validated();
       $result = $this->email->subscribeEmail($request);
       return $this->returnSuccess($result, 'success');
     }
@@ -99,7 +96,6 @@ class EmailController extends Controller
   public function broadcastEmail(BroadcastRequest $request): JsonResponse
   {
     try {
-      $request->validated();
       $result = $this->email->broadcastEmail($request);
       return $this->returnSuccess($result, 'success');
     }
@@ -121,10 +117,21 @@ class EmailController extends Controller
     }
   }
 
+  public function getEmailMessageById($id): JsonResponse
+  {
+    try {
+      $result = $this->email->getEmailMessageById($id);
+      return $this->returnSuccess($result, 'success');
+    }
+    catch (Exception $ex)
+    {
+      return $this->returnFail($ex->getMessage(), 'fail');
+    }
+  }
+
   public function receiveEmailMessage(EmailMessageRequest $request): JsonResponse
   {
     try {
-      $request->validated();
       $result = $this->email->receveEmailMessage($request);
       return $this->returnSuccess($result, 'success');
     }

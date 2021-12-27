@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('email')->middleware('api')->group(function () {
   Route::get('list', [EmailController::class, 'getListEmail']);
   Route::get('message', [EmailController::class, 'getEmailMessage']);
+  Route::get('message/{id}', [EmailController::class, 'getEmailMessageById']);
   Route::get('{id}', [EmailController::class, 'getEmailById']);
   Route::post('store', [EmailController::class, 'storeEmail']);
   Route::put('{id}/update', [EmailController::class, 'updateEmail']);

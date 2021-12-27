@@ -13,6 +13,7 @@ interface EmailInterface
     public function deleteEmail($id);
     public function broadcastEmail($broadcast);
     public function getEmailMessage();
+    public function getEmailMessageById($id);
     public function receveEmailMessage($email);
     public function sendEmailMessage($email);
     public function deleteEmailMessage($id);
