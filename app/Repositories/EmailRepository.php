@@ -11,7 +11,10 @@ class EmailRepository
 {
   public function getListEmailRepo()
   {
-    return EmailModel::select('id', 'email_address', 'is_subscribe')->get();
+    return DB::table('tbl_email as e')
+      ->join('tbl_email_message as em', 'e.id', 'em.email_id')
+      ->select('e.id', 'em.name', 'e.email_address', 'e.is_subscribe')
+      ->get();
   }
 
   public function getEmailByIdRepo($id)
