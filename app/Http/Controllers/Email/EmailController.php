@@ -46,6 +46,18 @@ class EmailController extends Controller
     }
   }
 
+  public function getSubscriber(): JsonResponse
+  {
+    try {
+      $emails = $this->email->getSubscriber();
+      return $this->returnSuccess($emails, 'success');
+    }
+    catch (Exception $ex)
+    {
+      return $this->returnFail($ex->getMessage(), 'fail');
+    }
+  }
+
   public function storeEmail(EmailRequest $request): JsonResponse
   {
     try {

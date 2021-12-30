@@ -3,7 +3,7 @@
 use App\Http\Controllers\Contact\ContactController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('contact')->middleware('api')->group(function () {
+Route::prefix('contact')->middleware('auth:sanctum')->group(function () {
 
   Route::get('list', [ContactController::class, 'getListContact']);
   Route::get('{id}', [ContactController::class, 'getContactById']);

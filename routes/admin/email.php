@@ -3,11 +3,12 @@
 use App\Http\Controllers\Email\EmailController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('email')->middleware('api')->group(function () {
+Route::prefix('email')->middleware('auth:sanctum')->group(function () {
   Route::get('list', [EmailController::class, 'getListEmail']);
   Route::get('message', [EmailController::class, 'getEmailMessage']);
   Route::get('message/{id}', [EmailController::class, 'getEmailMessageById']);
   Route::get('{id}', [EmailController::class, 'getEmailById']);
+  Route::get('list/subscriber', [EmailController::class, 'getSubscriber']);
   Route::post('store', [EmailController::class, 'storeEmail']);
   Route::put('{id}/update', [EmailController::class, 'updateEmail']);
   Route::delete('{id}/delete', [EmailController::class, 'deleteEmail']);

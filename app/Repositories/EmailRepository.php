@@ -12,8 +12,9 @@ class EmailRepository
   public function getListEmailRepo()
   {
     return DB::table('tbl_email as e')
-      ->join('tbl_email_message as em', 'e.id', 'em.email_id')
+      ->leftJoin('tbl_email_message as em', 'e.id', 'em.email_id')
       ->select('e.id', 'em.name', 'e.email_address', 'e.is_subscribe')
+      ->distinct()
       ->get();
   }
 
@@ -35,7 +36,7 @@ class EmailRepository
   {
     return DB::table('tbl_email as e')
             ->join('tbl_email_message as em', 'e.id', 'em.email_id')
-            ->select('em.id', 'em.name', 'e.email_address')
+            ->select('em.id', 'em.name', 'e.email_address', 'em.product_id')
             ->get();
   }
 
@@ -47,6 +48,16 @@ class EmailRepository
       ->where('em.id', $id)
       ->select('em.id', 'e.email_address', 'em.message', 'em.product_id as product_id',
         DB::raw('(select tpp.photo_name from tbl_product_photo tpp where tpd.id = tpp.product_id limit 1) as photo_name'))
+      ->get();
+  }
+
+  public function getEmailSubscriber()
+  {
+    return DB::table('tbl_email as e')
+      ->leftJoin('tbl_email_message as em', 'e.id', 'em.email_id')
+      ->select('e.id', 'em.name', 'e.email_address', 'e.is_subscribe')
+      ->where('e.is_subscribe', '=', config('constants_val.subscribe_true'))
+      ->distinct()
       ->get();
   }
 
@@ -95,7 +106,7 @@ class EmailRepository
   public function isEmailAddressExistRepo($address)
   {
     return EmailModel::where('email_address', $address)
-      ->select('id', 'email_address')
+      ->select('id', 'email_address', 'is_subscribe')
       ->get();
   }
 

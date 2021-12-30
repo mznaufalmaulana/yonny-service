@@ -7,6 +7,7 @@ interface EmailInterface
 {
     public function getListEmail();
     public function getEmailById($id);
+    public function getSubscriber();
     public function storeEmail($email);
     public function subscribeEmail($email);
     public function updateEmail($id, $email);

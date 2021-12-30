@@ -3,7 +3,7 @@
 use App\Http\Controllers\SocialMedia\SocialMediaController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('social-media')->middleware('api')->group(function () {
+Route::prefix('social-media')->middleware('auth:sanctum')->group(function () {
   Route::get('list', [SocialMediaController::class, 'getListSocialMedia']);
   Route::get('{id}', [SocialMediaController::class, 'getSocialMediaById']);
   Route::post('store', [SocialMediaController::class, 'storeSocialMedia']);

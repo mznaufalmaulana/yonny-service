@@ -35,6 +35,11 @@ class EmailService implements EmailInterface
     return $this->emailRepository->getListEmailRepo();
   }
 
+  public function getSubscriber()
+  {
+    return $this->emailRepository->getEmailSubscriber();
+  }
+
   public function getEmailById($id)
   {
     try {
@@ -46,6 +51,7 @@ class EmailService implements EmailInterface
       throw $ex;
     }
   }
+
 
   public function storeEmail($email)
   {
@@ -89,8 +95,20 @@ class EmailService implements EmailInterface
   public function subscribeEmail($email)
   {
     try {
-      $email->is_subscribe = Config::get('constants_val.subscribe_true');
-      $this->emailRepository->storeEmailRepo($email);
+      $result = $this->emailRepository->isEmailAddressExistRepo($email->email_address);
+      if(count($result) != 0)
+      {
+        if($result[0]->is_subscribe == 0 ){
+          $email->is_subscribe = Config::get('constants_val.subscribe_true');
+          $this->emailRepository->updateEmailRepo($result[0]->id, $email);
+        }else{
+          throw new Exception("You have subcribed");
+        }
+      }
+      else {
+        $email->is_subscribe = Config::get('constants_val.subscribe_true');
+        $this->emailRepository->storeEmailRepo($email);
+      }
       $content = new \stdClass();
       $content->link = "link";
       SubscribeMailJob::dispatch($email->email_address, $content)->onQueue('subscribe');
