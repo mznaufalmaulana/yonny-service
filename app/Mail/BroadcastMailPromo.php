@@ -21,7 +21,7 @@ class BroadcastMailPromo extends Mailable
   {
     $data = [
       'link'  => $this->content->link,
-//      'photo'  => $this->content->photoName,
+      'photo'  => $this->content->photoName,
     ];
     return $this->from(env('MAIL_FROM_ADDRESS'), config('constants_val.email_name'))
             ->subject(config('constants_val.broadcast_subject'))
