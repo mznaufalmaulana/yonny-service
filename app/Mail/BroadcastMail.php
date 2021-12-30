@@ -24,6 +24,6 @@ class BroadcastMail extends Mailable
       ];
       return $this->from(env('MAIL_FROM_ADDRESS'), config('constants_val.email_name'))
               ->subject(config('constants_val.broadcast_subject'))
-              ->text('email.broadcast_email_plain', compact('data'));
+              ->markdown('email.broadcast_email_plain', compact('data'));
     }
 }
