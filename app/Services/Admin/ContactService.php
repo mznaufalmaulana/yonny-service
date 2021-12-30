@@ -80,6 +80,11 @@ class ContactService implements ContactInterface
     }
   }
 
+  public function updateContactIsOnFooter($id)
+  {
+    return $this->contactRepository->updateContactIsOnFooter($id);
+  }
+
   public function deleteContact($id)
   {
     try {

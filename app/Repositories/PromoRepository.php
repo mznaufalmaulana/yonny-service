@@ -10,7 +10,7 @@ class PromoRepository
   public function getListPromoAllRepo()
   {
     return DB::table('tbl_promo as tpm')
-            ->select('tpm.id','tpm.photo_name', 'tpm.link', 'tpm.order', 'tpm.is_headline')
+            ->select('tpm.id', 'tpm.name', 'tpm.photo_name', 'tpm.link', 'tpm.order', 'tpm.is_headline')
             ->orderBy('tpm.id', 'ASC')
             ->get();
   }
@@ -19,7 +19,7 @@ class PromoRepository
   {
     return DB::table('tbl_promo as tpm')
             ->where('tpm.is_headline', '=', 0)
-            ->select('tpm.id','tpm.photo_name', 'tpm.link', 'tpm.order', 'tpm.is_headline')
+            ->select('tpm.id', 'tpm.name', 'tpm.photo_name', 'tpm.link', 'tpm.order', 'tpm.is_headline')
             ->orderBy('order', 'ASC')
             ->get();
   }
@@ -28,7 +28,7 @@ class PromoRepository
   {
     return DB::table('tbl_promo as tpm')
             ->where('tpm.is_headline', '=', 1)
-            ->select('tpm.id','tpm.photo_name', 'tpm.link', 'tpm.order', 'tpm.is_headline')
+            ->select('tpm.id', 'tpm.name', 'tpm.photo_name', 'tpm.link', 'tpm.order', 'tpm.is_headline')
             ->orderBy('order', 'ASC')
             ->get();
   }
@@ -37,7 +37,7 @@ class PromoRepository
   {
     return DB::table('tbl_promo as tpm')
             ->where('tpm.id', '=', $id)
-            ->select('tpm.id','tpm.photo_name', 'tpm.link', 'tpm.order', 'tpm.is_headline')
+            ->select('tpm.id', 'tpm.name', 'tpm.photo_name', 'tpm.link', 'tpm.order', 'tpm.is_headline')
             ->orderBy('order', 'ASC')
             ->get();
   }

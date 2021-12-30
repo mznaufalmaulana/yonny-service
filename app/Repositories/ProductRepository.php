@@ -74,6 +74,7 @@ class ProductRepository
   public function getListLatestProductRepo()
   {
     return DB::table('tbl_product as tpd')
+            ->where('tpd.is_active','=', Config::get('constants_val.active'))
             ->select('tpd.id', 'tpd.product_name',
               DB::raw('(select tpp.photo_name from tbl_product_photo tpp where tpd.id = tpp.product_id limit 1) as photo_name')
             )

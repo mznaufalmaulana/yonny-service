@@ -9,6 +9,7 @@ Route::prefix('contact')->middleware('api')->group(function () {
   Route::get('{id}', [ContactController::class, 'getContactById']);
   Route::post('store', [ContactController::class, 'storeContact']);
   Route::post('{id}/update', [ContactController::class, 'updateContact']);
+  Route::post('{id}/update-on-footer', [ContactController::class, 'updateContactIsOnFooter']);
   Route::delete('{id}/delete', [ContactController::class, 'deleteContact']);
 
 });

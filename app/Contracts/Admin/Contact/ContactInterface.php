@@ -13,6 +13,7 @@ interface ContactInterface
   public function getContactIsOnFooter();
   public function storeContact($contact);
   public function updateContact($id, $contact);
+  public function updateContactIsOnFooter($id);
   public function deleteContact($id);
 
 }

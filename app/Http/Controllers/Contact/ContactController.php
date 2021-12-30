@@ -70,7 +70,6 @@ class ContactController extends Controller
     public function storeContact(ContactRequest $request): JsonResponse
     {
       try {
-        $request->validated();
         $contact = $this->contact->storeContact($request);
         return $this->returnSuccess($contact, 'success');
       }
@@ -83,8 +82,19 @@ class ContactController extends Controller
     public function updateContact($id, ContactRequest $request): JsonResponse
     {
       try {
-        $request->validated();
         $contact = $this->contact->updateContact($id, $request);
+        return $this->returnSuccess($contact, 'success');
+      }
+      catch (Exception $ex)
+      {
+        return $this->returnFail($ex->getMessage(), 'fail');
+      }
+    }
+
+    public function updateContactIsOnFooter($id): JsonResponse
+    {
+      try {
+        $contact = $this->contact->updateContactIsOnFooter($id);
         return $this->returnSuccess($contact, 'success');
       }
       catch (Exception $ex)

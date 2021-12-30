@@ -13,7 +13,7 @@ class ContactRepository
   {
     return DB::table('tbl_contact as tc')
             ->join('ms_region as mr', 'tc.region_id', '=', 'mr.id')
-            ->select('tc.id', 'mr.region', 'tc.first_address', 'tc.second_address', 'tc.phone', 'tc.email')
+            ->select('tc.id', 'mr.region', 'tc.first_address', 'tc.second_address', 'tc.phone', 'tc.email', 'tc.is_on_footer')
             ->get();
   }
 
@@ -22,7 +22,7 @@ class ContactRepository
     return DB::table('tbl_contact as tc')
             ->join('ms_region as mr', 'tc.region_id', '=', 'mr.id')
             ->where('tc.id', $id)
-            ->select('tc.id', 'mr.id as region_id', 'mr.region', 'tc.first_address', 'tc.second_address', 'tc.phone', 'tc.email')
+            ->select('tc.id', 'mr.id as region_id', 'mr.region', 'tc.first_address', 'tc.second_address', 'tc.phone', 'tc.email', 'tc.is_on_footer')
             ->get();
   }
 
@@ -63,7 +63,15 @@ class ContactRepository
               'second_address' =>  $contact->second_address,
               'phone' =>  $contact->phone,
               'email' =>  $contact->email,
-              'is_on_footer' =>  $contact->is_on_footer
+            ]);
+  }
+
+  public function updateContactIsOnFooter($id)
+  {
+    ContactModel::query()->update(['is_on_footer' =>  0]);
+    return ContactModel::where('id', $id)
+            ->update([
+              'is_on_footer' =>  1
             ]);
   }
 
