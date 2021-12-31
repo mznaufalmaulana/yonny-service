@@ -11,6 +11,7 @@
       .container{
           margin: 20px 50px;
       }
+
       .logo-by{
           margin: 0 auto;
           max-width: 300px;
