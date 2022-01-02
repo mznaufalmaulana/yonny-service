@@ -16,7 +16,7 @@ class ProjectRequest extends FormRequest
         'project_name'  =>  'required | string',
         'description' =>  'required | string',
 //        'project_photo' =>  'required | array',
-//        'project_photo.*' =>  'image | mimetypes:image/jpeg,image/png,image/jpg | max:5000',
+//        'project_photo.*' =>  'mimetypes:image/jpeg,image/png,image/jpg | max:5000',
       ];
     }
     else if (request()->isMethod('put'))

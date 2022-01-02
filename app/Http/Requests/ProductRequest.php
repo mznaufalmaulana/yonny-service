@@ -18,7 +18,6 @@ class ProductRequest extends FormRequest
         'product_name'  =>  'required | min:4',
         'description' =>  'required | string | min:4',
         'is_active' =>  'required | numeric',
-//        'product_photo' =>  'required | image | mimetypes:image/jpeg,image/png,image/jpg | max:5000'
       ];
     }
     else if (request()->isMethod('put'))
