@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Region;
+namespace App\Http\Controllers\Master;
 
 use App\Contracts\Admin\Master\RegionInterface;
 use App\Http\Controllers\Controller;

@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Region\RegionController;
+use App\Http\Controllers\Master\RegionController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('region')->middleware('auth:sanctum')->group(function () {
