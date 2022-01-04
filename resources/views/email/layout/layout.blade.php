@@ -36,6 +36,7 @@
 
       .content-img{
           margin-top: 30px;
+          text-align: center;
       }
 
       .img-email{
