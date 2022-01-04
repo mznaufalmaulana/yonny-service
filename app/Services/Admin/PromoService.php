@@ -6,6 +6,7 @@ use App\Contracts\Admin\Promo\PromoInterface;
 use App\Repositories\PromoRepository;
 use DB;
 use Exception;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
 
@@ -27,12 +28,16 @@ class PromoService implements PromoInterface
 
   public function getListPromo()
   {
-    return $this->promoRepository->getListPromoRepo();
+    return Cache::remember('promoNonHeadline', 60*60*24, function (){
+      return $this->promoRepository->getListPromoRepo();
+    });
   }
 
   public function getListPromoHeadline()
   {
-    return $this->promoRepository->getListPromoHeadlineRepo();
+    return Cache::remember('promoHeadline', 60*60*24, function (){
+      return $this->promoRepository->getListPromoHeadlineRepo();
+    });
   }
 
   public function getPromoById($id)

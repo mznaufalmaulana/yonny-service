@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+
+use App\Models\PromoModel;
+use App\Observers\PromoObserver;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
@@ -28,5 +31,7 @@ class AppServiceProvider extends ServiceProvider
       {
         URL::forceScheme('https');
       }
+
+      PromoModel::observe(PromoObserver::class);
     }
 }

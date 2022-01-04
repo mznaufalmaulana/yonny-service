@@ -55,13 +55,15 @@ class PromoRepository
 
   public function updatePromoRepo($id, $promo)
   {
-    return PromoModel::where('id', $id)->update([
-              'name'  =>  $promo->name,
-              'photo_name'  =>  $promo->photo_name,
-              'link'  =>  $promo->link,
-              'order' =>  $promo->order,
-              'is_headline' =>  $promo->is_headline
-            ]);
+    $data = [
+      'name'  =>  $promo->name,
+      'photo_name'  =>  $promo->photo_name,
+      'link'  =>  $promo->link,
+      'order' =>  $promo->order,
+      'is_headline' =>  $promo->is_headline
+    ];
+    $model = PromoModel::find($id);
+    $model->update($data);
   }
 
   public function deletePromoRepo($id)
