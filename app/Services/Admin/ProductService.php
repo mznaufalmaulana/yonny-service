@@ -8,6 +8,7 @@ use App\Http\Requests\PhotoRequest;
 use App\Http\Requests\ProductRequest;
 use App\Repositories\ProductCategoryRepository;
 use App\Repositories\ProductRepository;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -72,7 +73,7 @@ class ProductService implements ProductInterface
       $productQuery = $this->productRepository->queryType($productQuery, $types);
     }
 
-//    $productQuery = $this->productRepository->queryGroupBy($productQuery);
+    $productQuery = $this->productRepository->queryGroupBy($productQuery);
 
     if ($request->sort && in_array($request->sort, ['asc','desc']))
     {

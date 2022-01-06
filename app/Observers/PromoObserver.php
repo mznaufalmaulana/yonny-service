@@ -19,12 +19,6 @@ class PromoObserver
       Cache::forget('promoNonHeadline');
     }
 
-    /**
-     * Handle the promo model "deleted" event.
-     *
-     * @param  \App\Models\PromoModel  $promoModel
-     * @return void
-     */
     public function deleted(PromoModel $promoModel)
     {
       Cache::forget('promoHeadline');

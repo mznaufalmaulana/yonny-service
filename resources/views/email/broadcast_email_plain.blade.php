@@ -5,3 +5,4 @@
     {!! $data['body'] !!}
   </div>
 @endsection
+@extends('email.layout.footer')

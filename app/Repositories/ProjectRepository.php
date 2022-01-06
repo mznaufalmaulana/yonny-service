@@ -31,11 +31,6 @@ class ProjectRepository
             );
   }
 
-  public function querySort($query, $sort)
-  {
-    return $query->orderBy('tp.id', $sort);
-  }
-
   public function queryPaging($query)
   {
     return $query->paginate(Config::get('constants_val.project_paging_limit'));
