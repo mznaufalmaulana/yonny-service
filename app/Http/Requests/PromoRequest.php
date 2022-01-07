@@ -14,7 +14,7 @@ class PromoRequest extends FormRequest
     {
       return [
         'name' => 'required | string',
-        'photo_name'  =>  'nullable | mimetypes:image/jpeg,image/png,image/jpg | max:10000',
+        'photo_name'  =>  'nullable | mimetypes:image/jpeg,image/png,image/jpg | max:15000',
         'link' =>  'required | string',
         'order' =>  'required | numeric | min:0',
         'is_headline' =>  'required | numeric | digits_between: 0,1',
@@ -23,7 +23,7 @@ class PromoRequest extends FormRequest
     else if (request()->isMethod('put'))
     {
       return [
-        'photo_name'  =>  'nullable | mimetypes:image/jpeg,image/png,image/jpg | max:10000',
+        'photo_name'  =>  'nullable | mimetypes:image/jpeg,image/png,image/jpg | max:15000',
         'link' =>  'required | string',
         'order' =>  'required | numeric | min:0',
         'is_headline' =>  'required | numeric |digits_between: 0,1',
