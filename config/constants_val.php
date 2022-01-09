@@ -13,7 +13,7 @@ return [
   'path_photo_product' => 'product/',
 
   //project
-  'project_paging_limit' => 5,
+  'project_paging_limit' => 9,
   'project_popular_limit' => 3,
   'path_photo_project' => 'project/',
 
