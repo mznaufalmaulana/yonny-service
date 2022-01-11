@@ -63,7 +63,7 @@ class PromoRepository
       'is_headline' =>  $promo->is_headline
     ];
     $model = PromoModel::find($id);
-    $model->update($data);
+    return $model->update($data);
   }
 
   public function deletePromoRepo($id)

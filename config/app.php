@@ -184,7 +184,7 @@ return [
         App\Providers\Admin\PromoServiceProvider::class,
         App\Providers\Admin\AuthenticationProvider::class,
         App\Providers\Admin\UserServiceProvider::class,
-
+        \App\Providers\DashboardServiceProvider::class,
 
     ],
 

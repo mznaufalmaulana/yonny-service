@@ -54,11 +54,13 @@ class ProductCategoryRepository
 
   public function updateCategoryRepo($id, $category)
   {
-    return ProductCategoryModel::where('id', $id)
-            ->update([
-              'category_parent' =>  $category->category_parent,
-              'category_name' => $category->category_name,
-            ]);
+    $data = [
+      'category_parent' =>  $category->category_parent,
+      'category_name' => $category->category_name,
+    ];
+
+    $model = ProductCategoryModel::find($id);
+    return $model->update($data);
   }
 
   public function deleteCategoryRepo($id)

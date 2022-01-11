@@ -82,7 +82,6 @@ class ProductService implements ProductInterface
     $productQuery = $this->productRepository->queryPaging($productQuery);
 
     return $productQuery->appends($request->input())->toArray();
-    //$productQuery->toArray()['current_page']
   }
 
   public function getProductById($id)

@@ -27,6 +27,32 @@ class ProductRepository
             ->get();
   }
 
+  public function getTopProductRepo(){
+    return DB::table('tbl_product as tpd')
+      ->join('ms_product_type as mpt', 'tpd.product_type_id', 'mpt.id')
+      ->select(
+        'tpd.id', 'mpt.type_name', 'tpd.product_name',
+        'tpd.product_slug', 'tpd.is_active', 'tpd.seen_count',
+        'tpd.share_count'
+      );
+  }
+
+  public function queryTopSeenRepo($query)
+  {
+    return $query
+      ->orderBy('tpd.seen_count', 'DESC')
+      ->limit(Config::get('constants_val.top_product_limit'))
+      ->get();
+  }
+
+  public function queryTopShareRepo($query)
+  {
+    return $query
+      ->orderBy('tpd.share_count', 'DESC')
+      ->limit(Config::get('constants_val.top_product_limit'))
+      ->get();
+  }
+
   public function getListProductStoreRepo()
   {
     return DB::table('tbl_product as tpd')
@@ -70,7 +96,6 @@ class ProductRepository
     return $query->paginate(Config::get('constants_val.product_paging_limit'));
   }
 
-
   public function getListLatestProductRepo()
   {
     return DB::table('tbl_product as tpd')
@@ -108,6 +133,17 @@ class ProductRepository
               DB::raw('(select tpp.photo_name from tbl_product_photo tpp where tp.id = tpp.product_id limit 1) as photo_name')
             )
             ->get();
+  }
+
+  public function getTotalSeenShareProductByCategoryIdRepo($id)
+  {
+    return DB::table('brg_product_category as bpc')
+          ->join('tbl_product as tp', 'bpc.product_id', '=', 'tp.id')
+          ->select(DB::raw('sum(tp.seen_count) as total_seen, sum(tp.share_count) as total_share'))
+          ->where('bpc.category_id', $id)
+          ->where('tp.is_active','=', Config::get('constants_val.active'))
+//          ->sum('tp.seen_count', 'tp.share_count');
+          ->get();
   }
 
   public function getProductPhotoByProductIdRepo($id)
@@ -158,7 +194,7 @@ class ProductRepository
   //Update Product
   public function updateProductRepo($id, $request)
   {
-    return ProductModel::where('id', $id)->update([
+    $data = [
       'product_type_id' =>  $request->product_type_id,
       'product_name' => $request->product_name,
       'product_slug' => \Str::slug($request->product_name,'-'),
@@ -166,7 +202,10 @@ class ProductRepository
       'is_active' =>  $request->is_active,
       'seen_count' =>  $request->seen_count,
       'share_count' =>  $request->share_count
-    ]);
+    ];
+
+    $model = ProductModel::find($id);
+    return $model->update($data);
   }
 
   public function updateProductPhotoRepo($id, $productPhotoName)

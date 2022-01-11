@@ -29,4 +29,7 @@ return [
   'subscribe_subject' => 'Subscribe Batu Yonny',
   'broadcast_subject' => 'Promo Product Batu Yonny',
   'send_subject' => 'Batu Yonny',
+
+  //dashboard
+  'top_product_limit' => 5,
 ];
