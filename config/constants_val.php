@@ -8,7 +8,7 @@ return [
   'nonactive' => 0,
 
   //product
-  'latest_product_limit' =>  4,
+  'latest_product_limit' =>  3,
   'product_paging_limit' => 9,
   'path_photo_product' => 'product/',
 
