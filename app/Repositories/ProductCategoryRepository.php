@@ -30,8 +30,9 @@ class ProductCategoryRepository
   public function getCategoryByIdRepo($id)
   {
     return DB::table('ms_category as mc')
+            ->leftJoin('ms_category as mc2', 'mc.category_parent', '=', 'mc2.id')
             ->where('mc.id', $id)
-            ->select('mc.id', 'mc.category_parent', 'mc.category_name')
+            ->select('mc.id', 'mc.category_parent', 'mc.category_name', 'mc2.category_name as category_parent_name')
             ->get();
   }
 
