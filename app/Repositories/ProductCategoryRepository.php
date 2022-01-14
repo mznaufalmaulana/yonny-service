@@ -38,9 +38,10 @@ class ProductCategoryRepository
   public function getCategoryProductByProductId($id)
   {
     return DB::table('brg_product_category as bpc')
-      ->join('ms_category as mc', 'mc.id', 'bpc.category_id')
+      ->join('ms_category as mc', 'mc.id', '=','bpc.category_id')
+      ->leftJoin('ms_category as mcb', 'mcb.id', '=', 'mc.category_parent')
       ->where('bpc.product_id', $id)
-      ->select('mc.id', 'mc.category_name')
+      ->select('mc.id', 'mcb.category_name as category_parent', 'mc.category_name')
       ->get();
   }
 
