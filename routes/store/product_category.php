@@ -9,6 +9,7 @@ Route::prefix('menu')->group(function () {
 
 Route::prefix('product-category')->group(function () {
   Route::get('list-parent', [ProductCategoryController::class, 'getListCategoryParent']);
+  Route::get('{id}', [ProductCategoryController::class, 'getCategoryById']);
 });
 
 Route::fallback(function () {
