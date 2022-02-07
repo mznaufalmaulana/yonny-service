@@ -9,7 +9,7 @@ return [
 
   //product
   'latest_product_limit' =>  3,
-  'product_paging_limit' => 9,
+  'product_paging_limit' => 12,
   'path_photo_product' => 'product/',
 
   //project
