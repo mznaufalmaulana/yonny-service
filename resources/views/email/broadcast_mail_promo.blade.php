@@ -7,7 +7,7 @@
           <p class="title-email"><strong>Hello there,</strong><br> New collection special for you . . . !!!</p>
         </div>
         <div class="content-img">
-          <img class="img-email" src="{{'https://batuyonny.live:81/storage/'.$data['image']}}" alt="promo">
+          <img class="img-email" src="{{'https://batuyonny.com:81/storage/'.$data['image']}}" alt="promo">
         </div>
         <div class="content-button">
           <a href="{{$data['link']}}">
