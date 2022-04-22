@@ -8,7 +8,7 @@
       </div>
       <div class="content-img">
         <a href="http://batuyonny.com">
-          <img class="img-email" src="https://178.128.99.51:81/image/contohBY.png" alt="promo">
+          <img class="img-email" src="https://178.128.99.51:81/image/contohBY.png" alt="promo"/>
         </a>
       </div>
       <div style="margin-top: 20px">
